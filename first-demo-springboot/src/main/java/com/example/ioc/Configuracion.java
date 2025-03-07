@@ -9,4 +9,9 @@ public class Configuracion {
 		System.err.println("Configuracion creada");
 	}
 
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

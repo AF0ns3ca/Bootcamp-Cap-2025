@@ -2,6 +2,7 @@ package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 
 import com.example.ioc.Configuracion;
+import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
 import com.example.ioc.RepositorioImpl;
 import com.example.ioc.Servicio;
@@ -25,6 +27,9 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 	@Autowired
 	Servicio srv;
 	
+	@Autowired
+	Rango rango;
+	
 //	@Autowired
 //	@Qualifier("verdad")
 //	Repositorio repo1;
@@ -33,8 +38,13 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 //	Repositorio repo2;
 	
 	@Autowired
-	Repositorio repo;
+	Repositorio repo1;
+	@Autowired
+	Repositorio repo2;
 	
+	
+	@Value("${mi.valor:valor por defecto}")
+	String valor;
 	
 
 	@Override
@@ -45,9 +55,10 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 
 		//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 		//srv.guardar();
-//		repo1.guardar();
-//		repo2.guardar();
-		repo.guardar();
+		repo1.guardar();
+		repo2.guardar();
+		System.err.println("Valor: " + valor);
+		System.err.println("Rango: " + rango);
 	}
 	
 	
