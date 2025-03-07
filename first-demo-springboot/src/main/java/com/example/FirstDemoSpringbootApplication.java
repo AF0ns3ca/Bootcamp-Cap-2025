@@ -18,6 +18,7 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 		System.err.println("Aplicacion arrancada");
 	}
 	
+	//Metodo que ejecuta acciones despues de que finaliza el arranque de la aplicación
 	@Bean
 	public CommandLineRunner demo()
 	{
