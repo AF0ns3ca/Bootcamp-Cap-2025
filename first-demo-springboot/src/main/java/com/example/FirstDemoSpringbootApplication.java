@@ -25,12 +25,17 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 	@Autowired
 	Servicio srv;
 	
+//	@Autowired
+//	@Qualifier("verdad")
+//	Repositorio repo1;
+//	@Autowired
+//	@Qualifier("mentira")
+//	Repositorio repo2;
+	
 	@Autowired
-	@Qualifier("verdad")
-	Repositorio repo1;
-	@Autowired
-	@Qualifier("mentira")
-	Repositorio repo2;
+	Repositorio repo;
+	
+	
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -40,8 +45,9 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 
 		//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 		//srv.guardar();
-		repo1.guardar();
-		repo2.guardar();
+//		repo1.guardar();
+//		repo2.guardar();
+		repo.guardar();
 	}
 	
 	
