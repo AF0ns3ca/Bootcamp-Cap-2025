@@ -24,13 +24,13 @@ public class CatalogoSpringApplication implements CommandLineRunner {
 	}
 
 	//Metodo que ejecuta acciones despues de que finaliza el arranque de la aplicación
-		@Bean
-		public CommandLineRunner demo()
-		{
-			return (args) -> {
-				System.err.println("Aplicacion Arrancadaaaaaa");
-			};
-		}
+//		@Bean
+//		public CommandLineRunner demo()
+//		{
+//			return (args) -> {
+//				System.err.println("Aplicacion Arrancadaaaaaa");
+//			};
+//		}
 		
 		//Lugar al que apunta la pagina, en este caso la pagina por defecto
 		//http://localhost:8003/?name=Alvaro Pasando el nombre como parametro
