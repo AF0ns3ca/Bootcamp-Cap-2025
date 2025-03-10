@@ -15,6 +15,7 @@ import com.example.ioc.Repositorio;
 import com.example.ioc.RepositorioImpl;
 import com.example.ioc.Servicio;
 import com.example.ioc.ServicioImpl;
+import com.example.util.Calculadora;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.ioc")
@@ -42,7 +43,7 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 	@Autowired
 	Repositorio repo2;
 	
-	
+	//El valor se toma del fichero application.properties, es como una variable global a la que se accede mediante @Value, de modo que si se cambia en un sitio se cambia en todos donde esté referenciada
 	@Value("${mi.valor:valor por defecto}")
 	String valor;
 	
@@ -51,16 +52,28 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		System.err.println("Aplicacion arrancada");
-		//Servicio srv = new Servicio(new Repositorio(new Configuracion()));
-
-		//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-		//srv.guardar();
-		repo1.guardar();
-		repo2.guardar();
-		System.err.println("Valor: " + valor);
-		System.err.println("Rango: " + rango);
+		
+		ejemplosPruebas();
 	}
 	
+	
+	private void ejemplosIOC() {
+		//Servicio srv = new Servicio(new Repositorio(new Configuracion()));
+
+				//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+				//srv.guardar();
+				repo1.guardar();
+				repo2.guardar();
+				System.err.println("Valor: " + valor);
+				System.err.println("Rango: " + rango);
+	}
+
+
+		private void ejemplosPruebas() {
+			var calc = new Calculadora();
+			System.err.println("Suma: " + calc.suma(2, 3));
+			
+		}
 	
 	
 	
