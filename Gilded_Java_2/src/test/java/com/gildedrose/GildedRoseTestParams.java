@@ -8,6 +8,20 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GildedRoseTestParams {
+	
+	@Test
+	void foo() {
+	    Item[] items = new Item[] { new Item("foo", 0, 0) };
+	    GildedRose app = new GildedRose(items);
+	    app.updateQuality();
+	    
+	    assertEquals("foo, -1, 0", items[0].toString());
+	    assertAll("Producto",
+	    		() -> assertEquals("foo", items[0].name),
+	    		() -> assertEquals(-1, items[0].sellIn, "SellIn"),
+	    		() -> assertEquals(0, items[0].quality, "Quality")
+	    		);
+	}
 
     // -------------------- 1. Articulos Comunes --------------------
     
