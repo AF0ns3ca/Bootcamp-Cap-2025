@@ -9,13 +9,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GildedRoseTest {
 
-//@Test
-//void foo() {
-//    Item[] items = new Item[] { new Item("foo", 0, 0) };
-//    GildedRose app = new GildedRose(items);
-//    app.updateQuality();
-//    assertEquals("fixme", app.items[0].name);
-//}
+@Test
+void foo() {
+    Item[] items = new Item[] { new Item("foo", 0, 0) };
+    GildedRose app = new GildedRose(items);
+    app.updateQuality();
+    
+    assertEquals("foo, -1, 0", items[0].toString());
+    assertAll("Producto",
+    		() -> assertEquals("foo", items[0].name),
+    		() -> assertEquals(-1, items[0].sellIn, "SellIn"),
+    		() -> assertEquals(0, items[0].quality, "Quality")
+    		);
+}
+	
 
 	
 // -------------------- 1. Articulos Comunes --------------------
@@ -326,16 +333,40 @@ class GildedRoseTest {
 
 	// -------------------- 5. Conjured --------------------
 	
-//	@Test
-//	@DisplayName("5.1 Conjured -> La calidad de los objetos Conjured se degradan al doble de velocidad")
-//	void testConjuredQuality() {
-//		Item[] items = new Item[] { new Item("Conjured Axe", 5, 10) };
-//		GildedRose app = new GildedRose(items);
-//
-//		app.updateQuality();
-//
-//		assertEquals(8, items[0].quality);
-//		assertEquals(4, items[0].sellIn);
-//	}
+	@Test
+	@DisplayName("5.1 Conjured -> La calidad de los objetos Conjured se degradan al doble de velocidad")
+	void testConjuredQuality() {
+		Item[] items = new Item[] { new Item("Conjured Axe", 5, 10) };
+		GildedRose app = new GildedRose(items);
+
+		app.updateQuality();
+
+		assertEquals(8, items[0].quality);
+		assertEquals(4, items[0].sellIn);
+	}
+	
+	@Test
+	@DisplayName("5.1 Conjured -> La calidad de los objetos Conjured se degradan al doble de velocidad con sellIn caducado")
+	void testConjuredQualityAfterSellIn() {
+		Item[] items = new Item[] { new Item("Conjured Axe", 0, 10) };
+		GildedRose app = new GildedRose(items);
+
+		app.updateQuality();
+
+		assertEquals(6, items[0].quality);
+		assertEquals(-1, items[0].sellIn);
+	}
+	
+	@Test
+	@DisplayName("5.1 Conjured -> La calidad de los objetos Conjured no puede ser negativa")
+	void testConjuredQualityNoNegative() {
+		Item[] items = new Item[] { new Item("Conjured Axe", 10, -1) };
+		GildedRose app = new GildedRose(items);
+
+		app.updateQuality();
+
+		assertEquals(0, items[0].quality);
+		assertEquals(9, items[0].sellIn);
+	}
 	
 }
