@@ -1,8 +1,0 @@
-name,sellIn,quality,expectedQuality,expectedSellIn
-Sword,10,10,9,9
-Sword,0,10,8,-1
-Aged Brie,10,10,11,9
-Aged Brie,0,10,12,-1
-Backstage passes to a TAFKAL80ETC concert,15,10,11,14
-Backstage passes to a TAFKAL80ETC concert,5,10,13,4
-Conjured Axe,5,10,8,4
