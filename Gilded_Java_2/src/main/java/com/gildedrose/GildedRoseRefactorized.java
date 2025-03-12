@@ -1,11 +1,22 @@
-//package com.gildedrose;
-//
-//class GildedRoseRefactorized {
-//    Item[] items;
-//
-//    public GildedRoseRefactorized(Item[] items) {
-//        this.items = items;
-//    }
+
+package com.gildedrose;
+
+import java.util.List;
+
+public class GildedRoseRefactorized {
+    private Item[] items;
+
+    public GildedRoseRefactorized(Item[] items) {
+        this.items = items; 
+    }
+
+    public void updateQuality() {
+        for (Item item : items) {
+            item.updateQuality();
+        }
+    }
+}
+
 //
 //    public void updateQuality() {
 //        for (int i = 0; i < items.length; i++) {
@@ -74,21 +85,3 @@
 //        item.quality = Math.max(item.quality, 0);
 //    }
 //}
-
-package com.gildedrose;
-
-import java.util.List;
-
-public class GildedRoseRefactorized {
-    private Item[] items;
-
-    public GildedRoseRefactorized(Item[] items) {
-        this.items = items; 
-    }
-
-    public void updateQuality() {
-        for (Item item : items) {
-            item.updateQuality();
-        }
-    }
-}
