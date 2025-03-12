@@ -48,14 +48,11 @@ class CalculadoraTest {
 		class OK {
 			@Test
 			@DisplayName("Suma dos enteros")
-			// @Tag("Smoke")
 			@Smoke
 			void testSuma() {
-//		var calc = new Calculadora();
 
-				var actual = calc.suma(2, 3);
-
-				assertEquals(5, actual);
+				var actual = calc.suma(1, 6);
+				assertEquals(7, actual);
 			}
 
 			@Test
@@ -97,13 +94,10 @@ class CalculadoraTest {
 			@Disabled
 			void testSumaInt() {
 				var calc = new Calculadora();
-
 				var actual = calc.suma(Integer.MAX_VALUE, 1);
 				assertEquals(5, actual);
-
 				assertTrue(1.0 / 0 > 0);
 				assertEquals(5, 1.0 / 0);
-//		assertTrue(actual > 0);
 			}
 		}
 
