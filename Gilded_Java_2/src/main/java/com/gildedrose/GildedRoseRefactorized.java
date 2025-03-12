@@ -1,7 +1,7 @@
 
 package com.gildedrose;
 
-import java.util.List;
+// import java.util.List;
 
 public class GildedRoseRefactorized {
     private Item[] items;
