@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -61,6 +62,11 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 		dao.deleteById(201);
 		System.err.println("Borrado");
 		dao.findAll().forEach(System.err::println);
+	}
+	
+	private void ejemplosConsultas(){
+		dao.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P").forEach(System.err::println);
+
 	}
 	
 //	@Autowired
