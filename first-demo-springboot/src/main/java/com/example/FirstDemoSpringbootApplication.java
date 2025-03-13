@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.ioc.Configuracion;
 import com.example.ioc.Rango;
 import com.example.ioc.Repositorio;
@@ -20,9 +21,46 @@ import com.example.util.Calculadora;
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.ioc")
 public class FirstDemoSpringbootApplication implements CommandLineRunner {
+	
+	@Autowired
+	private ActorRepository dao;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FirstDemoSpringbootApplication.class, args);
+	}
+	
+	private void ejemplosPruebas() {
+		var calc = new Calculadora();
+		System.err.println("Suma: " + calc.suma(2, 3));
+		
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		ejemplosDatos();
+		
+	}
+	
+	private void ejemplosDatos(){
+		//Le ponemos como clave primaria 0 para que no haya problemas con la base de datos al insertar y lo cree automaticamente
+		// var actor = new Actor(0, "Pepito", "Grillo", null);
+		// dao.save(actor);
+		var item = dao.findById(201);
+		//Para asegurar de no mandar un null
+		if(item.isPresent()){
+			//Extraccion del actor para trabajar con el
+			var actor = item.get();
+			actor.setFirstName("VINICIUS");
+			actor.setLastName(actor.getLastName().toUpperCase());
+			dao.save(actor);
+		} else {
+			System.err.println("No se ha encontrado el actor");
+		}
+		dao.findAll().forEach(System.err::println);
+		dao.deleteById(201);
+		System.err.println("Borrado");
+		dao.findAll().forEach(System.err::println);
 	}
 	
 //	@Autowired
@@ -69,17 +107,7 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 //	}
 
 
-		private void ejemplosPruebas() {
-			var calc = new Calculadora();
-			System.err.println("Suma: " + calc.suma(2, 3));
-			
-		}
-
-		@Override
-		public void run(String... args) throws Exception {
-			// TODO Auto-generated method stub
-			
-		}
+		
 	
 	
 	
