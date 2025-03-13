@@ -8,6 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 
 import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.contracts.services.LanguageService;
+import com.example.domains.contracts.services.CategoryService;
+
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,75 +18,54 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 public class CatalogoApplication implements CommandLineRunner {
 
-	//Ahora solo se puede usar el repositorio desde el servicio
-	// @Autowired
-	// private ActorRepository dao;
-
 	@Autowired
 	private ActoresService srv;
 
 	@Autowired
 	private FilmService srvFilm;
 
+	@Autowired
+	private LanguageService srvLanguage;
+
+	@Autowired
+	private CategoryService srvCategory;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CatalogoApplication.class, args);
 	}
 	
 	@Override
-	//La anotacion @Transactional es para que se ejecute todo el metodo en una transaccion, se pone cuando el fetch es lazy
 	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion Iniciada");
-		// ejemplosDatos();
-		ejemplosConsultas();
+		consultActors();
+		consultFilms();
+		consultCategory();
+		consultLanguage();
 	}
 
-
-
-	private void ejemplosConsultas(){
-		// dao.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P").forEach(System.err::println);
-		// dao.findTop5ByFirstNameStartingWith("P", Sort.by("lastName")).forEach(System.err::println);
-		// dao.findByActorIdGreaterThan(100).forEach(System.err::println);
-		// dao.findNovedadesJPQL(100).forEach(System.err::println);
-		// dao.findNovedadesSQL(100).forEach(System.err::println);
-		// dao.findAll((root, query, builder) -> builder.lessThanOrEqualTo(root.get("actorId"), 5)).forEach(System.err::println);
-
+	public void consultActors(){
+		System.err.println("Actores");
 		// srv.getAll().forEach(System.err::println);
-		srv.GreaterThanId(190);
-		srvFilm.getAll().forEach(System.err::println);
-		var item = srv.getOne(1);
-		if(item.isPresent()){
-			var actor = item.get();
-			System.err.println(item + "\nPeliculas");
-			// actor.getFilmActors().forEach(fa -> System.err.println(fa.getFilm().getTitle()));
-
-		} else {
-			System.err.println("No se ha encontrado el actor");
-		}
+		srv.getOne(1).ifPresent(System.err::println);
 	}
 
+	public void consultFilms(){
+		System.err.println("Films");
+		// srvFilm.getAll().forEach(System.err::println);
+		srvFilm.getOne(1).ifPresent(System.err::println);
+	}
 
-	// private void ejemplosDatos(){
-	// 	//Le ponemos como clave primaria 0 para que no haya problemas con la base de datos al insertar y lo cree automaticamente
-	// 	// var actor = new Actor(0, "Pepito", "Grillo", null);
-	// 	// dao.save(actor);
-	// 	var item = dao.findById(201);
-	// 	//Para asegurar de no mandar un null
-	// 	if(item.isPresent()){
-	// 		//Extraccion del actor para trabajar con el
-	// 		var actor = item.get();
-	// 		actor.setFirstName("VINICIUS");
-	// 		actor.setLastName(actor.getLastName().toUpperCase());
-	// 		dao.save(actor);
-	// 	} else {
-	// 		System.err.println("No se ha encontrado el actor");
-	// 	}
-	// 	dao.findAll().forEach(System.err::println);
-	// 	dao.deleteById(201);
-	// 	System.err.println("Borrado");
-	// 	dao.findAll().forEach(System.err::println);
-	// }
+	public void consultCategory(){
+		System.err.println("Category");
+		// srvLanguage.getAll().forEach(System.err::println);
+		srvLanguage.getOne(1).ifPresent(System.err::println);
+	}
 
-	
+	public void consultLanguage(){
+		System.err.println("Language");
+		// srvCategory.getAll().forEach(System.err::println);
+		srvCategory.getOne(1).ifPresent(System.err::println);
+	}
 
 }

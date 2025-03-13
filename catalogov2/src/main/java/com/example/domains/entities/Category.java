@@ -80,4 +80,11 @@ public class Category implements Serializable {
 		return filmCategory;
 	}
 
+	@Override
+	public String toString() {
+		return "Category [name=" + name + "]";
+	}
+
+	
+
 }

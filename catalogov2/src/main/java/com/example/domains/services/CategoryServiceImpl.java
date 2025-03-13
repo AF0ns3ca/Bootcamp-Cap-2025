@@ -5,25 +5,26 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.domains.contracts.services.LanguageService;
-import com.example.domains.entities.Language;
+import com.example.domains.contracts.services.CategoryService;
+import com.example.domains.entities.Category;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
-import com.example.domains.contracts.repositories.LanguageRepository;
+import com.example.domains.contracts.repositories.CategoryRepository;
 
 @Service
-public class LanguageServiceImpl implements LanguageService {
+public class CategoryServiceImpl implements CategoryService {
 
-    private LanguageRepository dao;
+    private CategoryRepository dao;
 
-    public LanguageServiceImpl(LanguageRepository dao) {
+    public CategoryServiceImpl(CategoryRepository dao) {
         this.dao = dao;
     }
 
     @Override
-    public List<Language> getAll() {
+    public List<Category> getAll() {
+        // TODO Auto-generated method stub
         return dao.findAll();
     }
 
@@ -46,13 +47,13 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
+    public Category add(Category item) throws DuplicateKeyException, InvalidDataException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void delete(Language item) throws InvalidDataException {
+    public void delete(Category item) throws InvalidDataException {
         // TODO Auto-generated method stub
         
     }
@@ -66,16 +67,16 @@ public class LanguageServiceImpl implements LanguageService {
     
 
     @Override
-    public Optional<Language> getOne(Integer id) {
+    public Optional<Category> getOne(Integer id) {
         // TODO Auto-generated method stub
         return Optional.empty();
     }
 
     @Override
-    public Language modify(Language item) throws NotFoundException, InvalidDataException {
+    public Category modify(Category item) throws NotFoundException, InvalidDataException {
         // TODO Auto-generated method stub
         return null;
     }
-
     
+
 }

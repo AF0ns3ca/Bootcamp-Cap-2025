@@ -106,4 +106,11 @@ public class Language implements Serializable {
 		return filmsVO;
 	}
 
+	@Override
+	public String toString() {
+		return "Language [name=" + name + "]";
+	}
+
+	
+
 }
