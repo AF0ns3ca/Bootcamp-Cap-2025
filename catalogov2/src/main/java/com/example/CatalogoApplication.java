@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @SpringBootApplication
-public class DataApplication implements CommandLineRunner {
+public class CatalogoApplication implements CommandLineRunner {
 
 	//Ahora solo se puede usar el repositorio desde el servicio
 	// @Autowired
@@ -26,7 +26,7 @@ public class DataApplication implements CommandLineRunner {
 	private FilmService srvFilm;
 
 	public static void main(String[] args) {
-		SpringApplication.run(DataApplication.class, args);
+		SpringApplication.run(CatalogoApplication.class, args);
 	}
 	
 	@Override
