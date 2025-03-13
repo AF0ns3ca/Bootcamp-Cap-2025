@@ -25,53 +25,59 @@ public class FirstDemoSpringbootApplication implements CommandLineRunner {
 		SpringApplication.run(FirstDemoSpringbootApplication.class, args);
 	}
 	
-	@Autowired
-	Servicio srv;
-	
-	@Autowired
-	Rango rango;
-	
 //	@Autowired
-//	@Qualifier("verdad")
+//	Servicio srv;
+//	
+//	@Autowired
+//	Rango rango;
+//	
+////	@Autowired
+////	@Qualifier("verdad")
+////	Repositorio repo1;
+////	@Autowired
+////	@Qualifier("mentira")
+////	Repositorio repo2;
+//	
+//	@Autowired
 //	Repositorio repo1;
 //	@Autowired
-//	@Qualifier("mentira")
 //	Repositorio repo2;
-	
-	@Autowired
-	Repositorio repo1;
-	@Autowired
-	Repositorio repo2;
-	
-	//El valor se toma del fichero application.properties, es como una variable global a la que se accede mediante @Value, de modo que si se cambia en un sitio se cambia en todos donde esté referenciada
-	@Value("${mi.valor:valor por defecto}")
-	String valor;
+//	
+//	//El valor se toma del fichero application.properties, es como una variable global a la que se accede mediante @Value, de modo que si se cambia en un sitio se cambia en todos donde esté referenciada
+//	@Value("${mi.valor:valor por defecto}")
+//	String valor;
 	
 
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		System.err.println("Aplicacion arrancada");
-		
-		ejemplosPruebas();
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		// TODO Auto-generated method stub
+//		System.err.println("Aplicacion arrancada");
+//		
+//		ejemplosPruebas();
+//	}
 	
 	
-	private void ejemplosIOC() {
-		//Servicio srv = new Servicio(new Repositorio(new Configuracion()));
-
-				//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-				//srv.guardar();
-				repo1.guardar();
-				repo2.guardar();
-				System.err.println("Valor: " + valor);
-				System.err.println("Rango: " + rango);
-	}
+//	private void ejemplosIOC() {
+//		//Servicio srv = new Servicio(new Repositorio(new Configuracion()));
+//
+//				//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+//				//srv.guardar();
+//				repo1.guardar();
+//				repo2.guardar();
+//				System.err.println("Valor: " + valor);
+//				System.err.println("Rango: " + rango);
+//	}
 
 
 		private void ejemplosPruebas() {
 			var calc = new Calculadora();
 			System.err.println("Suma: " + calc.suma(2, 3));
+			
+		}
+
+		@Override
+		public void run(String... args) throws Exception {
+			// TODO Auto-generated method stub
 			
 		}
 	
