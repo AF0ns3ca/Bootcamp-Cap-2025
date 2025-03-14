@@ -2,9 +2,16 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
+
+import com.example.domains.core.entities.AbstractEntity;
 
 
 /**
@@ -14,7 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name="actor")
 @NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")
-public class Actor implements Serializable {
+public class Actor extends AbstractEntity<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,12 +30,26 @@ public class Actor implements Serializable {
 	private int actorId;
 
 	@Column(name="first_name", nullable=false, length=45)
+	//Para que no pueda estar en blanco
+	@NotBlank
+	//Para que tenga un tamaño minimo y maximo
+	@Size(min = 2, max = 45)
+	//Para que se definan los caracteres validos que puede tener
+	//En este caso solo letras
+	@Pattern(regexp = "^[A-Z]*$", message = "El nombre debe estar en mayusculas, sin espacios y sin caracteres especiales")
 	private String firstName;
 
+	
 	@Column(name="last_name", nullable=false, length=45)
+	//Para que no pueda estar en blanco
+	@NotBlank
+	//Para que tenga un tamaño minimo y maximo
+	@Size(min = 2, max = 45)
 	private String lastName;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	//Para que la fecha de actualizacion no pueda ser futura y deba ser una fecha
+	@PastOrPresent
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
@@ -61,7 +82,11 @@ public class Actor implements Serializable {
 		return this.firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName) throws IllegalArgumentException {	
+		if (this.getFirstName() == null) {
+			throw new IllegalArgumentException("El nombre no puede ser nulo");
+			
+		}
 		this.firstName = firstName;
 	}
 

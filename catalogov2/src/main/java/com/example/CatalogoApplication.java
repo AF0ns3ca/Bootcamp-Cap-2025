@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.contracts.services.LanguageService;
+import com.example.domains.entities.Actor;
 import com.example.domains.contracts.services.CategoryService;
 
 
@@ -39,7 +40,15 @@ public class CatalogoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion Iniciada");
 		// generalConsult();
-		consultFilms();
+		// consultFilms();
+		//Validar un actor
+		var actor = new Actor(0, "juan", "perez");
+		if(actor.isValid()){
+			System.err.println("Actor valido");
+		}else{
+			System.err.println(actor.getErrorsMessage());
+		}
+		
 	}
 
 	public void consultActors(){
@@ -54,13 +63,13 @@ public class CatalogoApplication implements CommandLineRunner {
 		srvFilm.FilmWithCategories(1);
 	}
 
-	public void consultCategory(){
+	public void consultLanguage(){
 		System.err.println("Language");
 		// srvLanguage.getAll().forEach(System.err::println);
 		srvLanguage.getOne(1).ifPresent(System.err::println);
 	}
 
-	public void consultLanguage(){
+	public void consultCategory(){
 		System.err.println("Category");
 		srvCategory.getAll().forEach(System.err::println);
 		// srvCategory.getOne(1).ifPresent(System.err::println);

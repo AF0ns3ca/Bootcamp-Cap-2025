@@ -5,7 +5,6 @@ import com.example.domains.core.contracts.services.DomainService;
 import com.example.domains.entities.Actor;
 
 public interface ActoresService extends DomainService<Actor, Integer> {
-    void repartePremio();
     void GreaterThanId(int id);
     
 }

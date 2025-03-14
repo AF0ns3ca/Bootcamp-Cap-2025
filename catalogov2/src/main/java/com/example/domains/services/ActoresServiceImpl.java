@@ -62,21 +62,18 @@ public class ActoresServiceImpl implements ActoresService {
     }
 
     @Override
-    public void delete(Actor item) {
+    public void delete(Actor item) throws InvalidDataException {
         dao.delete(item);
     }
 
     @Override
     public void deleteById(Integer id) {
+        
         dao.deleteById(id);
     }
 
     public void GreaterThanId(int id) {
         dao.findByActorIdGreaterThan(id).forEach(System.err::println);
-    }
-
-    @Override
-    public void repartePremio() {  
     }
 
 
