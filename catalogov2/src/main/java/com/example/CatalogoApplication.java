@@ -42,7 +42,7 @@ public class CatalogoApplication implements CommandLineRunner {
 		// generalConsult();
 		// consultFilms();
 		//Validar un actor
-		var actor = new Actor(0, "juan", "perez");
+		var actor = new Actor(0, "pedro", "porro");
 		if(actor.isValid()){
 			System.err.println("Actor valido");
 		}else{
