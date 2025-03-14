@@ -28,6 +28,25 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
+    public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
+        if (item == null) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+        //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
+        if(item.getLanguageId() > 0 && dao.existsById(item.getLanguageId())) {
+            throw new DuplicateKeyException("Ya existe un lenguaje con ese id");
+        }
+
+        return dao.save(item);
+    }
+
+    @Override
+    public Optional<Language> getOne(Integer id) {
+        // TODO Auto-generated method stub
+        return dao.findById(id);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // TODO Auto-generated method stub
         return super.equals(obj);
@@ -40,35 +59,15 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
-    }
-
-    @Override
-    public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public void delete(Language item) throws InvalidDataException {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void deleteById(Integer id) {
         // TODO Auto-generated method stub
-        
-    }
 
-    
-
-    @Override
-    public Optional<Language> getOne(Integer id) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
     }
 
     @Override
@@ -77,5 +76,4 @@ public class LanguageServiceImpl implements LanguageService {
         return null;
     }
 
-    
 }

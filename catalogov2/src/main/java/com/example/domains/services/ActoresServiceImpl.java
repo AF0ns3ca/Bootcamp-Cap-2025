@@ -10,6 +10,7 @@ import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.entities.Actor;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.NotFoundException;
 
 
 @Service
@@ -47,7 +48,16 @@ public class ActoresServiceImpl implements ActoresService {
     }
 
     @Override
-    public Actor modify(Actor item) {
+    public Actor modify(Actor item) throws InvalidDataException, NotFoundException {
+        if (item == null) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+
+        if((item.getActorId() < 0) || (!dao.existsById(item.getActorId()))) {
+            throw new NotFoundException("No existe un actor con ese id");
+        }
+        
+
         return dao.save(item);
     }
 
@@ -62,17 +72,11 @@ public class ActoresServiceImpl implements ActoresService {
     }
 
     public void GreaterThanId(int id) {
-        // TODO Auto-generated method stub
         dao.findByActorIdGreaterThan(id).forEach(System.err::println);
     }
 
-
-
-
     @Override
-    public void repartePremio() {
-        // TODO Auto-generated method stub
-
+    public void repartePremio() {  
     }
 
 

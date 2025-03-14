@@ -38,10 +38,8 @@ public class CatalogoApplication implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion Iniciada");
-		consultActors();
+		// generalConsult();
 		consultFilms();
-		consultCategory();
-		consultLanguage();
 	}
 
 	public void consultActors(){
@@ -52,20 +50,27 @@ public class CatalogoApplication implements CommandLineRunner {
 
 	public void consultFilms(){
 		System.err.println("Films");
-		// srvFilm.getAll().forEach(System.err::println);
-		srvFilm.getOne(1).ifPresent(System.err::println);
+
+		srvFilm.FilmWithCategories(1);
 	}
 
 	public void consultCategory(){
-		System.err.println("Category");
+		System.err.println("Language");
 		// srvLanguage.getAll().forEach(System.err::println);
 		srvLanguage.getOne(1).ifPresent(System.err::println);
 	}
 
 	public void consultLanguage(){
-		System.err.println("Language");
-		// srvCategory.getAll().forEach(System.err::println);
-		srvCategory.getOne(1).ifPresent(System.err::println);
+		System.err.println("Category");
+		srvCategory.getAll().forEach(System.err::println);
+		// srvCategory.getOne(1).ifPresent(System.err::println);
+	}
+
+	public void generalConsult(){
+		consultActors();
+		consultFilms();
+		consultCategory();
+		consultLanguage();
 	}
 
 }

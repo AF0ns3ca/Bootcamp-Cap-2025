@@ -82,7 +82,7 @@ public class Category implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Category [name=" + name + "]";
+		return "Category [name=" + name + " Film Category=" + filmCategories + "]";
 	}
 
 	

@@ -66,4 +66,21 @@ public class FilmCategory implements Serializable {
 		this.film = film;
 	}
 
+	@Override
+	public String toString() {
+		return "FilmCategory [id=" + id + ", film=" + film
+				+ "]";
+	}
+
+	
+
+	
+
+	
+
+	
+	
+
+	
+
 }

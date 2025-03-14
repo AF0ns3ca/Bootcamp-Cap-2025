@@ -38,6 +38,13 @@ public class Language implements Serializable {
 	public Language() {
 	}
 
+	public Language(int languageId, Timestamp lastUpdate, String name) {
+		super();
+		this.languageId = languageId;
+		this.lastUpdate = lastUpdate;
+		this.name = name;
+	}
+
 	public int getLanguageId() {
 		return this.languageId;
 	}

@@ -54,4 +54,11 @@ public class FilmCategoryPK implements Serializable {
 		
 		return hash;
 	}
+	@Override
+	public String toString() {
+		return "FilmCategoryPK [filmId=" + filmId + ", categoryId=" + categoryId + "]";
+	}
+
+
+	
 }

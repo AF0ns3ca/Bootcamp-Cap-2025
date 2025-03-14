@@ -77,6 +77,16 @@ public class FilmServiceImpl implements FilmService {
         return super.toString();
     }
 
+    public void FilmWithCategories(int id) {
+        dao.findAllFilmsWithCategories(id).forEach(film -> {
+            System.out.print(film.getTitle() + " - ");
+            film.getFilmCategories().forEach(fc -> {
+                System.out.println(fc.getCategory().getName());
+            });
+        });
+        
+    }
+
     
 
 

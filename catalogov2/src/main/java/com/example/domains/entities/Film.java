@@ -67,11 +67,6 @@ public class Film implements Serializable {
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="film")
 	private List<FilmCategory> filmCategories;
-
-	//bi-directional many-to-one association to Inventory
-	@OneToMany(mappedBy="film")
-	private List<Inventory> inventories;
-
 	public Film() {
 	}
 
@@ -215,32 +210,11 @@ public class Film implements Serializable {
 		return filmCategory;
 	}
 
-	public List<Inventory> getInventories() {
-		return this.inventories;
-	}
-
-	public void setInventories(List<Inventory> inventories) {
-		this.inventories = inventories;
-	}
-
-	public Inventory addInventory(Inventory inventory) {
-		getInventories().add(inventory);
-		inventory.setFilm(this);
-
-		return inventory;
-	}
-
-	public Inventory removeInventory(Inventory inventory) {
-		getInventories().remove(inventory);
-		inventory.setFilm(null);
-
-		return inventory;
-	}
-
 	@Override
 	public String toString() {
-		return "Film [filmId=" + filmId + ", title=" + title
-				+"]";
+		return "PELICULA: TITULO " + title + "";
 	}
+
+	
 
 }

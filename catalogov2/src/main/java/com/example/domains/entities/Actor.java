@@ -41,12 +41,11 @@ public class Actor implements Serializable {
 	public Actor() {
 	}
 
-	public Actor(int actorId, String firstName, String lastName, Timestamp lastUpdate) {
+	public Actor(int actorId, String firstName, String lastName) {
 		super();
 		this.actorId = actorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.lastUpdate = lastUpdate;
 	}
 	
 
