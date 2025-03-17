@@ -77,6 +77,26 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	public Film() {
 	}
 
+	public Film(int filmId, String description, Timestamp lastUpdate, int length, String rating, Short releaseYear,
+			byte rentalDuration, BigDecimal rentalRate, BigDecimal replacementCost, String title, Language language,
+			Language languageVO, List<FilmActor> filmActors, List<FilmCategory> filmCategories) {
+		super();
+		this.filmId = filmId;
+		this.description = description;
+		this.lastUpdate = lastUpdate;
+		this.length = length;
+		this.rating = rating;
+		this.releaseYear = releaseYear;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+		this.title = title;
+		this.language = language;
+		this.languageVO = languageVO;
+		this.filmActors = filmActors;
+		this.filmCategories = filmCategories;
+	}
+
 	public int getFilmId() {
 		return this.filmId;
 	}
@@ -220,6 +240,10 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	@Override
 	public String toString() {
 		return "PELICULA: TITULO " + title + "";
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	

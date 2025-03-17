@@ -29,7 +29,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
-        if (item.isInvalid()) {
+        if (item == null) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
         //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
@@ -42,7 +42,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Language modify(Language item) throws NotFoundException, InvalidDataException {
-        if (item.isInvalid()) {
+        if (item == null) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
 
@@ -55,31 +55,31 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Optional<Language> getOne(Integer id) {
-        // TODO Auto-generated method stub
         return dao.findById(id);
     }
 
     @Override
     public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        // TODO Auto-generated method stub
         return super.hashCode();
     }
 
     @Override
     public void delete(Language item) throws InvalidDataException {
-        // TODO Auto-generated method stub
+        if (item.isInvalid()) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+        dao.delete(item);
 
     }
 
     @Override
     public void deleteById(Integer id) {
-        // TODO Auto-generated method stub
+        dao.deleteById(id);
 
     }
 

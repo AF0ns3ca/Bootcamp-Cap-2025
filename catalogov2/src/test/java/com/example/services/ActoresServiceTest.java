@@ -33,17 +33,14 @@ class ActoresServiceImplTest {
     private ActoresServiceImpl actoresService;
 
     private Actor validActor;
-    private Actor invalidActor;
 
     @BeforeEach
     void setUp() {
         validActor = new Actor(1, "John", "Doe");
-        invalidActor = new Actor(-1, null, null);
     }
 
     @Test
     void testGetAll() {
-
         List<Actor> actors = List.of(new Actor(1, "John", "Doe"), new Actor(2, "Jane", "Smith"));
 
         when(actorRepository.findAll()).thenReturn(actors);
@@ -75,7 +72,7 @@ class ActoresServiceImplTest {
 
     @Test
     void testAddActor() throws DuplicateKeyException, InvalidDataException {
-        validActor = new Actor(1, "John", "Doe"); // Asegúrate de que no tenga campos nulos
+        validActor = new Actor(1, "John", "Doe");
 
         when(actorRepository.existsById(validActor.getActorId())).thenReturn(false);
         when(actorRepository.save(validActor)).thenReturn(validActor);
@@ -142,6 +139,45 @@ class ActoresServiceImplTest {
     }
 
     @Test
+    void testDeleteActorWithInvalidData() {
+        Actor invalidActor = new Actor(-1, null, null);
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.delete(invalidActor);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
+    }
+
+    @Test
+    void testDeleteActorWithInvalidId() {
+        Actor invalidActor = new Actor(-1, "PEDRO", "PICAPIEDRA");
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.delete(invalidActor);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
+    }
+    @Test
+    void testDeleteActorWithInvalidFirstName() {
+        Actor invalidActor = new Actor(0, null, "PICAPIEDRA");
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.delete(invalidActor);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
+    }
+
+    @Test
+    void testDeleteActorWithInvalidLastName() {
+        Actor invalidActor = new Actor(0, "PEDRO", null);
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.delete(invalidActor);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
+    }
+
+    @Test
     void testDeleteById() {
         actoresService.deleteById(validActor.getActorId());
 
@@ -149,11 +185,41 @@ class ActoresServiceImplTest {
     }
 
     @Test
-    void testGreaterThanId() {
-        when(actorRepository.findByActorIdGreaterThan(1)).thenReturn(List.of(validActor));
+    void testGreaterThanIdWithNoResults() {
+        when(actorRepository.findByActorIdGreaterThan(1)).thenReturn(List.of());
 
         actoresService.GreaterThanId(1);
 
         verify(actorRepository, times(1)).findByActorIdGreaterThan(1);
+    }
+
+    @Test
+    void testGreaterThanIdWithResults() {
+        Actor actor = new Actor(2, "Jane", "Smith");
+        when(actorRepository.findByActorIdGreaterThan(1)).thenReturn(List.of(actor));
+
+        actoresService.GreaterThanId(1);
+
+        verify(actorRepository, times(1)).findByActorIdGreaterThan(1);
+    }
+
+    @Test
+    void testAddActorWithNullFirstName() {
+        Actor actorWithNullName = new Actor(1, null, "Doe");
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.add(actorWithNullName);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
+    }
+
+    @Test
+    void testModifyActorWithInvalidActorId() {
+        Actor invalidActor = new Actor(-1, "John", "Doe");
+
+        InvalidDataException exception = assertThrows(InvalidDataException.class, () -> {
+            actoresService.modify(invalidActor);
+        });
+        assertEquals("No se puede añadir un valor nulo", exception.getMessage());
     }
 }

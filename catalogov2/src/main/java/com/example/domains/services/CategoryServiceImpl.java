@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category add(Category item) throws DuplicateKeyException, InvalidDataException {
-        if (item.isInvalid()) {
+        if (item == null) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
         //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category modify(Category item) throws NotFoundException, InvalidDataException {
-        if (item.isInvalid()) {
+        if (item == null) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
 
@@ -60,19 +60,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        // TODO Auto-generated method stub
         return super.hashCode();
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return super.toString();
     }
 
@@ -80,13 +77,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Category item) throws InvalidDataException {
-        // TODO Auto-generated method stub
+        if (item.isInvalid()) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+        dao.delete(item);
         
     }
 
     @Override
     public void deleteById(Integer id) {
-        // TODO Auto-generated method stub
+        dao.deleteById(id);
         
     }
     

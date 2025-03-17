@@ -2,6 +2,11 @@ package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.example.domains.services.ActoresServiceImpl;
+import com.example.exceptions.DuplicateKeyException;
+import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.CommandLineRunner;
@@ -11,9 +16,13 @@ import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
+import com.example.domains.entities.Film;
+import com.example.domains.entities.models.ActorDTO;
+import com.example.domains.entities.models.ActorShort;
 import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.example.domains.entities.dtos.ActorShort;
+
+import java.util.*;
 
 
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +31,13 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 public class CatalogoApplication implements CommandLineRunner {
 
+    private final ActoresServiceImpl actoresServiceImpl;
+
 	@Autowired
 	private ActorRepository dao;
 
 	@Autowired
-	private ActoresService srv;
+	private ActoresService srvActor;
 
 	@Autowired
 	private FilmService srvFilm;
@@ -37,6 +48,10 @@ public class CatalogoApplication implements CommandLineRunner {
 	@Autowired
 	private CategoryService srvCategory;
 
+    CatalogoApplication(ActoresServiceImpl actoresServiceImpl) {
+        this.actoresServiceImpl = actoresServiceImpl;
+    }
+
 	public static void main(String[] args) {
 		SpringApplication.run(CatalogoApplication.class, args);
 	}
@@ -45,52 +60,43 @@ public class CatalogoApplication implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion Iniciada");
-		// generalConsult();
-		// consultFilms();
-		//Validar un actor
-		var actor = new Actor(0, "pedro", "porro");
-		if(actor.isValid()){
-			System.err.println("Actor valido");
-		}else{
-			System.err.println(actor.getErrorsMessage());
-		}
-		// Llamadas para DTO
-		dao.findByActorIdGreaterThan(199).forEach(System.err::println);
-		dao.findByActorIdGreaterThan(199, ActorDTO.class).forEach(System.err::println);
-		dao.findByActorIdGreaterThan(199, ActorShort.class).forEach(o -> System.err.println(o.getActorId() + " " + o.getNombre()));
-		dao.getByActorIdGreaterThan(199).forEach(o -> System.err.println(o.getActorId() + " " + o.getNombre()));
 		
 	}
 
-	public void consultActors(){
-		System.err.println("Actores");
-		// srv.getAll().forEach(System.err::println);
-		srv.getOne(1).ifPresent(System.err::println);
+	public void crudActor() throws DuplicateKeyException, NotFoundException, InvalidDataException {
+		Actor actor = new Actor(203, "ANOMANDER", "RAKE");
+		srvActor.getAll().forEach(System.err::println);
+		srvActor.add(actor);
+		srvActor.getAll().forEach(System.err::println);
+		srvActor.modify(new Actor(202, "ANOMANDER", "LAKE"));
+		srvActor.delete(actor);
+		srvActor.getAll().forEach(System.err::println);
 	}
 
-	public void consultFilms(){
-		System.err.println("Films");
-
-		srvFilm.FilmWithCategories(1);
+	public void crudFilm() throws DuplicateKeyException, NotFoundException, InvalidDataException {
+		Film film = new Film();
+		
 	}
 
-	public void consultLanguage(){
-		System.err.println("Language");
-		// srvLanguage.getAll().forEach(System.err::println);
-		srvLanguage.getOne(1).ifPresent(System.err::println);
-	}
-
-	public void consultCategory(){
-		System.err.println("Category");
+	public void crudCategory() throws DuplicateKeyException, NotFoundException, InvalidDataException {
+		Category category = new Category(0, "FANTASIA");
 		srvCategory.getAll().forEach(System.err::println);
-		// srvCategory.getOne(1).ifPresent(System.err::println);
+		srvCategory.add(category);
+		srvCategory.getAll().forEach(System.err::println);
+		srvCategory.modify(new Category(23, "DARKFANTASY"));
+		srvCategory.getAll().forEach(System.err::println);
+		srvCategory.delete(new Category(23, "DARKFANTASY"));
+		srvCategory.getAll().forEach(System.err::println);
 	}
 
-	public void generalConsult(){
-		consultActors();
-		consultFilms();
-		consultCategory();
-		consultLanguage();
+	public void crudLanguage() throws DuplicateKeyException, NotFoundException, InvalidDataException {
+		Actor actor = new Actor(203, "ANOMANDER", "RAKE");
+		srvActor.getAll().forEach(System.err::println);
+		srvActor.add(actor);
+		srvActor.getAll().forEach(System.err::println);
+		srvActor.modify(new Actor(202, "ANOMANDER", "LAKE"));
+		srvActor.delete(actor);
+		srvActor.getAll().forEach(System.err::println);
 	}
 
 }

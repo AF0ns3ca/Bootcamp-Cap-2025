@@ -4,6 +4,8 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -39,6 +41,11 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
+	}
+
+	public Category(int categoryId, String name) {
+		this.categoryId = categoryId;
+		this.name = name;
 	}
 
 	public int getCategoryId() {
@@ -89,7 +96,7 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Category [name=" + name + " Film Category=" + filmCategories + "]";
+		return "Category [name=" + name + " ID=" + categoryId + "]";
 	}
 
 	
