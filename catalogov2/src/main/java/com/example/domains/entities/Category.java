@@ -4,8 +4,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -80,19 +78,19 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 		this.filmCategories = filmCategories;
 	}
 
-	public FilmCategory addFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().add(filmCategory);
-		filmCategory.setCategory(this);
+	// public FilmCategory addFilmCategory(FilmCategory filmCategory) {
+	// 	getFilmCategories().add(filmCategory);
+	// 	filmCategory.setCategory(this);
 
-		return filmCategory;
-	}
+	// 	return filmCategory;
+	// }
 
-	public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().remove(filmCategory);
-		filmCategory.setCategory(null);
+	// public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
+	// 	getFilmCategories().remove(filmCategory);
+	// 	filmCategory.setCategory(null);
 
-		return filmCategory;
-	}
+	// 	return filmCategory;
+	// }
 
 	@Override
 	public String toString() {

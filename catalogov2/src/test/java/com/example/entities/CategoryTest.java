@@ -12,7 +12,6 @@ import jakarta.validation.Validation;
 import java.util.Set;
 
 import com.example.domains.entities.Category;
-import com.example.domains.entities.FilmCategory;
 import java.sql.Timestamp;
 
 

@@ -206,4 +206,6 @@ public class FilmServiceTest {
 
         verify(mockFilmRepository).findAllFilmsWithCategories(film.getFilmId());
     }
+
+    
 }

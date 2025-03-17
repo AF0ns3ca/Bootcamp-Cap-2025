@@ -11,9 +11,7 @@ import jakarta.validation.ValidatorFactory;
 import jakarta.validation.Validation;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.example.domains.entities.Film;
 import com.example.domains.entities.Language;

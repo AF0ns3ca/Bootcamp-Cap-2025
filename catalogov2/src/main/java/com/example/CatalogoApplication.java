@@ -18,6 +18,7 @@ import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.Language;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
 import com.example.domains.contracts.services.CategoryService;
@@ -31,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 public class CatalogoApplication implements CommandLineRunner {
 
-    private final ActoresServiceImpl actoresServiceImpl;
 
 	@Autowired
 	private ActorRepository dao;
@@ -47,10 +47,6 @@ public class CatalogoApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoryService srvCategory;
-
-    CatalogoApplication(ActoresServiceImpl actoresServiceImpl) {
-        this.actoresServiceImpl = actoresServiceImpl;
-    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(CatalogoApplication.class, args);
@@ -75,6 +71,7 @@ public class CatalogoApplication implements CommandLineRunner {
 
 	public void crudFilm() throws DuplicateKeyException, NotFoundException, InvalidDataException {
 		Film film = new Film();
+		srvFilm.getAll().forEach(System.err::println);
 		
 	}
 
@@ -90,13 +87,14 @@ public class CatalogoApplication implements CommandLineRunner {
 	}
 
 	public void crudLanguage() throws DuplicateKeyException, NotFoundException, InvalidDataException {
-		Actor actor = new Actor(203, "ANOMANDER", "RAKE");
-		srvActor.getAll().forEach(System.err::println);
-		srvActor.add(actor);
-		srvActor.getAll().forEach(System.err::println);
-		srvActor.modify(new Actor(202, "ANOMANDER", "LAKE"));
-		srvActor.delete(actor);
-		srvActor.getAll().forEach(System.err::println);
+		Language language = new Language(0, null, "Esperanto");
+		srvLanguage.getAll().forEach(System.err::println);
+		srvLanguage.add(language);
+		srvLanguage.getAll().forEach(System.err::println);
+		srvLanguage.modify(new Language(6, null, "Esperanto"));
+		srvLanguage.getAll().forEach(System.err::println);
+		srvLanguage.delete(new Language(6, null, "Esperanto"));
+		srvLanguage.getAll().forEach(System.err::println);
 	}
 
 }
