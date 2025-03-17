@@ -36,7 +36,7 @@ public class ActoresServiceImpl implements ActoresService {
     //Habria que validar los datos antes de hacer cualquier consulta a la base de datos para evitar hacer una con datos malos
     @Override
     public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException{
-        if (item.isInvalid()) {
+        if (item == null || item.getFirstName() == null || item.getFirstName().isEmpty() || item.getLastName() == null || item.getLastName().isEmpty()) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
         //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
@@ -49,7 +49,7 @@ public class ActoresServiceImpl implements ActoresService {
 
     @Override
     public Actor modify(Actor item) throws InvalidDataException, NotFoundException {
-        if (item.isInvalid()) {
+        if (item == null || item.getFirstName() == null || item.getFirstName().isEmpty() || item.getLastName() == null || item.getLastName().isEmpty() || item.getActorId() <= 0) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
 

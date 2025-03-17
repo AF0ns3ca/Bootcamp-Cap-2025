@@ -82,13 +82,13 @@ public class Actor extends AbstractEntity<Actor> implements Serializable {
 		return this.firstName;
 	}
 
-	public void setFirstName(String firstName) throws IllegalArgumentException {	
-		if (this.getFirstName() == null) {
+	public void setFirstName(String firstName) throws IllegalArgumentException {    
+		if (firstName == null) {
 			throw new IllegalArgumentException("El nombre no puede ser nulo");
-			
 		}
 		this.firstName = firstName;
 	}
+	
 
 	public String getLastName() {
 		return this.lastName;
@@ -98,13 +98,13 @@ public class Actor extends AbstractEntity<Actor> implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Timestamp getLastUpdate() {
-		return this.lastUpdate;
-	}
+	// public Timestamp getLastUpdate() {
+	// 	return this.lastUpdate;
+	// }
 
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
+	// public void setLastUpdate(Timestamp lastUpdate) {
+	// 	this.lastUpdate = lastUpdate;
+	// }
 
 	public List<FilmActor> getFilmActors() {
 		return this.filmActors;

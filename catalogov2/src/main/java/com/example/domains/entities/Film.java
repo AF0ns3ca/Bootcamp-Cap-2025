@@ -2,6 +2,9 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -48,6 +51,8 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	private BigDecimal replacementCost;
 
 	@Column(nullable=false, length=128)
+	@NotBlank
+	@Size(min = 2, max = 128, message = "size must be between 2 and 128")
 	private String title;
 
 	//bi-directional many-to-one association to Language
