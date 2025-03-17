@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorShort;
 
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor> {
 
@@ -23,4 +25,12 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
     //Esta es en SQL por tanto la tabla se llama como en la base de datos, actor en vez de Actor, igualmente la columna sera actor_id en vez de actorId
     @Query(value = "SELECT * FROM actor a WHERE a.actor_id > :id", nativeQuery = true)
     List<Actor>findNovedadesSQL(int id);
+
+    //No se puede poner el mismo nombre si trabaja con otro tipo de dato, en este caso usaremos query como sinonimo de find pero el metodo sera igual salvo que sera para dos tipos diferentes
+    List<ActorDTO>queryByActorIdGreaterThan(int id);
+
+    List<ActorShort>getByActorIdGreaterThan(int id);
+    
+    <T> List<T>findByActorIdGreaterThan(int id, Class<T> type);
+
 }

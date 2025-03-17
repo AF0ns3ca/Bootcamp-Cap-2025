@@ -49,7 +49,7 @@ public class ActoresServiceImpl implements ActoresService {
 
     @Override
     public Actor modify(Actor item) throws InvalidDataException, NotFoundException {
-        if (item == null) {
+        if (item.isInvalid()) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
 

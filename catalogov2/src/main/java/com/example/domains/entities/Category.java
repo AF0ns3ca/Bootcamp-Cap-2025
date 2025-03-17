@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.example.domains.core.entities.AbstractEntity;
+
 
 /**
  * The persistent class for the category database table.
@@ -13,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
-public class Category implements Serializable {
+public class Category extends AbstractEntity<Category> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

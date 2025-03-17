@@ -29,7 +29,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Language add(Language item) throws DuplicateKeyException, InvalidDataException {
-        if (item == null) {
+        if (item.isInvalid()) {
             throw new InvalidDataException("No se puede añadir un valor nulo"); 
         }
         //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
@@ -37,6 +37,19 @@ public class LanguageServiceImpl implements LanguageService {
             throw new DuplicateKeyException("Ya existe un lenguaje con ese id");
         }
 
+        return dao.save(item);
+    }
+
+    @Override
+    public Language modify(Language item) throws NotFoundException, InvalidDataException {
+        if (item.isInvalid()) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+
+        if((item.getLanguageId() < 0) || (!dao.existsById(item.getLanguageId()))) {
+            throw new NotFoundException("No existe un lenguaje con ese id");
+        }
+        
         return dao.save(item);
     }
 
@@ -70,10 +83,6 @@ public class LanguageServiceImpl implements LanguageService {
 
     }
 
-    @Override
-    public Language modify(Language item) throws NotFoundException, InvalidDataException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    
 
 }

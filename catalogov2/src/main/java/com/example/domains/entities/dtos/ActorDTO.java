@@ -2,7 +2,6 @@ package com.example.domains.entities.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import com.example.domains.entities.Actor;
 
 //Value no tiene setters entonces no vale para entrada y salida mientras que Data si hace los setters si wue sirve para entrada y salida

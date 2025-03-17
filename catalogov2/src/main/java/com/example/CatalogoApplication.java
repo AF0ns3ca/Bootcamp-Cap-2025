@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.CommandLineRunner;
 
+import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActoresService;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Actor;
 import com.example.domains.contracts.services.CategoryService;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorShort;
 
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
 public class CatalogoApplication implements CommandLineRunner {
+
+	@Autowired
+	private ActorRepository dao;
 
 	@Autowired
 	private ActoresService srv;
@@ -48,6 +54,11 @@ public class CatalogoApplication implements CommandLineRunner {
 		}else{
 			System.err.println(actor.getErrorsMessage());
 		}
+		// Llamadas para DTO
+		dao.findByActorIdGreaterThan(199).forEach(System.err::println);
+		dao.findByActorIdGreaterThan(199, ActorDTO.class).forEach(System.err::println);
+		dao.findByActorIdGreaterThan(199, ActorShort.class).forEach(o -> System.err.println(o.getActorId() + " " + o.getNombre()));
+		dao.getByActorIdGreaterThan(199).forEach(o -> System.err.println(o.getActorId() + " " + o.getNombre()));
 		
 	}
 

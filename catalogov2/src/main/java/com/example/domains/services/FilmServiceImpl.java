@@ -12,6 +12,7 @@ import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 import com.example.domains.contracts.repositories.FilmRepository;
 
+
 @Service
 public class FilmServiceImpl implements FilmService {
 
@@ -23,20 +24,38 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public List<Film> getAll() {
-        // TODO Auto-generated method stub
         return dao.findAll();
     }
 
     @Override
     public Optional<Film> getOne(Integer id) {
-        // TODO Auto-generated method stub
         return dao.findById(id);
     }
 
     @Override
     public Film add(Film item) throws DuplicateKeyException, InvalidDataException {
-        // TODO Auto-generated method stub
-        return null;
+        if (item.isInvalid()) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+        //Comprobamos primero que es mayor que cero para que no haga un viaje a la base de datos para nada
+        if(item.getFilmId() > 0 && dao.existsById(item.getFilmId())) {
+            throw new DuplicateKeyException("Ya existe una película con ese id");
+        }
+
+        return dao.save(item);
+    }
+
+    @Override
+    public Film modify(Film item) throws NotFoundException, InvalidDataException {
+        if (item.isInvalid()) {
+            throw new InvalidDataException("No se puede añadir un valor nulo"); 
+        }
+
+        if((item.getFilmId() < 0) || (!dao.existsById(item.getFilmId()))) {
+            throw new NotFoundException("No existe una película con ese id");
+        }
+        
+        return dao.save(item);
     }
 
     @Override
@@ -49,12 +68,6 @@ public class FilmServiceImpl implements FilmService {
     public void deleteById(Integer id) {
         // TODO Auto-generated method stub
         
-    }
-
-    @Override
-    public Film modify(Film item) throws NotFoundException, InvalidDataException {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     
