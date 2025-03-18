@@ -18,6 +18,7 @@ import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.FilmActor;
 import com.example.domains.entities.Language;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
@@ -56,7 +57,15 @@ public class CatalogoApplication implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicacion Iniciada");
+		// srvFilm.FilmWithActors(1);
+		// srvFilm.FilmWithCategories(1);
+
+		srvFilm.addActorToFilm(2,202);
+		srvFilm.filmWithActors(2);
+
 		
+		
+
 	}
 
 	public void crudActor() throws DuplicateKeyException, NotFoundException, InvalidDataException {

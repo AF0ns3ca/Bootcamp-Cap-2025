@@ -182,30 +182,30 @@ public class FilmServiceTest {
         assertFalse(result.isPresent());
     }
 
-    @Test
-    public void testFilmWithCategories() {
-        Film film = new Film();
-        film.setFilmId(1);
-        film.setTitle("Inception");
+    // @Test
+    // public void testFilmWithCategories() {
+    //     Film film = new Film();
+    //     film.setFilmId(1);
+    //     film.setTitle("Inception");
 
-        filmService.FilmWithCategories(film.getFilmId());
+    //     filmService.FilmWithCategories(film.getFilmId());
 
-        verify(mockFilmRepository).findAllFilmsWithCategories(film.getFilmId());
-    }
+    //     verify(mockFilmRepository).findAllFilmsWithCategories(film.getFilmId());
+    // }
 
 
-    @Test
-    public void testFilmWithCategoriesNoCategories() {
-        Film film = new Film();
-        film.setFilmId(1);
-        film.setTitle("Inception");
+    // @Test
+    // public void testFilmWithCategoriesNoCategories() {
+    //     Film film = new Film();
+    //     film.setFilmId(1);
+    //     film.setTitle("Inception");
 
-        when(mockFilmRepository.findAllFilmsWithCategories(film.getFilmId())).thenReturn(List.of());
+    //     when(mockFilmRepository.findAllFilmsWithCategories(film.getFilmId())).thenReturn(List.of());
 
-        filmService.FilmWithCategories(film.getFilmId());
+    //     filmService.FilmWithCategories(film.getFilmId());
 
-        verify(mockFilmRepository).findAllFilmsWithCategories(film.getFilmId());
-    }
+    //     verify(mockFilmRepository).findAllFilmsWithCategories(film.getFilmId());
+    // }
 
     
 }

@@ -83,7 +83,7 @@ class FilmTest {
         Film film = new Film();
         film.setTitle("Inception");
 
-        // Inicializar las listas
+       
         film.setFilmActors(new ArrayList<>());
 
         FilmActor actor = new FilmActor();
@@ -103,7 +103,7 @@ class FilmTest {
         Film film = new Film();
         film.setTitle("Inception");
 
-        // Inicializar las listas
+      
         film.setFilmCategories(new ArrayList<>());
 
         FilmCategory category = new FilmCategory();
@@ -139,7 +139,7 @@ class FilmTest {
         film.setRentalDuration((byte) 7);
         film.setRating("PG-13");
 
-        // Asumimos que Language se ha inicializado previamente
+     
         Language language = new Language();
         language.setName("English");
         film.setLanguage(language);

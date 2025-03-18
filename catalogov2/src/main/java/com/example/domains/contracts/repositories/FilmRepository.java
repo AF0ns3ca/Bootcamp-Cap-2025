@@ -12,4 +12,6 @@ public interface FilmRepository extends JpaRepository<Film, Integer>, JpaSpecifi
 
     @Query("SELECT f FROM Film f JOIN FETCH f.filmCategories fc JOIN FETCH fc.category c where f.filmId = ?1")
     List<Film> findAllFilmsWithCategories(int id);
+    @Query("SELECT f FROM Film f JOIN FETCH f.filmActors fa JOIN FETCH fa.actor a where f.filmId = ?1")
+    List<Film> findAllFilmsWithActors(int id);
 }

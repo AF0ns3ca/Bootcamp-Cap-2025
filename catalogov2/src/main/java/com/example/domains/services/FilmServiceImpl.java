@@ -1,22 +1,38 @@
 package com.example.domains.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.entities.Actor;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.FilmActor;
+import com.example.domains.entities.FilmActorPK;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.OneToMany;
+
+import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.repositories.FilmRepository;
+
 
 
 @Service
 public class FilmServiceImpl implements FilmService {
 
+    @Autowired
     private FilmRepository dao;
+
+    @Autowired
+    private ActorRepository actorRepository;
+    
 
     public FilmServiceImpl(FilmRepository dao) {
         this.dao = dao;
@@ -90,7 +106,7 @@ public class FilmServiceImpl implements FilmService {
         return super.toString();
     }
 
-    public void FilmWithCategories(int id) {
+    public void filmWithCategories(int id) {
         dao.findAllFilmsWithCategories(id).forEach(film -> {
             System.out.print(film.getTitle() + " - ");
             film.getFilmCategories().forEach(fc -> {
@@ -100,7 +116,48 @@ public class FilmServiceImpl implements FilmService {
         
     }
 
+    public void filmWithActors(int id) {
+        dao.findAllFilmsWithActors(id).forEach(film -> {
+            System.out.print("\nPELICULA - ");
+            System.out.println(film.getTitle() + "\n");
+            System.out.println("REPARTO\n");
+            film.getFilmActors().forEach(fa -> {
+                System.out.println(fa.getActor().getFirstName() + " " + fa.getActor().getLastName());
+            });
+        });
+
+        
+        
+    }  
     
+      public void addActorToFilm(int filmId, int actorId) {
+       
+        Film film = dao.findById(filmId).orElseThrow(() -> new RuntimeException("Film not found"));  
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new RuntimeException("Actor not found"));
+ 
+        if (film.getFilmActors() == null) {
+            film.setFilmActors(new ArrayList<>()); 
+        }
+        
+        boolean actorExists = film.getFilmActors().stream()
+        .anyMatch(filmActor -> filmActor.getActor().getActorId() == actor.getActorId());
 
+        if (actorExists) {
+            System.out.println("El actor ya está asociado con esta película.");
+            return; 
+        }
+        
+        FilmActor filmActor = new FilmActor();
+        FilmActorPK pk = new FilmActorPK();
+        pk.setFilmId(film.getFilmId());
+        pk.setActorId(actor.getActorId());
+        filmActor.setId(pk);
+        filmActor.setFilm(film);
+        filmActor.setActor(actor);
 
+        film.addFilmActor(filmActor);
+
+        dao.save(film);
+    }
+    
 }

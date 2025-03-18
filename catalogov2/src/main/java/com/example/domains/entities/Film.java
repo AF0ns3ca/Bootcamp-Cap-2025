@@ -74,6 +74,8 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="film")
 	private List<FilmCategory> filmCategories;
+	
+	
 	public Film() {
 	}
 
@@ -246,6 +248,7 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 		return serialVersionUID;
 	}
 
+	
 	
 
 }
