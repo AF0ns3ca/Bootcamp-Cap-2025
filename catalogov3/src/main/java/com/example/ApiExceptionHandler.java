@@ -129,7 +129,7 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler({ NotFoundException.class })
 	public ProblemDetail notFoundRequest(Exception exception) {
-		return ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
 	}
 
 	@ExceptionHandler({ BadRequestException.class, DuplicateKeyException.class, HttpMessageNotReadableException.class })
@@ -138,11 +138,11 @@ public class ApiExceptionHandler {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
 	}
 
-	@ExceptionHandler({ org.springframework.security.authorization.AuthorizationDeniedException.class })
-	public ProblemDetail AuthorizationDeniedRequest(Exception exception) {
-		log.error(exception.getMessage(), exception);
-		return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
-	}
+	// @ExceptionHandler({ org.springframework.security.authorization.AuthorizationDeniedException.class })
+	// public ProblemDetail AuthorizationDeniedRequest(Exception exception) {
+	// 	log.error(exception.getMessage(), exception);
+	// 	return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
+	// }
 
 	@ExceptionHandler({ InvalidDataException.class, MethodArgumentNotValidException.class })
 	public ProblemDetail invalidData(Exception exception) {
@@ -158,10 +158,17 @@ public class ApiExceptionHandler {
 		return problem;
 	}
 
-	@ExceptionHandler({ Exception.class })
-	public ProblemDetail unknow(Exception exception) {
-		log.error("Unhandled exception", exception);
-		return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+	
+	@ExceptionHandler({ org.springframework.dao.DataIntegrityViolationException.class })
+	public ProblemDetail dataIntegrityViolation(Exception exception) {
+		log.error("Data Integrity Violation exception", exception);
+		return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Cuidado que tiene dependencias");
 	}
+
+	// @ExceptionHandler({ Exception.class })
+	// public ProblemDetail unknow(Exception exception) {
+	// 	log.error("Unhandled exception", exception);
+	// 	return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+	// }
 
 }
