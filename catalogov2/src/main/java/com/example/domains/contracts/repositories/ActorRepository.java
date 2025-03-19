@@ -9,6 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
+import com.example.exceptions.DuplicateKeyException;
+import com.example.exceptions.NotFoundException;
+import java.sql.Timestamp;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor> {
 
@@ -32,5 +38,21 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
     List<ActorShort>getByActorIdGreaterThan(int id);
     
     <T> List<T>findByActorIdGreaterThan(int id, Class<T> type);
+    List<Actor> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
+    <Actor> List<Actor> findAllBy(Class<Actor> type);
+    <Actor> Iterable<Actor> findAllBy(Sort sort, Class<Actor> type);
+    <Actor> Page<Actor> findAllBy(Pageable pageable, Class<Actor> type);
+	
+	default Actor insert(Actor item) throws DuplicateKeyException {
+		if(existsById(item.getActorId()))
+			throw new DuplicateKeyException();
+		return save(item);
+	}
+	
+	default Actor update(Actor item) throws NotFoundException {
+		if(!existsById(item.getActorId()))
+			throw new NotFoundException();
+		return save(item);
+	}
 
 }

@@ -2,8 +2,16 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.groups.Default;
+
+
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -79,24 +87,52 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	public Film() {
 	}
 
-	public Film(int filmId, String description, Timestamp lastUpdate, int length, String rating, Short releaseYear,
-			byte rentalDuration, BigDecimal rentalRate, BigDecimal replacementCost, String title, Language language,
-			Language languageVO, List<FilmActor> filmActors, List<FilmCategory> filmCategories) {
-		super();
+	public Film(int filmId) {
 		this.filmId = filmId;
-		this.description = description;
-		this.lastUpdate = lastUpdate;
-		this.length = length;
-		this.rating = rating;
-		this.releaseYear = releaseYear;
+	}
+
+	public Film(@NotBlank @Size(max = 128) String title, @NotNull Language language, @Positive byte rentalDuration,
+			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost) {
+		super();
+		this.title = title;
+		this.language = language;
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.replacementCost = replacementCost;
+	}
+
+	public Film(int filmId, @NotBlank @Size(max = 128) String title, @NotNull Language language,
+			@NotNull @Positive byte rentalDuration,
+			@NotNull @Digits(integer = 2, fraction = 2) @DecimalMin(value = "0.0", inclusive = false) BigDecimal rentalRate,
+			@NotNull @Digits(integer = 3, fraction = 2) @DecimalMin(value = "0.0", inclusive = false) BigDecimal replacementCost) {
+		super();
+		this.filmId = filmId;
 		this.title = title;
 		this.language = language;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+	}
+
+	public Film(int filmId, @NotBlank @Size(max = 128) String title, String description, @Min(1895) Short releaseYear,
+			@NotNull Language language, Language languageVO, @Positive byte rentalDuration,
+			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
+			@Positive Integer length,
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost,
+			String rating) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.language = language;
 		this.languageVO = languageVO;
-		this.filmActors = filmActors;
-		this.filmCategories = filmCategories;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
 	}
 
 	public int getFilmId() {
