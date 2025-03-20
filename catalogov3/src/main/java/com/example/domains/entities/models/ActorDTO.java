@@ -15,6 +15,7 @@ public class ActorDTO {
 	@JsonProperty("apellidos")
 	private String lastName;
 
+	//De donde saca sus datos para crear un ActorDTO
 	public static ActorDTO from(Actor source) {
 		return new ActorDTO(
 				source.getActorId(), 
@@ -22,6 +23,8 @@ public class ActorDTO {
 				source.getLastName()
 				);
 	}
+
+	//Para pasar de actorDTO a actor
 	public static Actor from(ActorDTO source) {
 		return new Actor(
 				source.getActorId(), 

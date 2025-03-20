@@ -1,10 +1,13 @@
 package com.example.application.controllers;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,7 @@ import com.example.exceptions.NotFoundException;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.DuplicateKeyException;
+import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
 import java.util.List;
@@ -41,7 +45,7 @@ public class ActoresController {
 
     private ActorService srv;
 
-    private ActoresController(ActorService srv) {
+    public ActoresController(ActorService srv) {
         super();
         this.srv = srv;
     }
@@ -49,6 +53,11 @@ public class ActoresController {
     @GetMapping
     public List<ActorDTO> getAll() {
         return srv.getByProjection(ActorDTO.class);
+    }
+
+    @GetMapping(params = {"page"})
+    public Page<ActorDTO> getAll(Pageable pageable) {
+        return srv.getByProjection(pageable, ActorDTO.class);
     }
 
     @GetMapping(path = "/{id}")
@@ -60,6 +69,22 @@ public class ActoresController {
         return ActorDTO.from(item.get());
 
     }
+
+     //Se puede crear un DTO en una clase interna si va a ser de un solo uso, laos tipos record son clases inmutables cuyos datos no pueden cambiar, es similar a lombok pero esto es sintaxis propia de java, pone datos, constructores, etc...
+     record Titulo(int id, String titulo) { }
+
+    @GetMapping(path = "/{id}/pelis")
+    @Transactional
+    public List<Titulo> getPeliculas(@PathVariable int id) throws NotFoundException {
+        var item = srv.getOne(id);
+        if (item.isEmpty()) {
+            throw new NotFoundException("No se encontro el actor con id " + id);
+        }
+        return item.get().getFilmActors().stream().map(o -> new Titulo(o.getFilm().getFilmId(), o.getFilm().getTitle()))
+        .toList();
+
+    }
+   
 
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
