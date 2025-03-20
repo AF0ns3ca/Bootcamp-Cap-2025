@@ -1,5 +1,6 @@
 package com.example.application.controllers;
 
+
 import java.net.URI;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.ActorService;
+import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.FilmDetailsDTO;
@@ -35,60 +39,54 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/films/v1")
-@Tag(name = "Controlador Peliculas", description = "Gestión de Peliculas")
-public class FilmController {
+@RequestMapping("/category/v1")
+@Tag(name = "Controlador Categorias", description = "Gestión de Categorías")
+public class CategoryController {
 
-    private FilmService srv;
+    private CategoryService srv;
 
-    public FilmController(FilmService srv) {
+    public CategoryController(CategoryService srv) {
         super();
         this.srv = srv;
     }
 
-    @Hidden
+    @Operation(summary = "Obtener todas las categorias")
     @GetMapping
-    public List<FilmShortDTO> getAll() {
-        return srv.getByProjection(FilmShortDTO.class);
+    public List<Category> getAll() {
+        return srv.getAll();
     }
 
-    @Operation(summary = "Obtiene las películas paginadas")
-    @GetMapping(params = { "page" })
-    public Page<FilmShortDTO> getAll(Pageable pageable) {
-        return srv.getByProjection(pageable, FilmShortDTO.class);
-    }
-
-    @Operation(summary = "Obtener una pelicula por su id")
+    @Operation(summary = "Obtener una categoria por su id")
     @GetMapping(path = "/{id}")
-    public FilmShortDTO getOne(@PathVariable @Parameter(description = "Identificador de la pelicula") int id)
+    public Category getOne(@PathVariable @Parameter(description = "Identificador de la pelicula") int id)
             throws NotFoundException {
         var item = srv.getOne(id);
         if (item.isEmpty()) {
             throw new NotFoundException("No se encontro la pelicula con id " + id);
         }
-        return FilmShortDTO.from(item.get());
+
+        return item.get();
 
     }
 
-    @Operation(summary = "Obtener los actores de una pelicula")
-    @GetMapping(path = "/{id}/actores")
-    public FilmDetailsDTO getActors(@PathVariable int id) {
-        return srv.filmWithActors(id);
+    @PostMapping
+    @ApiResponse(responseCode = "201", description = "Categoría creada")
+    public ResponseEntity<Object> create(@Valid @RequestBody Category item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
+        var newItem = srv.add(item);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newItem.getCategoryId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 
-    @Operation(summary = "Buscar peliculas por titulo")
-    @GetMapping(params = { "title" })
-    public List<FilmDetailsDTO> findByTitle(@Parameter(description = "Titulo de la pelicula") String title) {
-        return srv.findByTitle(title);
+    @PutMapping(path = "/{id}")
+    @ApiResponse(responseCode = "200", description = "Categoría modificada")
+    public void update(@PathVariable @Parameter(description = "Identificador de la pelicula") int id, @Valid @RequestBody Category item) throws NotFoundException, InvalidDataException, BadRequestException {
+        if (item.getCategoryId() != id) {
+            throw new BadRequestException("El id no coincide con el id de la URL");
+        }
+        
+        item.setCategoryId(id);
+        srv.modify(item);
     }
-
-    @Operation(summary = "Buscar peliculas por titulo paginadas")
-    @GetMapping(path = { "/title" })
-    public Page<FilmDetailsDTO> findByTitle( @RequestParam String title,
-           @ParameterObject Pageable pageable) {
-        return srv.findByTitlePage(title, pageable);
-    }
-
-    
 
 }

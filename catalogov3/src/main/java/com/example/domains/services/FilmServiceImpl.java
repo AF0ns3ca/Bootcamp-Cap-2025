@@ -126,7 +126,18 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public FilmDetailsDTO filmWithActors(int id) {
-		return dao.findFilmsWithActors(id).get(0);
+		return dao.findFilmsWithActors(id);
 	}
 
+	@Override
+	public List<FilmDetailsDTO> findByTitle(String title) {
+		return dao.findByTitleContaining(title).stream()
+		.map(FilmDetailsDTO::from)
+		.toList();
+	}
+
+	public Page<FilmDetailsDTO> findByTitlePage(String title, Pageable pageable) {
+		return dao.findByTitleContaining(title, pageable)
+		.map(FilmDetailsDTO::from);
+	}
 }
