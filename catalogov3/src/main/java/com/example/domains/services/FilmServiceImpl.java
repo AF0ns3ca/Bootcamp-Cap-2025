@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.domains.contracts.repositories.FilmRepository;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.models.FilmDetailsDTO;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -121,6 +122,11 @@ public class FilmServiceImpl implements FilmService {
 	@Override
 	public List<Film> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
+	}
+
+	@Override
+	public FilmDetailsDTO filmWithActors(int id) {
+		return dao.findFilmsWithActors(id).get(0);
 	}
 
 }

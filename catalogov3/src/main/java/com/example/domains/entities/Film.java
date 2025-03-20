@@ -528,5 +528,6 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 		filmActors.forEach(o -> o.prePersiste());
 		filmCategories.forEach(o -> o.prePersiste());
 	}
+	
 
 }

@@ -26,6 +26,13 @@ import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.exceptions.NotFoundException;
+
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.DuplicateKeyException;
@@ -41,6 +48,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/actores/v1")
+@Tag(name = "Controlador Actores", description = "Gestión de actores")
 public class ActoresController {
 
     private ActorService srv;
@@ -50,18 +58,21 @@ public class ActoresController {
         this.srv = srv;
     }
 
+    @Hidden
     @GetMapping
     public List<ActorDTO> getAll() {
         return srv.getByProjection(ActorDTO.class);
     }
 
+    @Operation(summary = "Obtiene todos los actores paginados")
     @GetMapping(params = {"page"})
     public Page<ActorDTO> getAll(Pageable pageable) {
         return srv.getByProjection(pageable, ActorDTO.class);
     }
 
+    @Operation(summary = "Obtener un actor por su id")
     @GetMapping(path = "/{id}")
-    public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
+    public ActorDTO getOne(@PathVariable @Parameter(description = "Identificador del actor") int id) throws NotFoundException {
         var item = srv.getOne(id);
         if (item.isEmpty()) {
             throw new NotFoundException("No se encontro el actor con id " + id);
@@ -87,6 +98,7 @@ public class ActoresController {
    
 
     @PostMapping
+    @ApiResponse(responseCode = "201", description = "Actor creado")
     public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
         var newItem = srv.add(ActorDTO.from(item));
         //Generacion de la url de forma dinamica para que cumpla el convenio REST de la API y sea del estilo /actores/v1/{id}

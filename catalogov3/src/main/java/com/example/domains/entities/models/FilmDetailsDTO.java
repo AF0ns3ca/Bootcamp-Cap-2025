@@ -62,4 +62,5 @@ public class FilmDetailsDTO {
 				source.getCategories().stream().map(item -> item.getName()).sorted().toList()
 				);
 	}
+	
 }
