@@ -7,6 +7,7 @@ import com.example.domains.entities.Film;
 import com.example.domains.entities.Language;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -26,6 +27,10 @@ import lombok.Value;
 @Value
 @Data @AllArgsConstructor
 public class FilmPostDTO {
+
+   @JsonProperty("id")
+    private int filmId;
+
     @NotBlank
     @Size(max = 128)
     private String title;
@@ -52,6 +57,7 @@ public class FilmPostDTO {
 
     public static FilmPostDTO from(Film film) {
         return new FilmPostDTO(
+            film.getFilmId(),
             film.getTitle(),
             film.getLanguage(), // Asumiendo que 'Language' tiene un método 'getLanguageId'
             film.getRentalDuration(),
@@ -62,6 +68,7 @@ public class FilmPostDTO {
 
     public static Film from(FilmPostDTO dto) {
         return new Film(
+            dto.getFilmId(),
             dto.getTitle(),
             dto.getLanguage(),
             dto.getRentalDuration(),
