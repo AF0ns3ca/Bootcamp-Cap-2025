@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Películas</title>
+  </head>
+  <body>
+    <h1>Lista de Películas</h1>
+    <table id="film-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Las filas se agregarán dinámicamente aquí -->
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM cargado y script ejecutado");
+        fetch("http://localhost:8001/films/v1")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error en la solicitud: " + response.statusText);
+            }
+            return response.json(); // Convertir la respuesta a JSON
+          })
+          .then((data) => {
+            // console.log('Datos obtenidos:', data);  // Imprimir los datos en la consola
+            console.log("Prueba");
+          })
+          .catch((error) => {
+            console.error("Error al obtener las películas:", error); // Manejar errores si ocurren
+          });
+      });
+    </script>
+  </body>
+</html>

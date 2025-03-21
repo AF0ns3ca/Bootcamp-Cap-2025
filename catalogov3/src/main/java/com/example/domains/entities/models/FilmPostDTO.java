@@ -54,7 +54,7 @@ public class FilmPostDTO {
         return new FilmPostDTO(
             film.getFilmId(),
             film.getTitle(),
-            film.getLanguage(), // Asumiendo que 'Language' tiene un método 'getLanguageId'
+            film.getLanguage(),
             film.getRentalDuration(),
             film.getRentalRate(),
             film.getReplacementCost()
