@@ -1,11 +1,9 @@
 package com.example.domains.entities.models;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import com.example.domains.entities.Film;
 import com.example.domains.entities.Language;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,9 +16,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-//import io.swagger.v3.oas.annotations.media.Schema;
-//import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.Value;
 
 //@Schema(name = "Pelicula (Detalles)", description = "Version completa de las peliculas")

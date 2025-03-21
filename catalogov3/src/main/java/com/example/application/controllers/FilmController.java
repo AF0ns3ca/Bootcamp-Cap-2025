@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.domains.contracts.services.ActorService;
 import com.example.domains.contracts.services.FilmService;
-import com.example.domains.entities.Film;
-import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.FilmDetailsDTO;
 import com.example.domains.entities.models.FilmPostDTO;
 import com.example.domains.entities.models.FilmShortDTO;
@@ -36,52 +33,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
-import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Valid;
-import jakarta.validation.Validator;
-import jakarta.websocket.server.PathParam;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.HttpStatus;
-import com.example.domains.entities.Actor;
-import com.example.domains.entities.models.ActorDTO;
-import com.example.domains.contracts.repositories.ActorRepository;
-import com.example.domains.contracts.services.ActorService;
-import com.example.exceptions.NotFoundException;
-
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import com.example.exceptions.BadRequestException;
-import com.example.exceptions.InvalidDataException;
-import com.example.exceptions.DuplicateKeyException;
-import org.springframework.data.domain.Pageable;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-
-import java.net.URI;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/films/v1")
@@ -158,7 +111,7 @@ public class FilmController {
         srv.modify(FilmPostDTO.from(item));
 
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
