@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import com.example.domains.core.entities.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.CascadeType;
@@ -177,23 +178,27 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 	@NotNull
 	@Positive
 	@Column(name = "rental_duration", nullable = false)
+	@JsonProperty("rentalDuration")
 	private byte rentalDuration;
 
 	@NotNull
 	@Digits(integer = 2, fraction = 2)
 	@DecimalMin(value = "0.0", inclusive = false)
 	@Column(name = "rental_rate", nullable = false, precision = 10, scale = 2)
+	@JsonProperty("rentalRate")
 	private BigDecimal rentalRate;
 
 	@NotNull
 	@Digits(integer = 3, fraction = 2)
 	@DecimalMin(value = "0.0", inclusive = false)
 	@Column(name = "replacement_cost", nullable = false, precision = 10, scale = 2)
+	@JsonProperty("replacementCost")
 	private BigDecimal replacementCost;
 
 	@NotBlank
 	@Size(max = 128)
 	@Column(nullable = false, length = 128)
+	@JsonProperty("title")
 	private String title;
 	
 	@Column(name = "special_features")
@@ -239,6 +244,12 @@ public class Film extends AbstractEntity<Film> implements Serializable {
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.replacementCost = replacementCost;
+	}
+
+	public Film(@NotBlank @Size(max = 128) String description, String title) {
+		super();
+		this.description = description;
+		this.title = title;
 	}
 
 	public Film(int filmId, @NotBlank @Size(max = 128) String title, @NotNull Language language,

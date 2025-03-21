@@ -17,4 +17,5 @@ public record FilmShortDTO(
 	public static FilmShortDTO from(Film source) {
 		return new FilmShortDTO(source.getFilmId(), source.getTitle());
 	}
+	
 }

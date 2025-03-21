@@ -21,6 +21,7 @@ import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.FilmDetailsDTO;
+import com.example.domains.entities.models.FilmPostDTO;
 import com.example.domains.entities.models.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -53,7 +54,7 @@ public class FilmController {
     }
 
     @Operation(summary = "Obtiene las películas paginadas")
-    @GetMapping(params = { "page" })
+    @GetMapping(path = "/", params = { "page" })
     public Page<FilmShortDTO> getAll(Pageable pageable) {
         return srv.getByProjection(pageable, FilmShortDTO.class);
     }
@@ -84,11 +85,19 @@ public class FilmController {
 
     @Operation(summary = "Buscar peliculas por titulo paginadas")
     @GetMapping(path = { "/title" })
-    public Page<FilmDetailsDTO> findByTitle( @RequestParam String title,
-           @ParameterObject Pageable pageable) {
+    public Page<FilmDetailsDTO> findByTitle(@RequestParam String title,
+            @ParameterObject Pageable pageable) {
         return srv.findByTitlePage(title, pageable);
     }
 
-    
+    @PostMapping
+    @ApiResponse(responseCode = "201", description = "Pelicula creada")
+    public ResponseEntity<Object> create(@Valid @RequestBody FilmPostDTO item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
+        var newItem = srv.add(FilmPostDTO.from(item));
+        //Generacion de la url de forma dinamica para que cumpla el convenio REST de la API y sea del estilo /actores/v1/{id}
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newItem.getFilmId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
 
 }
