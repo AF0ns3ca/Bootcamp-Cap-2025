@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,11 +56,12 @@ public class Actor extends AbstractEntity<Actor> implements Serializable {
 	@Column(name="last_name", nullable=false, length=45)
 	@Size(max=45, min=2)
 	@NotBlank
-//	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
+//	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas")
 	private String lastName;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	@PastOrPresent
+	//Habría que cambiarlo a Date o algún tipo de dato más acorde porque Timestamp no es un tipo de dato de Java y asi nos ahorramos problemas
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor

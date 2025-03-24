@@ -63,6 +63,8 @@ public class FilmController {
 
     @Operation(summary = "Obtener una pelicula por su id")
     @GetMapping(path = "/{id}")
+    @ApiResponse(responseCode = "200", description = "Pelicula encontrada")
+    @ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
     public FilmShortDTO getOne(@PathVariable @Parameter(description = "Identificador de la pelicula") int id)
             throws NotFoundException {
         var item = srv.getOne(id);
@@ -81,6 +83,8 @@ public class FilmController {
 
     @Operation(summary = "Buscar peliculas por titulo")
     @GetMapping(params = { "title" })
+    @ApiResponse(responseCode = "200", description = "Peliculas encontradas")
+    @ApiResponse(responseCode = "404", description = "Peliculas no encontradas")
     public List<FilmDetailsDTO> findByTitle(@Parameter(description = "Titulo de la pelicula") String title) {
         return srv.findByTitle(title);
     }
@@ -94,6 +98,8 @@ public class FilmController {
 
     @PostMapping
     @ApiResponse(responseCode = "201", description = "Pelicula creada")
+    @ApiResponse(responseCode = "400", description = "Datos invalidos")
+    @ApiResponse(responseCode = "409", description = "Pelicula duplicada")
     public ResponseEntity<Object> create(@Valid @RequestBody FilmPostDTO item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
         var newItem = srv.add(FilmPostDTO.from(item));
         //Generacion de la url de forma dinamica para que cumpla el convenio REST de la API y sea del estilo /actores/v1/{id}
@@ -114,6 +120,7 @@ public class FilmController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiResponse(responseCode = "204", description = "Pelicula eliminada")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         srv.deleteById(id);

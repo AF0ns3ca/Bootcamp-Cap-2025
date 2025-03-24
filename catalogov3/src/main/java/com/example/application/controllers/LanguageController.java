@@ -3,7 +3,10 @@ package com.example.application.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.domains.contracts.repositories.LanguageRepository;
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Language;
+import com.example.domains.entities.models.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -28,6 +33,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -36,6 +42,9 @@ import jakarta.validation.Valid;
 public class LanguageController {
 
     private LanguageService srv;
+
+    @Autowired
+	private LanguageRepository dao;
 
     public LanguageController(LanguageService srv) {
         super();
@@ -63,11 +72,31 @@ public class LanguageController {
     @ApiResponse(responseCode = "201", description = "Language creado")
     public ResponseEntity<Object> create(@Valid @RequestBody Language item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
         var newItem = srv.add(item);
-        //Generacion de la url de forma dinamica para que cumpla el convenio REST de la API y sea del estilo /actores/v1/{id}
+        
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newItem.getLanguageId()).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @GetMapping(path = "/{id}/peliculas")
+	@Transactional
+	public List<FilmShortDTO> getFilms(@PathVariable int id) throws Exception {
+		Optional<Language> rslt = dao.findById(id);
+		if (rslt.isEmpty())
+			throw new NotFoundException();
+		return rslt.get().getFilms().stream().map(item -> FilmShortDTO.from(item))
+				.collect(Collectors.toList());
+	}
+
+    @GetMapping(path = "/{id}/vo")
+	@Transactional
+	public List<FilmShortDTO> getFilmsVO(@PathVariable int id) throws Exception {
+		Optional<Language> rslt = dao.findById(id);
+		if (rslt.isEmpty())
+			throw new NotFoundException();
+		return rslt.get().getFilmsVO().stream().map(item -> FilmShortDTO.from(item))
+				.collect(Collectors.toList());
+	}
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
