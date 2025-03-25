@@ -70,7 +70,7 @@ public class ActoresController {
 	}
 
     @Operation(summary = "Obtiene todos los actores paginados")
-    @GetMapping(path = { "/v1", "/v2" }, params = "page")
+    @GetMapping(params = {"page"})
     public Page<ActorDTO> getAll(Pageable pageable) {
         return srv.getByProjection(pageable, ActorDTO.class);
     }

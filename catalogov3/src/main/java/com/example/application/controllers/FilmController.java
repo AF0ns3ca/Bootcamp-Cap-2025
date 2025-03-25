@@ -85,37 +85,37 @@ public class FilmController {
 
     }
 
-    @GetMapping(path = "/{id}", params = "mode=details")
-	public FilmDetailsDTO getOneDetalle(
-			@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
-			@Parameter(required = false, schema = @Schema(type = "string", allowableValues = { "details", "short",
-					"edit" }, defaultValue = "edit")) @RequestParam(required = false, defaultValue = "edit") String mode)
-			throws Exception {
-		Optional<Film> rslt = srv.getOne(id);
-		if (rslt.isEmpty())
-			throw new NotFoundException();
-		return FilmDetailsDTO.from(rslt.get());
-	}
+    // @GetMapping(path = "/{id}", params = "mode=details")
+	// public FilmDetailsDTO getOneDetalle(
+	// 		@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
+	// 		@Parameter(required = false, schema = @Schema(type = "string", allowableValues = { "details", "short",
+	// 				"edit" }, defaultValue = "edit")) @RequestParam(required = false, defaultValue = "edit") String mode)
+	// 		throws Exception {
+	// 	Optional<Film> rslt = srv.getOne(id);
+	// 	if (rslt.isEmpty())
+	// 		throw new NotFoundException();
+	// 	return FilmDetailsDTO.from(rslt.get());
+	// }
 
-    @Operation(summary = "Recupera una pelicula", description = "Version corta, version detallada, version donde se han traido las dependencias con sus identificadores y version donde se han convertido dependencias en cadena.")
-	@GetMapping(path = "/{id}")
-	@ApiResponse(responseCode = "200", description = "Pelicula encontrada", content = @Content(schema = @Schema(oneOf = {
-			FilmShortDTO.class, FilmDetailsDTO.class, FilmEditDTO.class })))
-	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
-	public FilmEditDTO getOneEditar(
-			@Parameter(description = "Identificador de la pelicula", required = true) 
-			@PathVariable 
-			int id,
-			@Parameter(required = false, schema = @Schema(type = "string", allowableValues = { "details", "short",
-					"edit" }, defaultValue = "edit")) 
-			@RequestParam(required = false, defaultValue = "edit") 
-			String mode)
-			throws Exception {
-		Optional<Film> rslt = srv.getOne(id);
-		if (rslt.isEmpty())
-			throw new NotFoundException();
-		return FilmEditDTO.from(rslt.get());
-	}
+    // @Operation(summary = "Recupera una pelicula", description = "Version corta, version detallada, version donde se han traido las dependencias con sus identificadores y version donde se han convertido dependencias en cadena.")
+	// @GetMapping(path = "/{id}")
+	// @ApiResponse(responseCode = "200", description = "Pelicula encontrada", content = @Content(schema = @Schema(oneOf = {
+	// 		FilmShortDTO.class, FilmDetailsDTO.class, FilmEditDTO.class })))
+	// @ApiResponse(responseCode = "404", description = "Pelicula no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+	// public FilmEditDTO getOneEditar(
+	// 		@Parameter(description = "Identificador de la pelicula", required = true) 
+	// 		@PathVariable 
+	// 		int id,
+	// 		@Parameter(required = false, schema = @Schema(type = "string", allowableValues = { "details", "short",
+	// 				"edit" }, defaultValue = "edit")) 
+	// 		@RequestParam(required = false, defaultValue = "edit") 
+	// 		String mode)
+	// 		throws Exception {
+	// 	Optional<Film> rslt = srv.getOne(id);
+	// 	if (rslt.isEmpty())
+	// 		throw new NotFoundException();
+	// 	return FilmEditDTO.from(rslt.get());
+	// }
 
     @Operation(summary = "Obtener los actores de una pelicula")
     @GetMapping(path = "/{id}/actores")
@@ -164,18 +164,18 @@ public class FilmController {
         return ResponseEntity.created(location).build();
     }
 
-    @Operation(summary = "Añadir una nueva pelicula")
-	@ApiResponse(responseCode = "201", description = "Pelicula añadida")
-	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
-	@PostMapping
-	@ResponseStatus(code = HttpStatus.CREATED)
-	@Transactional
-	public ResponseEntity<Object> add(@RequestBody() FilmEditDTO item) throws Exception {
-		Film newItem = srv.add(FilmEditDTO.from(item));
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newItem.getFilmId()).toUri();
-		return ResponseEntity.created(location).build();
-	}
+    // @Operation(summary = "Añadir una nueva pelicula")
+	// @ApiResponse(responseCode = "201", description = "Pelicula añadida")
+	// @ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
+	// @PostMapping
+	// @ResponseStatus(code = HttpStatus.CREATED)
+	// @Transactional
+	// public ResponseEntity<Object> add(@RequestBody() FilmEditDTO item) throws Exception {
+	// 	Film newItem = srv.add(FilmEditDTO.from(item));
+	// 	URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+	// 			.buildAndExpand(newItem.getFilmId()).toUri();
+	// 	return ResponseEntity.created(location).build();
+	// }
 
     @Operation(summary = "Modificar una pelicula existente de forma reducida")
 	@ApiResponse(responseCode = "200", description = "Pelicula encontrada")
@@ -191,17 +191,17 @@ public class FilmController {
 
     }
 
-    @Operation(summary = "Modificar una pelicula existente de forma detallada")
-	@ApiResponse(responseCode = "200", description = "Pelicula encontrada")
-	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
-	@PutMapping(path = "/{id}")
-	public FilmEditDTO modify(
-			@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
-			@Valid @RequestBody FilmEditDTO item) throws Exception {
-		if (item.getFilmId() != id)
-			throw new BadRequestException("El id no coincide con el id de la URL");
-		return FilmEditDTO.from(srv.modify(FilmEditDTO.from(item)));
-	}
+    // @Operation(summary = "Modificar una pelicula existente de forma detallada")
+	// @ApiResponse(responseCode = "200", description = "Pelicula encontrada")
+	// @ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
+	// @PutMapping(path = "/{id}")
+	// public FilmEditDTO modify(
+	// 		@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
+	// 		@Valid @RequestBody FilmEditDTO item) throws Exception {
+	// 	if (item.getFilmId() != id)
+	// 		throw new BadRequestException("El id no coincide con el id de la URL");
+	// 	return FilmEditDTO.from(srv.modify(FilmEditDTO.from(item)));
+	// }
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204", description = "Pelicula eliminada")
