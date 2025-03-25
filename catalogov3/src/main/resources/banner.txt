@@ -1,12 +1,9 @@
 
 
 
- █████╗ ███████╗██╗  ██╗           
-██╔══██╗██╔════╝██║  ██║
-███████║█████╗  ███████║
-██╔══██║██╔══╝  ██╔══██║
-██║  ██║██║     ██║  ██║
-╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝       
-
-Proyecto SpringBoot         3.4.3
-
+ █████╗ ███████╗██╗  ██╗        Application | ${info.app.name} (${info.app.version})      
+██╔══██╗██╔════╝██║  ██║	            | ${info.app.description}
+███████║█████╗  ███████║        Profile     | ${spring.profiles.active:DEFAULT}
+██╔══██║██╔══╝  ██╔══██║        Java VM     | ${java.specification.vendor} ${java.specification.version} (v${java.version})
+██║  ██║██║     ██║  ██║        Spring Boot |${spring-boot.formatted-version}
+╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝        Process ID  | ${PID}

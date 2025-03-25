@@ -2,17 +2,12 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
-
-import com.example.domains.core.entities.AbstractEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -22,22 +17,21 @@ import java.util.Objects;
 @Entity
 @Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
-public class Category extends AbstractEntity<Category> implements Serializable {
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id")
+	@Column(name="category_id", unique=true, nullable=false)
 	@JsonProperty("id")
 	private int categoryId;
 
-	@Column(name="last_update", insertable = false, updatable = false)
-	@PastOrPresent
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	@JsonIgnore
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private Timestamp lastUpdate;
 
-	@NotBlank
-	@Size(min=2, max=25)
+	@Column(nullable=false, length=25)
 	@JsonProperty("categoria")
 	private String name;
 
@@ -47,15 +41,6 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
-	}
-
-	public Category(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public Category(int categoryId, @NotBlank @Size(max = 25) String name) {
-		this.categoryId = categoryId;
-		this.name = name;
 	}
 
 	public int getCategoryId() {
@@ -103,34 +88,5 @@ public class Category extends AbstractEntity<Category> implements Serializable {
 
 		return filmCategory;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(categoryId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj instanceof Category o)
-			return categoryId == o.categoryId;
-		else
-			return false;
-	}
-
-	@Override
-	public String toString() {
-		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
-	}
-
-// 	public List<Film> getFilms() {
-//     List<Film> films = new ArrayList<>();
-//     for (FilmCategory filmCategory : filmCategories) {
-//         films.add(filmCategory.getFilm());
-//     }
-//     return films;
-// }
-
 
 }
