@@ -5,79 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./dist/styles.css" rel="stylesheet" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <!-- <script src="./index.js"></script> -->
     <title>Inicio</title>
   </head>
-  <body>
-    <div id="container" class="w-full h-[100vh] flex flex-col justify-center">
-      <div id="navigator-bar" class="w-full h-32 bg-black flex justify-center">
-        <div class="w-full flex flex-row justify-center items-center">
-          <div
-            class="w-full h-full flex flex-row justify-center items-center text-center gap-5"
+  <body class="bg-gray-50">
+
+    <div class="w-full h-screen flex flex-col justify-center items-center bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600">
+      
+      <div id="navigator-bar" class="w-full h-32 bg-black flex justify-center items-center shadow-2xl mb-12">
+        <div class="flex justify-center gap-10 items-center">
+          
+          <a
+            href="https://lenguajehtml.com/html/"
+            class="flex justify-center items-center w-36 h-36 bg-orange-600 text-white text-xl font-semibold rounded-xl hover:bg-orange-500 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-xl hover:shadow-2xl"
           >
-            <div
-              class="w-full h-full flex justify-center items-center text-center"
-            >
-              <a
-                href="https://lenguajehtml.com/html/"
-                class="flex justify-center items-center w-[50%] h-full cursor-pointer rounded hover:bg-orange-200 text-white font-bold text-xl shadow-lg hover:text-gray-900 hover:shadow-xl transition duration-300 hover:border-8 hover:border-orange-600"
-                >HTML</a
-              >
-            </div>
-            <div
-              class="w-full h-full flex justify-center items-center text-center"
-            >
-              <a
-                href="https://lenguajecss.com/css/"
-                class="flex justify-center items-center w-[50%] h-full cursor-pointer rounded hover:bg-blue-200 text-white font-bold text-xl shadow-lg hover:text-gray-900 hover:shadow-xl transition duration-300 hover:border-8 hover:border-blue-600"
-                >CSS</a
-              >
-            </div>
-            <div class="w-full flex justify-center items-center">
-              <img
-                src="/assets/gummy-programming.png"
-                alt="icono principal"
-                class="w-60 h-60"
-              />
-            </div>
-            <div
-              class="w-full h-full flex justify-center items-center text-center"
-            >
-              <a
-                href="https://lenguajejs.com/javascript/"
-                class="flex justify-center items-center w-[50%] h-full cursor-pointer rounded hover:bg-yellow-200 text-white font-bold text-xl shadow-lg hover:text-gray-900 hover:shadow-xl transition duration-300 hover:border-8 hover:border-yellow-600"
-                >JS</a
-              >
-            </div>
-            <div
-              class="w-full h-full flex justify-center items-center text-center"
-            >
-              <span
-                class="flex justify-center items-center w-[50%] h-full cursor-pointer rounded hover:bg-red-200 text-white font-bold text-xl shadow-lg hover:text-gray-900 hover:shadow-xl transition duration-300 hover:border-8 hover:border-red-600"
-                >Angular</span
-              >
-            </div>
-          </div>
+            HTML
+          </a>
+
+          <a
+            href="https://lenguajecss.com/css/"
+            class="flex justify-center items-center w-36 h-36 bg-blue-600 text-white text-xl font-semibold rounded-xl hover:bg-blue-500 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-xl hover:shadow-2xl"
+          >
+            CSS
+          </a>
+
+          <img src="/assets/gummy-programming.png" alt="icono principal" class="w-52 h-52 rounded-full object-contain" />
+
+          <a
+            href="https://lenguajejs.com/javascript/"
+            class="flex justify-center items-center w-36 h-36 bg-yellow-600 text-white text-xl font-semibold rounded-xl hover:bg-yellow-500 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-xl hover:shadow-2xl"
+          >
+            JS
+          </a>
+
+          <span
+            class="flex justify-center items-center w-36 h-36 bg-red-600 text-white text-xl font-semibold rounded-xl hover:bg-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-xl hover:shadow-2xl cursor-pointer"
+          >
+            Angular
+          </span>
         </div>
       </div>
-      <div id="content" class="w-full h-full flex flex-col justify-center items-center gap-5">
-        <div>
-          <span onclick="window.location.href='./demo.html';" class="text-black font-bold text-3xl cursor-pointer">
+
+      <div id="content" class="w-full h-full flex flex-col justify-center items-center gap-10 px-6 py-12 bg-white rounded-2xl shadow-3xl">
+
+        <div class="text-center">
+          <span
+            onclick="window.location.href='./demo.html';"
+            class="text-black font-extrabold text-5xl cursor-pointer hover:text-indigo-500 transition duration-300 ease-in-out transform hover:scale-105"
+          >
             Ejemplos Curso
           </span>
         </div>
+
         <div>
           <img
             src="./assets/wip.png"
             alt="Work in Progress"
-            class="w-[40rem] h-[30rem]>"
+            class="w-[40rem] h-[30rem] object-contain rounded-2xl shadow-2xl"
           />
         </div>
       </div>
     </div>
 
-    <span id="result"></span>
-
-    <!-- <script src="./index.js"></script> -->
   </body>
 </html>
