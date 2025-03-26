@@ -57,14 +57,7 @@ public class ActoresController {
         return srv.getByProjection(ActorDTO.class);
     }
 
-    @GetMapping(path = "/v2")
-	public List<ActorDTO> getAllv2(@RequestParam(required = false) String sort) {
-		if (sort != null)
-			return (List<ActorDTO>) srv.getByProjection(Sort.by(sort), ActorDTO.class);
-		return srv.getByProjection(ActorDTO.class);
-	}
-
-    @GetMapping(path = { "/v1", "/v2" }, params = "page")
+    @GetMapping(path = { "/v1" }, params = "page")
 	public PagedModel<ActorShort> getAllParam(@ParameterObject Pageable page) {
 		return new PagedModel<ActorShort>(srv.getByProjection(page, ActorShort.class));
 	}
@@ -76,7 +69,7 @@ public class ActoresController {
     }
 
     @Operation(summary = "Obtener un actor por su id")
-    @GetMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @GetMapping(path = { "/v1/{id}" })
     public ActorDTO getOne(@PathVariable @Parameter(description = "Identificador del actor") int id) throws NotFoundException {
         var item = srv.getOne(id);
         if (item.isEmpty()) {
@@ -89,7 +82,7 @@ public class ActoresController {
      //Se puede crear un DTO en una clase interna si va a ser de un solo uso, laos tipos record son clases inmutables cuyos datos no pueden cambiar, es similar a lombok pero esto es sintaxis propia de java, pone datos, constructores, etc...
      record Titulo(int id, String titulo) { }
 
-     @GetMapping(path = {"/v1/{id}/pelis","/v2/{id}/pelis"})
+     @GetMapping(path = {"/v1/{id}/pelis"})
     @Transactional
     public List<Titulo> getPeliculas(@PathVariable int id) throws NotFoundException {
         var item = srv.getOne(id);
@@ -102,7 +95,7 @@ public class ActoresController {
     }
    
 
-    @PostMapping(path = { "/v1", "/v2" })
+    @PostMapping(path = { "/v1"})
     @ApiResponse(responseCode = "201", description = "Actor creado")
     public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException , InvalidDataException {
         var newItem = srv.add(ActorDTO.from(item));
@@ -112,7 +105,7 @@ public class ActoresController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @PutMapping(path = { "/v1/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item)
             throws BadRequestException, NotFoundException, InvalidDataException {
@@ -123,7 +116,7 @@ public class ActoresController {
 
     }
 
-    @DeleteMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @DeleteMapping(path = { "/v1/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         srv.deleteById(id);

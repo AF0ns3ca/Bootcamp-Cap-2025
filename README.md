@@ -1,6 +1,12 @@
 # Bootcamp-Cap-2025
 
-## This is a repository for the Spring, Spring Boot and Angular bootcamp from Capgemini, 2025
+Este repositorio contiene el código y materiales del **Bootcamp de Spring, Spring Boot y Angular** de Capgemini, 2025.
 
+## Proyecto Activo: catalogov3
 
-**Autor:** Alvaro Fonseca Hernández
+El proyecto en curso es un **catálogo** desarrollado con tecnologías de Spring, Spring Boot y Angular.
+
+---
+
+**Autor:**  
+Alvaro Fonseca Hernández
