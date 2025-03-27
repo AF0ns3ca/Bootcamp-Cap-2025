@@ -9,4 +9,17 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'demo-ng-afh';
+
+  modalVisible = false;
+
+  // Método para abrir el modal
+  openModal() {
+    this.modalVisible = true;
+  }
+
+  // Método para cerrar el modal
+  closeModal() {
+    this.modalVisible = false;
+  }
+  
 }
