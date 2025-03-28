@@ -1,0 +1,138 @@
+<style>
+  .fondo-sombreado {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3); /* Fondo semi-transparente */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50; /* Asegura que el fondo esté detrás de la modal */
+  }
+
+  /* Asegurando que el botón de cierre esté en la parte inferior y tenga el color adecuado */
+  .modal-header {
+    position: relative; /* Esto es importante para asegurar que el botón esté bien ubicado */
+  }
+
+  .btn-close:hover {
+    color: #ccc; /* Cambio de color al pasar el ratón */
+  }
+
+  /* Centrar la modal en la pantalla */
+  .modal {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    position: fixed; /* Fija la modal en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* Asegura que la modal esté por encima de otros elementos */
+  }
+
+  /* Contenedor de la modal */
+  .modal-dialog {
+    max-width: 90%; /* Limita el ancho máximo */
+    width: 500px; /* Ajusta el tamaño de la modal */
+    margin: 0; /* Asegura que el contenedor de la modal no tenga márgenes adicionales */
+  }
+
+  .modal-footer {
+    padding: 10px 20px; 
+    /* Añade espacio al pie de la modal */
+  }
+</style>
+
+@if(VM.HayNotificaciones){
+  <div class="fondo-sombreado"></div>
+  <div
+    class="modal show fixed inset-0"
+    tabindex="-1"
+    [attr.aria-hidden]="!VM.HayNotificaciones"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content rounded-lg shadow-lg bg-white w-96">
+        <div
+          class="modal-header text-white rounded-t-lg p-4"
+          [ngClass]="{
+            'bg-red-600': VM.Listado[0].Type === VM.NotificationType.error,
+            'bg-yellow-400': VM.Listado[0].Type === VM.NotificationType.warn,
+            'bg-blue-600': VM.Listado[0].Type === VM.NotificationType.info,
+            'bg-green-600': VM.Listado[0].Type === VM.NotificationType.log
+          }"
+        >
+          <h5 class="modal-title text-xl font-bold" id="exampleModalLabel">Notificaciones</h5>
+        </div>
+        
+        <div class="modal-body bg-light p-4">
+          <!-- Contenido de la modal -->
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+            <!-- Definición de los íconos -->
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </symbol>
+            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </symbol>
+            <!-- Otros símbolos -->
+          </svg>
+
+          @for(item of VM.Listado; track item.Id) { 
+            @switch (item.Type) { 
+              @case(VM.NotificationType.error) {
+                <div class="m-0 p-3 alert alert-danger d-flex items-center rounded-none" role="alert">
+                  <svg class="bi flex-shrink-0 me-2 text-red-600" width="24" height="24" role="img" aria-label="Danger:">
+                    <use xlink:href="#forbidden-circle-fill" />
+                  </svg>
+                  <div>{{ item.Message }}</div>
+                </div>
+              }
+              @case(VM.NotificationType.warn) {
+                <div class="m-0 p-3 alert alert-warning d-flex items-center rounded-none" role="alert">
+                  <svg class="bi flex-shrink-0 me-2 text-yellow-400" width="24" height="24" role="img" aria-label="Warning:">
+                    <use xlink:href="#exclamation-triangle-fill" />
+                  </svg>
+                  <div>{{ item.Message }}</div>
+                </div>
+              }
+              @case(VM.NotificationType.info) {
+                <div class="m-0 p-3 alert alert-info d-flex items-center rounded-none" role="alert">
+                  <svg class="bi flex-shrink-0 me-2 text-blue-600" width="24" height="24" role="img" aria-label="Info:">
+                    <use xlink:href="#info-fill" />
+                  </svg>
+                  <div>{{ item.Message }}</div>
+                </div>
+              }
+              @default {
+                <div class="m-0 p-3 alert alert-success d-flex items-center rounded-none" role="alert">
+                  <svg class="bi flex-shrink-0 me-2 text-green-600" width="24" height="24" role="img" aria-label="Log:">
+                    <use xlink:href="#check-circle-fill" />
+                  </svg>
+                  <div>{{ item.Message }}</div>
+                </div>
+              }
+            }
+          }
+        </div>
+        <div class="w-full flex justify-center bg-light bg-gradient p-4">
+          <!-- Botón de cerrar en el pie de la modal, con el color dinámico -->
+          <button 
+            type="button" 
+            class="px-6 py-2 text-white rounded-md hover:bg-gray-300 transition duration-200"
+            [ngClass]="{
+              'bg-red-600': VM.Listado[0].Type === VM.NotificationType.error,
+              'bg-yellow-400': VM.Listado[0].Type === VM.NotificationType.warn,
+              'bg-blue-600': VM.Listado[0].Type === VM.NotificationType.info,
+              'bg-green-600': VM.Listado[0].Type === VM.NotificationType.log
+            }"
+            (click)="VM.clear()"
+            aria-label="Close"
+          >
+            Cerrar <!-- El ícono de la "X" -->
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

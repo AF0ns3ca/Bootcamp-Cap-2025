@@ -1,0 +1,28 @@
+<!-- <p>demos works!</p> -->
+<p class="space-x-4 w-full h-screen flex justify-center items-center">
+  <input
+    type="button"
+    value="Error"
+    (click)="vm.add('Esto es una notificación de error')"
+    class="px-6 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 transition duration-200"
+  />
+  <input
+    type="button"
+    value="Warn"
+    (click)="vm.add('Esta notificación es un aviso', vm.NotificationType.warn)"
+    class="px-6 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 transition duration-200"
+  />
+  <input
+    type="button"
+    value="Info"
+    (click)="vm.add('Solo una notificación informativa', vm.NotificationType.info)"
+    class="px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
+  />
+  <input
+    type="button"
+    value="Log"
+    (click)="vm.add('Para trazar con notificaciones', vm.NotificationType.log)"
+    class="px-6 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition duration-200"
+  />
+</p>
+
