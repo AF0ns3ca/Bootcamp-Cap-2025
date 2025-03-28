@@ -4,3 +4,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Nabla:EDPT,EHLT@75,10&display=swap');
 @import "tailwindcss";
 
+:root {
+  --font-roboto: "Roboto", sans-serif;
+  --font-cinzel: "Cinzel", serif;
+  --font-nabla: "Nabla", serif;
+}
+
+.font-roboto {
+  font-family: var(--font-roboto);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-nabla {
+  font-family: var(--font-nabla);
+}
+
