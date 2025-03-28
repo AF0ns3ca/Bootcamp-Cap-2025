@@ -1,26 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nabla:EDPT,EHLT@75,10&display=swap');
 @import "tailwindcss";
 
+:root {
+  --font-roboto: "Roboto", sans-serif;
+  --font-cinzel: "Cinzel", serif;
+  --font-nabla: "Nabla", serif;
+}
 
-  /* Transición suave entre colores */
+.font-roboto {
+  font-family: var(--font-roboto);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-nabla {
+  font-family: var(--font-nabla);
+}
+
+body {
+  background: black;
+  color: #00ff00;
+  background-image: url(./assets/m.gif);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+  background-repeat: no-repeat; /* No se repite el GIF */
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.falling-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 2px;
+}
+
+.falling-text span {
+  display: block;
+  animation: matrixRain 3s infinite linear;
+}
+
+.matrix-text {
+  font-family: 'Cinzel', serif;
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.6);
+  animation: fadeInMatrix 1s ease-in-out;
+}
+
+.matrix-rain {
+  font-size: 5rem;
+  color: #00ff00;
+  text-shadow: 0 0 15px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.6);
+  animation: matrixRain 2s infinite linear;
+}
+
+@keyframes matrixRain {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100px);
+  }
+}
+
+@keyframes fadeInMatrix {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes rainbow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
   }
-  
-  /* Aplicar el gradiente a la clase */
-  .rainbow-text {
-    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-    background-size: 400% 400%;
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    animation: rainbow 6s ease infinite;
+  50% {
+    background-position: 100% 50%;
   }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.rainbow-text {
+  background: linear-gradient(
+    45deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  background-size: 400% 400%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: rainbow 6s ease infinite;
+}
+
+.matrix-rain {
+  font-size: 5rem;
+  color: #00ff00;
+  text-shadow: 0 0 15px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.6);
+  animation: matrixRain 2s infinite linear;
+}
+
+body {
+  background: black;
+  color: #00ff00;
+  background-image: url(./assets/m.gif);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Mantiene el fondo fijo mientras haces scroll */
+  height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+  background-repeat: no-repeat; /* No se repite el GIF */
+}
