@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
+import { appRoutes } from './app.routes';
 import { ERROR_LEVEL, LoggerService } from '@my/core';
 import { environment } from 'src/environments/environment';
 
@@ -10,5 +10,5 @@ export const appConfig: ApplicationConfig = {
     LoggerService,
     { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL },
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes)]
+    provideRouter(appRoutes)]
 };

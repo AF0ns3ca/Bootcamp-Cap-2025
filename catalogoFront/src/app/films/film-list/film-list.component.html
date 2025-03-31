@@ -1,0 +1,10 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+    <div *ngFor="let film of films" class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">{{ film.titulo }}</h3>
+        <p class="text-gray-600">Sinopsis: {{ film.descripcion }}</p>
+        <p class="text-gray-600">ID: {{ film.id }}</p>
+      </div>
+    </div>
+  </div>
+  

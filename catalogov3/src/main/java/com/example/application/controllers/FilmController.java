@@ -65,10 +65,16 @@ public class FilmController {
         return srv.getByProjection(FilmShortDTO.class);
     }
 
+    // @Operation(summary = "Obtiene las películas paginadas")
+    // @GetMapping(path = "/", params = { "page" })
+    // public Page<FilmShortDTO> getAll(Pageable pageable) {
+    //     return srv.getByProjection(pageable, FilmShortDTO.class);
+    // }
+
     @Operation(summary = "Obtiene las películas paginadas")
     @GetMapping(path = "/", params = { "page" })
-    public Page<FilmShortDTO> getAll(Pageable pageable) {
-        return srv.getByProjection(pageable, FilmShortDTO.class);
+    public Page<FilmDetailsDTO> getAll(Pageable pageable) {
+        return srv.getByProjection(pageable, FilmDetailsDTO.class);
     }
 
     @Operation(summary = "Obtener una pelicula por su id")
