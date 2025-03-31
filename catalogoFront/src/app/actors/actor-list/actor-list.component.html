@@ -1,0 +1,9 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+    <div *ngFor="let actor of actors" class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">{{ actor.nombre }} {{ actor.apellidos }}</h3>
+        <p class="text-gray-600">ID: {{ actor.id }}</p>
+      </div>
+    </div>
+  </div>
+  

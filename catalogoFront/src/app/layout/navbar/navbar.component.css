@@ -1,0 +1,6 @@
+/* navbar.component.css */
+#mobile-menu-button.open {
+    transform: rotate(90deg);
+    transition: transform 0.3s;
+  }
+  
