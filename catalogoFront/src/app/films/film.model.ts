@@ -4,9 +4,9 @@
 // import { Language } from '../languages/language.model';
 
 export interface Film {
-  id: number;
-  titulo: string;
-  descripcion: string;
+  filmId: number;
+  title: string;
+  description: string;
 //   releaseYear: number | null;
 //   language: Language; 
 //   languageVO: Language | null; 

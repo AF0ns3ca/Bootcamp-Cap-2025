@@ -1,21 +1,34 @@
 
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Film } from './film.model';
+// import { Film } from './film.model';
+import { Pageable } from '../core/model/Pageable';
+import { FilmPage } from '../core/model/FilmPage';
 
 @Injectable({
   providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
 })
 export class FilmService {
 
-  private apiUrl = 'http://localhost:8001/films/v1';  // Ajusta la URL según tu API
+  // private apiUrl = 'http://localhost:8001/films/v1'; 
+  // private apiUrl = 'http://localhost:8001/films/v1?mode=details'; // Ajusta la URL según tu API
+  
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+  private baseUrl = 'http://localhost:8001/films/v1?mode=details';
 
-  getActors(): Observable<Film[]> {
-    return this.http.get<Film[]>(this.apiUrl);  // Esta es la llamada HTTP
+  // getFilms(): Observable<Film[]> {
+  //   return this.http.get<Film[]>(this.apiUrl);  // Esta es la llamada HTTP
+  // }
+  getFilms(pageable: Pageable): Observable<FilmPage> {
+    const params = new HttpParams()
+      .set('page', pageable.pageNumber.toString())
+      .set('size', pageable.pageSize.toString())
+  
+    return this.http.get<FilmPage>(this.baseUrl, { params });
   }
 }
+
 

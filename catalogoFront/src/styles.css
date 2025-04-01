@@ -22,3 +22,27 @@
   font-family: var(--font-nabla);
 }
 
+/* styles.css */
+
+/* Asegura que el contenedor root ocupe toda la altura de la pantalla */
+html, body {
+  @apply h-full;
+  @apply m-0;
+}
+
+/* Utilizamos flexbox para organizar la estructura */
+app-root {
+  @apply flex flex-col min-h-screen;
+}
+
+/* El main ocupa el espacio restante */
+main {
+  @apply flex-1 overflow-auto;
+}
+
+/* El footer se mantiene al final */
+app-footer {
+  @apply mt-auto;
+}
+
+
