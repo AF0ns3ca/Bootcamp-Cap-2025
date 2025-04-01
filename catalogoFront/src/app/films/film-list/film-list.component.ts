@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';  // Importa FormsModule
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
+
 export class FilmListComponent implements OnInit {
   films: Film[] = [];
   pageable: Pageable = { pageNumber: 0, pageSize: 5 };

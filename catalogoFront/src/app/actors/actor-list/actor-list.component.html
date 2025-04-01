@@ -1,9 +1,96 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-    <div *ngFor="let actor of actors" class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl">
+<div class="w-full flex flex-col items-center justify-center gap-10">
+  <div
+    class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4"
+  >
+    <div
+      *ngFor="let actor of actors"
+      class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
+    >
       <div class="p-4">
-        <h3 class="text-lg font-semibold text-gray-800">{{ actor.nombre }} {{ actor.apellidos }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ actor.nombre }} {{ actor.apellidos }}
+        </h3>
         <p class="text-gray-600">ID: {{ actor.id }}</p>
       </div>
     </div>
   </div>
-  
+
+  <!-- Paginación -->
+  <div class="w-full flex justify-center items-center space-x-4 m-6">
+    <!-- Botón de "Primera" -->
+    <button
+      class="px-4 py-2 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none disabled:opacity-50 transition-all"
+      (click)="goToFirstPage()"
+      [disabled]="currentPage === 0"
+    >
+      <span class="font-semibold">Primera</span>
+    </button>
+
+    <!-- Botón de "Anterior" -->
+    <button
+      class="px-4 py-2 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none disabled:opacity-50 transition-all"
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 0"
+    >
+      <span class="font-semibold">Anterior</span>
+    </button>
+
+    <!-- Numeración de Páginas -->
+    <div class="flex items-center space-x-2">
+      <button
+        *ngIf="currentPage > 1"
+        class="px-3 py-1 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none"
+        (click)="goToPage(currentPage - 1)"
+      >
+        {{ currentPage }}
+      </button>
+      <button
+        class="px-3 py-1 text-white rounded-md bg-gray-600 focus:outline-none"
+        [class.bg-gray-600]="currentPage === currentPage"
+        [class.text-white]="currentPage === currentPage"
+      >
+        {{ currentPage + 1 }}
+      </button>
+      <button
+        *ngIf="currentPage < totalPages - 2"
+        class="px-3 py-1 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none"
+        (click)="goToPage(currentPage + 1)"
+      >
+        {{ currentPage + 2 }}
+      </button>
+    </div>
+
+    <!-- Botón de "Siguiente" -->
+    <button
+      class="px-4 py-2 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none disabled:opacity-50 transition-all"
+      (click)="goToNextPage()"
+      [disabled]="currentPage === totalPages - 1"
+    >
+      <span class="font-semibold">Siguiente</span>
+    </button>
+
+    <!-- Botón de "Última" -->
+    <button
+      class="px-4 py-2 text-gray-600 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none disabled:opacity-50 transition-all"
+      (click)="goToLastPage()"
+      [disabled]="currentPage === totalPages - 1"
+    >
+      <span class="font-semibold">Última</span>
+    </button>
+
+    <!-- Desplegable para cambiar el número de elementos por página -->
+    <div class="ml-6 flex flex-row gap-2 items-center">
+      <label class="text-gray-600" for="pageSize">Mostrar</label>
+      <select
+        id="pageSize"
+        class="px-4 py-2 text-gray-600 text-center bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+        [(ngModel)]="pageable.pageSize"
+        (change)="onPageSizeChange()"
+      >
+        <option value="12">12</option>
+        <option value="36">36</option>
+        <option value="48">48</option>
+      </select>
+    </div>
+  </div>
+</div>
