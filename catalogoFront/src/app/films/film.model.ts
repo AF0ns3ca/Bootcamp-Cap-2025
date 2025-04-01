@@ -1,14 +1,14 @@
 // film.model.ts
 // import { Actor } from '../actors/actor.model'
 // import { Category } from '../categories/category.model';
-// import { Language } from '../languages/language.model';
+ import { Language } from '../languages/language.model';
 
 export interface Film {
   filmId: number;
   title: string;
   description: string;
 //   releaseYear: number | null;
-//   language: Language; 
+   language: Language; 
 //   languageVO: Language | null; 
 //   rentalDuration: number;
 //   rentalRate: number;
