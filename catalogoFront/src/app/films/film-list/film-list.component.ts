@@ -3,14 +3,15 @@ import { FilmService } from '../film.service';
 import { Film } from '../film.model';
 import { Pageable } from '../../core/model/Pageable';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // Importamos Router para la navegación
 
 @Component({
   selector: 'app-film-list',
   templateUrl: './film-list.component.html',
   styleUrls: ['./film-list.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
 })
 
 export class FilmListComponent implements OnInit {

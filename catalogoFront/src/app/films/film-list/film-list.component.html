@@ -7,13 +7,15 @@
         *ngFor="let film of films"
         class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
       >
-        <div class="h-56 p-4">
-          <h3 class="text-lg font-semibold text-gray-800">{{ film.title }}</h3>
-          <p *ngIf="film.description" class="text-gray-600">
-            {{ film.description }}
-          </p>
-          <p class="text-gray-600">ID: {{ film.filmId }}</p>
-        </div>
+        <a [routerLink]="['/films', film.filmId]" class="block">
+          <div class="h-56 p-4">
+            <h3 class="text-lg font-semibold text-gray-800">{{ film.title }}</h3>
+            <p *ngIf="film.description" class="text-gray-600">
+              {{ film.description }}
+            </p>
+            <p class="text-gray-600">ID: {{ film.filmId }}</p>
+          </div>
+        </a>
       </div>
     </div>
   </div>
