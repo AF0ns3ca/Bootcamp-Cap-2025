@@ -8,6 +8,7 @@ import { FilmDetailComponent } from './films/film-detail/film-detail.component';
 import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
 import { ActorFormComponent } from './actors/actor-create/actor-create.component';
+import { FilmFormComponent } from './films/film-create/film-create.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,14 +23,16 @@ export const appRoutes: Routes = [
   {path: 'films', children: [
     {path: '', component: FilmListComponent},
     {path: ':id', component: FilmDetailComponent},
+    {path: 'create', component: FilmFormComponent},
+    {path: 'edit/:id', component: FilmFormComponent },
   ]},
+  { path: 'categories', component: CategoriesListComponent},
+  { path: 'category/:id', component: CategoryDetailComponent },
   // { path: 'actors', component: ActorListComponent},
   // { path: 'films', component: FilmListComponent},
   // { path: 'actors/create', component: ActorCreateComponent},
-  { path: 'categories', component: CategoriesListComponent},
   // { path: 'films/:id', component: FilmDetailComponent},
   // { path: 'actors/:id', component: ActorDetailComponent},
-  { path: 'category/:id', component: CategoryDetailComponent },
   
 
 ];

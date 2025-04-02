@@ -1,0 +1,185 @@
+<div class="w-full max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+  <h2 class="text-3xl font-bold text-gray-900">
+    {{ isEditMode ? "Editar Film" : "Crear Nuevo Film" }}
+  </h2>
+
+  <form [formGroup]="filmForm" (ngSubmit)="onSubmit()" class="mt-6 space-y-6">
+    <!-- Titulo -->
+    <div class="flex flex-col">
+      <label for="title" class="text-gray-700 font-medium">Título</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Título de la película"
+        required
+      />
+      <div
+        *ngIf="filmForm.get('title')?.invalid && filmForm.get('title')?.touched"
+        class="text-red-500 text-sm"
+      >
+        El título es requerido.
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="flex flex-col">
+      <label for="description" class="text-gray-700 font-medium"
+        >Descripción</label
+      >
+      <input
+        type="text"
+        id="description"
+        formControlName="description"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Descripción de la película"
+        required
+      />
+      <div
+        *ngIf="
+          filmForm.get('description')?.invalid &&
+          filmForm.get('description')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        La descripción es requerida.
+      </div>
+    </div>
+
+    <!-- Año de estreno -->
+    <div class="flex flex-col">
+      <label for="releaseYear" class="text-gray-700 font-medium"
+        >Año de estreno</label
+      >
+      <input
+        type="number"
+        id="releaseYear"
+        formControlName="releaseYear"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Año de estreno"
+      />
+    </div>
+
+    <!-- Duración del alquiler -->
+    <div class="flex flex-col">
+      <label for="rentalDuration" class="text-gray-700 font-medium"
+        >Duración del alquiler (días)</label
+      >
+      <input
+        type="number"
+        id="rentalDuration"
+        formControlName="rentalDuration"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Duración del alquiler"
+      />
+    </div>
+
+    <!-- Valor de alquiler -->
+    <div class="flex flex-col">
+      <label for="rentalRate" class="text-gray-700 font-medium"
+        >Valor del alquiler</label
+      >
+      <input
+        type="number"
+        id="rentalRate"
+        formControlName="rentalRate"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Valor del alquiler"
+      />
+    </div>
+
+    <!-- Coste de reposición -->
+    <div class="flex flex-col">
+      <label for="replacementCost" class="text-gray-700 font-medium"
+        >Coste de reposición</label
+      >
+      <input
+        type="number"
+        id="replacementCost"
+        formControlName="replacementCost"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Coste de reposición"
+      />
+    </div>
+
+    <!-- Longitud -->
+    <div class="flex flex-col">
+      <label for="length" class="text-gray-700 font-medium"
+        >Longitud (minutos)</label
+      >
+      <input
+        type="number"
+        id="length"
+        formControlName="length"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Longitud de la película"
+      />
+    </div>
+
+    <!-- Clasificación -->
+    <div class="flex flex-col">
+      <label for="rating" class="text-gray-700 font-medium"
+        >Clasificación</label
+      >
+      <input
+        type="text"
+        id="rating"
+        formControlName="rating"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Clasificación de la película"
+      />
+    </div>
+
+    <!-- Características especiales -->
+    <div class="flex flex-col">
+      <label for="specialFeatures" class="text-gray-700 font-medium"
+        >Características especiales</label
+      >
+      <input
+        type="text"
+        id="specialFeatures"
+        formControlName="specialFeatures"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Características especiales"
+      />
+    </div>
+
+    <!-- Idioma -->
+    <!-- Idioma -->
+<div class="flex flex-col">
+  <label for="language" class="text-gray-700 font-medium">Idioma</label>
+  <select
+    id="language"
+    formControlName="language"
+    class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    [ngClass]="{'border-red-500': filmForm.get('language')?.invalid && filmForm.get('language')?.touched}"
+  >
+    <option value="" disabled selected>Seleccione un idioma</option>
+    <option *ngFor="let language of languages" [value]="language.id">{{ language.idioma }}</option>
+  </select>
+  <div *ngIf="filmForm.get('language')?.invalid && filmForm.get('language')?.touched" class="text-red-500 text-sm">
+    El idioma es requerido.
+  </div>
+</div>
+
+
+    <!-- Botón de Enviar -->
+    <div class="flex justify-center mt-6 gap-4">
+      <button
+        type="submit"
+        [disabled]="filmForm.invalid"
+        class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50"
+      >
+        {{ isEditMode ? "Actualizar Film" : "Crear Film" }}
+      </button>
+      <a
+        type="button"
+        class="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300"
+        [routerLink]="['/films']"
+      >
+        Volver a Filmes
+      </a>
+    </div>
+  </form>
+</div>
