@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router'; // Importamos Router para la nav
 
 export class FilmListComponent implements OnInit {
   films: Film[] = [];
-  pageable: Pageable = { pageNumber: 0, pageSize: 5 };
+  pageable: Pageable = { pageNumber: 0, pageSize: 10 };
   totalElements: number = 0;
   totalPages: number = 0;
   currentPage: number = 0;

@@ -1,12 +1,9 @@
 <div class="w-full max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-  <h2 class="text-3xl font-bold text-gray-900">Crear Nuevo Actor</h2>
+  <h2 class="text-3xl font-bold text-gray-900">
+    {{ isEditMode ? 'Editar Actor' : 'Crear Nuevo Actor' }}
+  </h2>
 
-  <form
-    *ngIf="actorForm"
-    [formGroup]="actorForm"
-    (ngSubmit)="onSubmit()"
-    class="mt-6 space-y-6"
-  >
+  <form [formGroup]="actorForm" (ngSubmit)="onSubmit()" class="mt-6 space-y-6">
     <!-- Nombre del actor -->
     <div class="flex flex-col">
       <label for="nombre" class="text-gray-700 font-medium">Nombre</label>
@@ -18,12 +15,7 @@
         placeholder="Nombre del actor"
         required
       />
-      <div
-        *ngIf="
-          actorForm.get('nombre')?.invalid && actorForm.get('nombre')?.touched
-        "
-        class="text-red-500 text-sm"
-      >
+      <div *ngIf="actorForm.get('nombre')?.invalid && actorForm.get('nombre')?.touched" class="text-red-500 text-sm">
         El nombre es requerido.
       </div>
     </div>
@@ -39,13 +31,7 @@
         placeholder="Apellidos del actor"
         required
       />
-      <div
-        *ngIf="
-          actorForm.get('apellidos')?.invalid &&
-          actorForm.get('apellidos')?.touched
-        "
-        class="text-red-500 text-sm"
-      >
+      <div *ngIf="actorForm.get('apellidos')?.invalid && actorForm.get('apellidos')?.touched" class="text-red-500 text-sm">
         Los Apellidos son requeridos.
       </div>
     </div>
@@ -57,7 +43,7 @@
         [disabled]="actorForm.invalid"
         class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50"
       >
-        Crear Actor
+        {{ isEditMode ? 'Actualizar Actor' : 'Crear Actor' }}
       </button>
       <a
         type="button"

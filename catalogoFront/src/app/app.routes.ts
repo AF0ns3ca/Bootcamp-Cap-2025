@@ -7,15 +7,17 @@ import { CategoriesListComponent } from './categories/categories-list/categories
 import { FilmDetailComponent } from './films/film-detail/film-detail.component';
 import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
-import { ActorCreateComponent } from './actors/actor-create/actor-create.component';
+import { ActorFormComponent } from './actors/actor-create/actor-create.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   {path: 'actors', children: [
     {path: '', component: ActorListComponent},
-    {path: 'create', component: ActorCreateComponent},
+    {path: 'create', component: ActorFormComponent},
     {path: ':id', component: ActorDetailComponent},
+    { path: 'edit/:id', component: ActorFormComponent },
+
   ]},
   {path: 'films', children: [
     {path: '', component: FilmListComponent},

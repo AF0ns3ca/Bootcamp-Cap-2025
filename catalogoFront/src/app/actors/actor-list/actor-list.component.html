@@ -24,7 +24,7 @@
           <!-- Botones de acción (Editar, Eliminar) -->
           <div class="flex justify-around gap-4 p-4">
             <!-- Botón de Editar -->
-            <button class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-500 focus:outline-none">
+            <button [routerLink]="['/actors/edit', actor.id]" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-500 focus:outline-none">
               Editar
             </button>
             <!-- Botón de Eliminar -->

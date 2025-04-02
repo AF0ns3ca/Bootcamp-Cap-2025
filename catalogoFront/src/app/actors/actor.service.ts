@@ -48,6 +48,12 @@ export class ActorService {
   addActor(actor: Actor): Observable<Actor> {
     return this.http.post<Actor>(this.apiUrl, actor);  // Envia el objeto actor al backend
   }
+
+  updateActor(id: number, actor: Actor): Observable<Actor> {
+    const url = `${this.apiUrl}/${id}`;  // El ID del actor debe ir en la URL
+    return this.http.put<Actor>(url, actor);  // Se utiliza PUT para actualizar
+  }
+  
   
   deleteActor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
