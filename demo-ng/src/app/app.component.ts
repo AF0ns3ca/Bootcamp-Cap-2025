@@ -1,28 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoggerService } from '@my/core';
-import { DemosComponent } from './ejemplos/demos/demos.component';
-import { NotificationComponent, NotificationModalComponent } from './main';
+import { AjaxWaitComponent, NotificationComponent, NotificationModalComponent } from './main';
 import { NotificationService, NotificationType } from './common-services';
-import { FormulariosComponent } from './ejemplos/formularios/formularios.component';
+import { HeaderComponent } from "./main/header/header.component";
+import { FooterComponent } from "./main/footer/footer.component";
+import { ContactosComponent } from './contactos';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormulariosComponent, NotificationComponent, /*NotificationModalComponent,*/ ],
+  imports: [RouterOutlet, NotificationComponent, /*NotificationModalComponent,*/
+    AjaxWaitComponent, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
 
-  // constructor(out: LoggerService) {
-  //   out.error('Es un error')
-  //   out.warn('Es un warn')
-  //   out.info('Es un info')
-  //   out.log('Es un log')
-  // }
-  // constructor(private notify: NotificationService) {}
-
-  // ngOnInit(): void {
-  //   this.notify.add('Aplicación arrancada', NotificationType.info)
-  // }
 }
