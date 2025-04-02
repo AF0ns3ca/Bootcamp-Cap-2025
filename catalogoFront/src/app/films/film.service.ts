@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Pageable } from '../core/model/Pageable';
 import { FilmPage } from '../core/model/FilmPage';
 import { Film } from './film.model';
+import { Actor } from '../actors/actor.model';
 
 @Injectable({
   providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
@@ -33,6 +34,10 @@ export class FilmService {
 
   getFilmDetails(id: number): Observable<Film> {
     return this.http.get<Film>(`${this.baseUrl}/${id}`);  // Debería devolver un solo objeto, no una lista
+  }
+
+  getActorsInFilm(id: number): Observable<Actor[]> {
+    return this.http.get<Actor[]>(`${this.baseUrl}/${id}/reparto`);
   }
 }
 

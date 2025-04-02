@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';  // Asegúrate de importar Commo
 import { Actor } from '../actor.model';
 import { FormsModule } from '@angular/forms';
 import { Pageable } from 'src/app/core/model/Pageable';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-actor-list',  // Este es el nombre del componente en HTML
   templateUrl: './actor-list.component.html',
   styleUrls: ['./actor-list.component.css'],
   standalone: true,  // Marca el componente como independiente
-  imports: [CommonModule, FormsModule]  // Importa CommonModule para usar directivas comunes (como *ngFor)
+  imports: [CommonModule, FormsModule, RouterModule]  // Importa CommonModule para usar directivas comunes (como *ngFor)
 })
 export class ActorListComponent implements OnInit {
   actors: Actor[] = [];

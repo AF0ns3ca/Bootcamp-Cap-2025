@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';  // Importa el modelo de Actor si lo tienes
+import { map, Observable, tap } from 'rxjs';  // Importa el modelo de Actor si lo tienes
 import { Pageable } from '../core/model/Pageable';
 import { ActorPage } from '../core/model/ActorPage';
 @Injectable({
@@ -21,5 +21,30 @@ export class ActorService {
   
     return this.http.get<ActorPage>(this.apiUrl, { params });
   }
+
+  getActorDetails(id: number): Observable<any> {  // Cambia 'any' por el tipo de datos que esperas recibir
+    return this.http.get<any>(`${this.apiUrl}/${id}`);  // Debería devolver un solo objeto, no una lista
+  }
+
+  getActorMovies(id: string): Observable<any> {
+    const url = `${this.apiUrl}/${id}/pelis`;
+    console.log(`Llamada a la API con la URL: ${url}`);
+  
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+        console.log('Respuesta de la API:', response); // Asegúrate de que la respuesta sea un array de películas
+      }),
+      map(response => {
+        // No es necesario hacer response.List.map, porque la respuesta ya es un array
+        return response.map((item: any) => ({
+          filmId: item.id,
+          title: item.titulo,
+        }));
+      })
+    );
+  }
+  
+  
+
 }
 
