@@ -1,0 +1,25 @@
+<div *ngIf="categoryId" class="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-4xl font-semibold text-gray-800">{{ categoryName }}</h1>
+  
+    <!-- Lista de películas -->
+    <div class="mt-8">
+      <h2 class="text-2xl font-semibold text-gray-800">Películas de esta categoría</h2>
+  
+      <!-- Verificar si hay películas -->
+      <div *ngIf="peliculas.length === 0; else movieList" class="mt-4 text-lg text-gray-600">
+        Esta categoría no tiene películas.
+      </div>
+  
+      <!-- Mostrar las películas si no están vacías -->
+      <ng-template #movieList>
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div *ngFor="let film of peliculas" class="bg-gray-100 rounded-lg p-4 shadow-lg">
+            <h3 class="text-xl font-medium text-gray-800">{{ film.title }}</h3>
+            <p class="mt-2 text-sm text-gray-600">{{ film.description || 'Descripción no disponible' }}</p>
+            <a [routerLink]="['/films', film.filmId]" class="mt-4 inline-block text-blue-500 hover:underline">Ver detalles</a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  

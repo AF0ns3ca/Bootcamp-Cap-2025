@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';  // Importa el modelo de Actor si lo tienes
 import { Pageable } from '../core/model/Pageable';
 import { ActorPage } from '../core/model/ActorPage';
+import { Actor } from './actor.model';
 @Injectable({
   providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
 })
@@ -43,7 +44,14 @@ export class ActorService {
       })
     );
   }
+
+  addActor(actor: Actor): Observable<Actor> {
+    return this.http.post<Actor>(this.apiUrl, actor);  // Envia el objeto actor al backend
+  }
   
+  deleteActor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
   
 
 }

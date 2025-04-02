@@ -1,38 +1,42 @@
 <div class="w-full flex flex-col items-center justify-center gap-5">
   <h2 class="text-3xl font-bold text-gray-900 mt-6">Actores</h2>
   
-  <div class="w-full flex flex-col items-center justify-center gap-10">
-    <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+  <div class="w-[70%] flex flex-col items-center justify-center gap-10">
+    <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
       <div *ngFor="let actor of actors" class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl">
-        <a [routerLink]="['/actors', actor.id]" class="block">
-
-          <div class="flex p-4">
-            <!-- Placeholder SVG de Persona -->
-            <svg class="w-24 h-24 rounded-full mr-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20c0-2.21 1.79-4 4-4h8c2.21 0 4 1.79 4 4H4z"/>
-            </svg>
-    
-            <div class="flex flex-col justify-between">
-              <h3 class="text-lg font-semibold text-gray-800">{{ actor.nombre }} {{ actor.apellidos }}</h3>
-    
-              <!-- Botones de editar y eliminar -->
-              <div class="flex gap-4 mt-2">
-                <button class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-500 focus:outline-none">
-                  Editar
-                </button>
-                <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
-                  Eliminar
-                </button>
+        
+        <!-- Bloque de contenido del actor -->
+        <div class="block">
+          <a [routerLink]="['/actors', actor.id]" class="block">
+            <div class="flex p-4">
+              <!-- Placeholder SVG de Persona -->
+              <svg class="w-24 h-24 rounded-full mr-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20c0-2.21 1.79-4 4-4h8c2.21 0 4 1.79 4 4H4z"/>
+              </svg>
+  
+              <div class="flex flex-col justify-between">
+                <!-- Nombre del actor -->
+                <h3 class="text-lg font-semibold text-gray-800">{{ actor.nombre }} {{ actor.apellidos }}</h3>
               </div>
             </div>
+          </a>
+          
+          <!-- Botones de acción (Editar, Eliminar) -->
+          <div class="flex justify-around gap-4 p-4">
+            <!-- Botón de Editar -->
+            <button class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-500 focus:outline-none">
+              Editar
+            </button>
+            <!-- Botón de Eliminar -->
+            <button (click)="onDeleteActor(actor.id, $event)" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
+              Eliminar
+            </button>
           </div>
-        </a>
+        </div>
       </div>
     </div>
   </div>
   
-  
-
   <!-- Paginación -->
   <div class="w-full flex justify-center items-center space-x-4 m-6">
     <!-- Botón de "Primera" -->
@@ -105,10 +109,15 @@
         [(ngModel)]="pageable.pageSize"
         (change)="onPageSizeChange()"
       >
-        <option value="12">12</option>
-        <option value="36">36</option>
-        <option value="48">48</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="40">40</option>
       </select>
     </div>
   </div>
+
+  <!-- Botón flotante para crear un nuevo actor -->
+  <button class="fixed bottom-6 right-6 w-16 h-16 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none flex items-center justify-center transition-all" [routerLink]="['/actors/create']">
+    <span class="text-3xl font-bold">+</span>
+  </button>
 </div>

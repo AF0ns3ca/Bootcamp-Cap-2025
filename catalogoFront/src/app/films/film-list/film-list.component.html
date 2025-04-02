@@ -1,19 +1,28 @@
 <div class="w-full flex flex-col items-center justify-center gap-10">
-  <div class="w-full h-fit mt-10 mb-5">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-4"
-    >
-      <div
-        *ngFor="let film of films"
-        class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl"
-      >
+  <h2 class="text-3xl font-bold text-gray-900 mt-6">Peliculas</h2>
+
+  <div class="w-[70%] flex flex-col items-center justify-center gap-10">
+    <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
+      <div *ngFor="let film of films" class="max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-all hover:scale-105 hover:shadow-xl">
         <a [routerLink]="['/films', film.filmId]" class="block">
-          <div class="h-56 p-4">
-            <h3 class="text-lg font-semibold text-gray-800">{{ film.title }}</h3>
-            <p *ngIf="film.description" class="text-gray-600">
-              {{ film.description }}
-            </p>
-            <p class="text-gray-600">ID: {{ film.filmId }}</p>
+          <div class="flex p-4">
+            <svg class="w-24 h-24 rounded-full mr-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18v16H3V4zm14 10H7v-2h10v2z"/>
+            </svg>
+
+            <div class="flex flex-col justify-between">
+              <h3 class="text-lg font-semibold text-gray-800">{{ film.title }}</h3>
+
+              <!-- Botones de editar y eliminar -->
+              <div class="flex gap-4 mt-2">
+                <button class="p-2 w-12 h-12 bg-gray-800 text-white rounded-full hover:bg-gray-500 focus:outline-none items-center flex justify-center transition-all duration-200 ease-in-out transform hover:scale-105">
+                  <img src="edit.svg" alt="Editar" class="w-8 h-8">
+                </button>
+                <button class="p-2 w-12 h-12 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none items-center flex justify-center transition-all duration-200 ease-in-out transform hover:scale-105">
+                  <img src="delete.svg" alt="Eliminar" class="w-8 h-8">
+                </button>
+              </div>
+            </div>
           </div>
         </a>
       </div>

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
+import com.example.domains.entities.models.FilmDetailsDTO;
 import com.example.domains.entities.models.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -66,13 +67,13 @@ public class CategoryController {
 
     @GetMapping(path = "/{id}/peliculas")
 	@Transactional
-	public List<FilmShortDTO> getPelis(@PathVariable int id) throws NotFoundException {
+	public List<FilmDetailsDTO> getPelis(@PathVariable int id) throws NotFoundException {
 		var Category = srv.getOne(id);
 		if(Category.isEmpty())
 			throw new NotFoundException();
 		else {
-			return (List<FilmShortDTO>) Category.get().getFilmCategories().stream()
-					.map(item -> FilmShortDTO.from(item.getFilm()))
+			return (List<FilmDetailsDTO>) Category.get().getFilmCategories().stream()
+					.map(item -> FilmDetailsDTO.from(item.getFilm()))
 					.collect(Collectors.toList());
 		}
 	}
