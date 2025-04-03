@@ -2,16 +2,16 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';  // Importa el modelo de Actor si lo tienes
+import { map, Observable, tap } from 'rxjs';  
 import { Pageable } from '../core/model/Pageable';
 import { ActorPage } from '../core/model/ActorPage';
 import { Actor } from './actor.model';
 @Injectable({
-  providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
+  providedIn: 'root'  
 })
 export class ActorService {
 
-  private apiUrl = 'http://localhost:8001/actores/v1';  // Ajusta la URL según tu API
+  private apiUrl = 'http://localhost:8001/actores/v1'; 
 
   constructor(private http: HttpClient) { }
 
@@ -23,8 +23,8 @@ export class ActorService {
     return this.http.get<ActorPage>(this.apiUrl, { params });
   }
 
-  getActorDetails(id: number): Observable<any> {  // Cambia 'any' por el tipo de datos que esperas recibir
-    return this.http.get<any>(`${this.apiUrl}/${id}`);  // Debería devolver un solo objeto, no una lista
+  getActorDetails(id: number): Observable<any> {  
+    return this.http.get<any>(`${this.apiUrl}/${id}`);  
   }
 
   getActorMovies(id: string): Observable<any> {
@@ -33,10 +33,10 @@ export class ActorService {
   
     return this.http.get<any>(url).pipe(
       tap(response => {
-        console.log('Respuesta de la API:', response); // Asegúrate de que la respuesta sea un array de películas
+        console.log('Respuesta de la API:', response); 
       }),
       map(response => {
-        // No es necesario hacer response.List.map, porque la respuesta ya es un array
+        
         return response.map((item: any) => ({
           filmId: item.id,
           title: item.titulo,
@@ -46,12 +46,12 @@ export class ActorService {
   }
 
   addActor(actor: Actor): Observable<Actor> {
-    return this.http.post<Actor>(this.apiUrl, actor);  // Envia el objeto actor al backend
+    return this.http.post<Actor>(this.apiUrl, actor); 
   }
 
   updateActor(id: number, actor: Actor): Observable<Actor> {
-    const url = `${this.apiUrl}/${id}`;  // El ID del actor debe ir en la URL
-    return this.http.put<Actor>(url, actor);  // Se utiliza PUT para actualizar
+    const url = `${this.apiUrl}/${id}`;  
+    return this.http.put<Actor>(url, actor);  
   }
   
   

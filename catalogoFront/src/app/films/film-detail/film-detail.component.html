@@ -1,54 +1,75 @@
-<!-- film-detail.component.html -->
-<div *ngIf="film" class="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-  <!-- Detalles de la película -->
+
+<div
+  *ngIf="film"
+  class="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg"
+>
+
   <div class="flex items-center space-x-6">
     <div>
-      <img [src]="film.posterUrl || 'https://via.placeholder.com/150'" alt="{{ film.title }}" class="w-32 h-32 rounded-md object-cover shadow-lg">
+      <img
+        [src]="film.posterUrl || 'https://via.placeholder.com/150'"
+        alt="{{ film.title }}"
+        class="w-32 h-32 rounded-md object-cover shadow-lg"
+      />
     </div>
     <div class="flex-1">
       <h1 class="text-4xl font-semibold text-gray-800">{{ film.title }}</h1>
-      <p class="mt-2 text-lg text-gray-600">{{ film.description || 'Descripción no disponible' }}</p>
+      <p class="mt-2 text-lg text-gray-600">
+        {{ film.description || "Descripción no disponible" }}
+      </p>
     </div>
   </div>
 
-  <!-- Actores en la película -->
-<div class="mt-8">
-  <h2 class="text-2xl font-semibold text-gray-800">Actores en la película</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-    <div *ngFor="let actor of actors" class="bg-gray-100 rounded-lg p-4 shadow-sm">
-      <!-- Enlace para ir al detalle del actor -->
-      <h3 class="text-xl font-medium text-gray-800">
-        <a [routerLink]="['/actors', actor.id]" class="text-blue-500 hover:underline">
-          {{ actor.nombre }} {{ actor.apellidos }}
-        </a>
-      </h3>
-      
-      <!-- Botón para eliminar actor -->
-      <button 
-        (click)="confirmDeleteActor(actor.id)" 
-        class="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+
+  <div class="mt-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Actores en la película</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      <div
+        *ngFor="let actor of actors"
+        class="bg-gray-100 rounded-lg p-4 shadow-sm"
       >
-        Eliminar Actor
-      </button>
+    
+        <h3 class="text-xl font-medium text-gray-800">
+          <a
+            [routerLink]="['/actors', actor.id]"
+            class="text-blue-500 hover:underline"
+          >
+            {{ actor.nombre }} {{ actor.apellidos }}
+          </a>
+        </h3>
+
+    
+        <button
+          (click)="confirmDeleteActor(actor.id)"
+          class="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          Eliminar Actor
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-  <!-- Categorias de la película -->
+
   <div class="mt-8">
     <h2 class="text-2xl font-semibold text-gray-800">Género</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-      <div *ngFor="let category of categories" class="bg-gray-100 rounded-lg p-4 shadow-sm">
-        <!-- Enlace para ir al detalle del actor -->
+      <div
+        *ngFor="let category of categories"
+        class="bg-gray-100 rounded-lg p-4 shadow-sm"
+      >
+ 
         <h3 class="text-xl font-medium text-gray-800">
-          <a [routerLink]="['/category', category.id]" class="text-blue-500 hover:underline">
+          <a
+            [routerLink]="['/category', category.id]"
+            class="text-blue-500 hover:underline"
+          >
             {{ category.categoria }}
           </a>
         </h3>
-        
-        <!-- Botón para eliminar actor -->
-        <button 
-          (click)="confirmDeleteCategory(category.id)" 
+
+
+        <button
+          (click)="confirmDeleteCategory(category.id)"
           class="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Eliminar Categoria
@@ -58,41 +79,53 @@
   </div>
 
 
-  <!-- Formulario para añadir actor -->
   <div class="mt-8 bg-gray-50 p-6 rounded-lg shadow-lg">
-    <h3 class="text-2xl font-semibold text-gray-800">Añadir Actor a la Película</h3>
+    <h3 class="text-2xl font-semibold text-gray-800">
+      Añadir Actor a la Película
+    </h3>
     <div class="flex flex-col mt-4">
-      <label for="actorId" class="text-gray-700 font-medium">ID del Actor</label>
-      <input 
-        type="number" 
-        id="actorId" 
-        [(ngModel)]="actorId" 
-        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-        placeholder="Ingresa el ID del actor" 
+      <label for="actorId" class="text-gray-700 font-medium"
+        >ID del Actor</label
+      >
+      <input
+        type="number"
+        id="actorId"
+        [(ngModel)]="actorId"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Ingresa el ID del actor"
       />
-      <button 
-        (click)="addActorToFilm()" 
-        class="mt-4 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+      <button
+        (click)="addActorToFilm()"
+        class="mt-4 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
         Añadir Actor
       </button>
     </div>
   </div>
 
-  <!-- Formulario para añadir Categoria -->
   <div class="mt-8 bg-gray-50 p-6 rounded-lg shadow-lg">
-    <h3 class="text-2xl font-semibold text-gray-800">Añadir Categoria a la Pelicula</h3>
+    <h3 class="text-2xl font-semibold text-gray-800">
+      Añadir Categoria a la Película
+    </h3>
     <div class="flex flex-col mt-4">
-      <label for="actorId" class="text-gray-700 font-medium">ID de la Categoria</label>
-      <input 
-        type="number" 
-        id="actorId" 
-        [(ngModel)]="categoryId" 
-        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-        placeholder="Ingresa el ID de la Categoria" 
-      />
-      <button 
-        (click)="addCategoryToFilm()" 
-        class="mt-4 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+      <label for="categoryId" class="text-gray-700 font-medium"
+        >Selecciona una Categoría</label
+      >
+      <select
+        [(ngModel)]="categoryId"
+        id="categoryId"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="" disabled selected>Seleccione una categoría</option>
+        <option *ngFor="let category of categoriesAll" [value]="category.id">
+          {{ category.categoria }}
+        </option>
+      </select>
+
+      <button
+        (click)="addCategoryToFilm()"
+        class="mt-4 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
         Añadir Categoria
       </button>
     </div>

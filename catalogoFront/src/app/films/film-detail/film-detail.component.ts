@@ -2,44 +2,48 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FilmService } from '../film.service';
-import { Actor } from '../../actors/actor.model';  // Si tienes un modelo Actor
+import { Actor } from '../../actors/actor.model';  
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { Category } from 'src/app/categories/category.model';
+import { CategoryService } from 'src/app/categories/category.service';
 
 
 @Component({
   selector: 'app-film-detail',
   templateUrl: './film-detail.component.html',
   styleUrls: ['./film-detail.component.css'],
-  standalone: true,  // Marca el componente como independiente
-  imports: [CommonModule, RouterLink, ReactiveFormsModule, FormsModule],  // Importa los módulos necesarios aquí
+  standalone: true,  
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, FormsModule], 
 })
 
 export class FilmDetailComponent implements OnInit {
   filmId: number | null = null;
-  film: any;  // Cambiar a un tipo más específico si es necesario
-  actors: Actor[] = [];  // Lista de actores
+  film: any; 
+  actors: Actor[] = []; 
   actorId: number | null = null;
-  categories: Category[] = [];  // Lista de categorías
-  categoryId: number | null = null;  // ID de la categoría seleccionada
+  categories: Category[] = []; 
+  categoriesAll: Category[] = [];
+  categoryId: number | null = null;  
   
 
   constructor(
     private route: ActivatedRoute,
     private filmService: FilmService,
+    private categoryService: CategoryService,
     private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.filmId = +params['id'];  // Obtener el id de la película
+      this.filmId = +params['id'];
       if (this.filmId !== null) {
         this.loadFilmDetails();
         this.loadActors();
         this.loadCategories();
       }
+      this.loadAllCategories();
     });
   }
 
@@ -71,13 +75,20 @@ export class FilmDetailComponent implements OnInit {
     }
   }
 
+  loadAllCategories(): void {
+    this.categoryService.getCategories().subscribe((categoriesAll: Category[]) => {
+      this.categoriesAll = categoriesAll;
+      console.log('Todas las categorías:', this.categoriesAll); 
+    });
+  }
+
   addActorToFilm(): void {
     if (this.filmId && this.actorId && !isNaN(this.filmId) && !isNaN(this.actorId)) {
       this.filmService.addActorToFilm(this.filmId, this.actorId).subscribe(
         (response) => {
           console.log('Respuesta recibida:', response);
           if (response && response.message) {
-            alert(response.message); // Mostrar el mensaje del backend
+            alert(response.message);
             this.loadFilmDetails(); 
             this.loadActors();
           } else {
@@ -107,8 +118,8 @@ export class FilmDetailComponent implements OnInit {
       this.filmService.removeActorFromFilm(this.filmId, actorId).subscribe(
         (response) => {
           console.log('Respuesta recibida:', response);
-          alert(response.message); // Mostrar el mensaje del backend
-          this.loadActors(); // Recargar la lista de actores después de eliminar al actor
+          alert(response.message); 
+          this.loadActors(); 
         },
         (error) => {
           console.error('Error al eliminar actor', error);
@@ -127,9 +138,9 @@ export class FilmDetailComponent implements OnInit {
             (response) => {
                 console.log('Respuesta recibida:', response);
                 if (response && response.message) {
-                    alert(response.message);  // Mostrar el mensaje del backend
+                    alert(response.message); 
                     this.loadFilmDetails(); 
-                    this.loadCategories() // Redirigir a la lista de películas
+                    this.loadCategories() 
                 } else {
                     console.error('Respuesta inesperada:', response);
                     alert('Hubo un problema al añadir la categoría.');
@@ -157,8 +168,8 @@ removeCategoryFromFilm(categoryId: number): void {
     this.filmService.removeCategoryFromFilm(this.filmId, categoryId).subscribe(
       (response) => {
         console.log('Respuesta recibida:', response);
-        alert(response.message); // Mostrar el mensaje del backend
-        this.loadCategories(); // Recargar la lista de actores después de eliminar al actor
+        alert(response.message);
+        this.loadCategories(); 
       },
       (error) => {
         console.error('Error al eliminar la categoria', error);

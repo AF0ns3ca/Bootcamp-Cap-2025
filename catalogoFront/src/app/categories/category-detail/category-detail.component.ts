@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CategoryService } from '../category.service';  // Asegúrate de importar el servicio
-import { Film } from 'src/app/films/film.model';  // Asegúrate de tener el modelo adecuado para Film
-import { Category } from '../category.model';  // Asegúrate de tener el modelo adecuado para Category
+import { CategoryService } from '../category.service';  
+import { Film } from 'src/app/films/film.model';  
+import { Category } from '../category.model';  
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category-detail',
   templateUrl: './category-detail.component.html',
   styleUrls: ['./category-detail.component.css'],
-  standalone: true,  // Marca el componente como independiente
-  imports: [CommonModule, RouterLink],  // Aquí puedes agregar otros módulos que necesites
+  standalone: true,  
+  imports: [CommonModule, RouterLink], 
 })
 export class CategoryDetailComponent implements OnInit {
   categoryId: number | null = null;
-  categoryName: string = '';  // Nombre de la categoría
+  categoryName: string = '';  
   peliculas: Film[] = [];
-    // Películas que pertenecen a esta categoría
+   
 
   constructor(
     private route: ActivatedRoute,
@@ -24,23 +24,23 @@ export class CategoryDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Capturar el 'categoryId' de la URL
+   
     this.route.params.subscribe(params => {
-      this.categoryId = +params['id'];  // Asegúrate de que categoryId sea un número
+      this.categoryId = +params['id'];  
 
-      // Verificamos que tenemos un categoryId válido
+      
       if (this.categoryId) {
-        this.loadCategoryDetails();  // Cargar los detalles de la categoría
-        this.getCategoryMovies();    // Cargar las películas de la categoría
+        this.loadCategoryDetails();  
+        this.getCategoryMovies();    
       }
     });
   }
 
   loadCategoryDetails(): void {
-    // Obtener los detalles de la categoría, como el nombre
+    
     this.categoryService.getCategoryById(this.categoryId!).subscribe(
       (category: Category) => {
-        this.categoryName = category.categoria;  // Asume que la respuesta tiene un campo 'name' para el nombre de la categoría
+        this.categoryName = category.categoria;  
       },
       (error) => {
         console.error('Error al obtener los detalles de la categoría:', error);
@@ -49,11 +49,11 @@ export class CategoryDetailComponent implements OnInit {
   }
 
   getCategoryMovies(): void {
-    console.log('Category ID:', this.categoryId);  // Verifica que categoryId sea correcto
+    console.log('Category ID:', this.categoryId);  
     if (this.categoryId) {
       this.categoryService.getCategoryMovies(this.categoryId).subscribe(
         (films: Film[]) => {
-          console.log('Datos de películas recibidos:', films);  // Log de los datos
+          console.log('Datos de películas recibidos:', films);  
           this.peliculas = films;
         },
         (error) => {

@@ -8,7 +8,7 @@ import { Film } from './film.model';
 import { Actor } from '../actors/actor.model';
 
 @Injectable({
-  providedIn: 'root', // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
+  providedIn: 'root', 
 })
 export class FilmService {
   // private apiUrl = 'http://localhost:8001/films/v1';
@@ -31,7 +31,7 @@ export class FilmService {
   }
 
   getFilmDetails(id: number): Observable<Film> {
-    return this.http.get<Film>(`${this.baseUrl}/${id}`); // Debería devolver un solo objeto, no una lista
+    return this.http.get<Film>(`${this.baseUrl}/${id}`); 
   }
 
   getActorsInFilm(id: number): Observable<Actor[]> {
@@ -59,19 +59,25 @@ export class FilmService {
   }
 
   getLanguages(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lanUrl}`); // Cambia la URL según corresponda
+    return this.http.get<any[]>(`${this.lanUrl}`); 
   }
 
   addFilm(film: Film): Observable<Film> {
-    return this.http.post<Film>(this.baseUrl, film); // Envia el objeto actor al backend
+    return this.http.post<Film>(this.baseUrl, film); 
   }
 
   updateFilm(id: number, film: Film): Observable<Film> {
-    const url = `${this.baseUrl}/${id}`; // El ID del actor debe ir en la URL
-    return this.http.put<Film>(url, film); // Se utiliza PUT para actualizar
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put<Film>(url, film); 
   }
 
   deleteActor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getNovedades(fecha: string): Observable<Film[]> {
+    console.log('Petición al endpoint con fecha:', fecha);
+    return this.http.get<Film[]>(`${this.baseUrl}/novedades?fecha=${fecha}`);
+  }
+  
 }

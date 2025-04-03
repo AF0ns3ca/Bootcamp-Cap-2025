@@ -4,7 +4,7 @@ import { Film } from '../film.model';
 import { Pageable } from '../../core/model/Pageable';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router'; // Importamos Router para la navegación
+import { Router, RouterModule } from '@angular/router'; 
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -25,7 +25,7 @@ export class FilmListComponent implements OnInit {
   constructor(private filmService: FilmService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadFilms(); // Cargar las películas al inicio
+    this.loadFilms();
   }
 
   loadFilms(): void {
@@ -67,8 +67,8 @@ export class FilmListComponent implements OnInit {
   }
 
   onPageSizeChange(): void {
-    this.pageable.pageNumber = 0; // Restablecer a la primera página al cambiar el tamaño de la página
-    this.loadFilms(); // Recargar las películas con el nuevo tamaño de página
+    this.pageable.pageNumber = 0; 
+    this.loadFilms(); 
   }
 
   get pages() {
@@ -76,13 +76,13 @@ export class FilmListComponent implements OnInit {
   }
 
   onDeleteFilm(id: number, event: Event): void {
-    event.stopPropagation(); // Detiene la propagación del evento
+    event.stopPropagation(); 
     if (confirm('¿Estás seguro de que deseas eliminar esta película?')) {
       this.filmService.deleteActor(id).subscribe(
         () => {
-          this.loadFilms(); // Recarga la lista de actores
+          this.loadFilms();
           alert('Pelicula eliminada con éxito');
-          this.router.navigate(['/films']); // Redirige a la lista de actores después de la eliminación
+          this.router.navigate(['/films']); 
         },
         (error) => {
           console.error('Error al eliminar la pelicula', error);

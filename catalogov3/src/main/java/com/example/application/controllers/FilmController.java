@@ -1,6 +1,7 @@
 package com.example.application.controllers;
 
 import java.net.URI;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import lombok.NonNull;
 
 @RestController
 @Tag(name = "peliculas-service", description = "Mantenimiento de peliculas")
@@ -315,7 +317,7 @@ public class FilmController {
 			throws Exception {
 		Film film = srv.getOne(filmId).orElseThrow(() -> new NotFoundException("Pelicula no encontrada"));
 		Category category = srvC.getOne(categoryId).orElseThrow(() -> new NotFoundException("Categoria no encontrada"));
-		
+
 		film.addCategory(category);
 		srv.modify(film);
 
@@ -341,6 +343,12 @@ public class FilmController {
 
 		return ResponseEntity.ok(response); // Devolvemos el objeto JSON
 	}
+
+	@GetMapping("/novedades")
+    public ResponseEntity<List<Film>> getNovedades(@RequestParam("fecha") @NonNull Timestamp fecha) {
+        List<Film> novedades = srv.novedades(fecha);
+        return ResponseEntity.ok(novedades);
+    }
 
 	// @Operation(summary = "Enviar un me gusta")
 	// @ApiResponse(responseCode = "200", description = "Like enviado")

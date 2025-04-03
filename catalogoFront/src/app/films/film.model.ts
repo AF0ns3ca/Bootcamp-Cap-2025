@@ -1,4 +1,4 @@
-// film.model.ts
+
 import { Actor } from '../actors/actor.model';
 import { Category } from '../categories/category.model';
 import { Language } from '../languages/language.model';

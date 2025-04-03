@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'; // Ajusta la ruta si es necesario
+import { Component, OnInit } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';  // Si usas RouterLink para navegación
+import { RouterLink } from '@angular/router';  
 import { Film } from 'src/app/films/film.model';
 import { Language } from '../language.model';
 import { LanguageService } from '../language.service';
@@ -16,10 +16,10 @@ export class LanguagesListComponent implements OnInit {
 
 
   languages: Language[] = [];
-  loading: boolean = true;  // Para manejar el estado de carga
-  errorMessage: string = '';  // Para manejar errores de la API
-  languageId: number | null = null;  // Declaramos categoryId
-  peliculas: Film[] = [];  // Declaramos peliculas como un array vacío de tipo Film
+  loading: boolean = true;  
+  errorMessage: string = ''; 
+  languageId: number | null = null;  
+  peliculas: Film[] = [];  
   
   constructor(private languageService: LanguageService) { }
 
@@ -28,16 +28,16 @@ export class LanguagesListComponent implements OnInit {
   }
 
   loadLanguages(): void {
-    // Llamada al servicio para obtener las categorías
+  
     this.languageService.getLanguages().subscribe(
       data => {
-        this.languages = data;  // Asigna los datos a la propiedad categories
-        this.loading = false;     // Establece que la carga ha terminado
+        this.languages = data;  
+        this.loading = false;    
       },
       error => {
-        this.errorMessage = 'Hubo un error al cargar los idiomas';  // Mensaje de error
-        this.loading = false;  // Asegúrate de cambiar el estado de carga
-        console.error(error);  // Loguea el error
+        this.errorMessage = 'Hubo un error al cargar los idiomas';  
+        this.loading = false; 
+        console.error(error);  
       }
     );
   }
@@ -45,7 +45,7 @@ export class LanguagesListComponent implements OnInit {
   getLanguageMovies(): void {
     this.languageService.getLanguageMovies(this.languageId!).subscribe(
       (films: Film[]) => {
-        this.peliculas = films;  // Asume que la respuesta es un array de películas
+        this.peliculas = films;  
       },
       (error) => {
         console.error('Error al obtener las películas del idioma:', error);
@@ -54,14 +54,14 @@ export class LanguagesListComponent implements OnInit {
   }
 
   onDeleteLanguage(languageId: number, event: Event): void {
-    event.stopPropagation();  // Evita que el evento de clic se propague
+    event.stopPropagation(); 
   
     if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
       this.languageService.removeLanguage(languageId).subscribe(
         (response) => {
           console.log('Categoría eliminada:', response);
           alert('Categoría eliminada con éxito');
-          this.loadLanguages();  // Recargar la lista de categorías
+          this.loadLanguages(); 
         },
         (error) => {
           console.error('Error al eliminar categoría', error);

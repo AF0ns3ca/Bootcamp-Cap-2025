@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router'; // Importa Router
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FilmService } from '../film.service';
 import { Film } from '../film.model';
@@ -30,10 +30,10 @@ export class FilmFormComponent implements OnInit {
     this.filmId = +this.route.snapshot.paramMap.get('id')!;
     this.isEditMode = this.filmId ? true : false;
 
-    // Cargar los idiomas disponibles
+
     this.loadLanguages();
 
-    // Crear el formulario
+
     this.filmForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -48,18 +48,18 @@ export class FilmFormComponent implements OnInit {
     });
     
 
-    // Si estamos en modo edición, cargar los datos
+ 
     if (this.isEditMode) {
       this.loadFilmData();
     }
   }
 
-  // Método para cargar los idiomas desde el servicio
+
   loadLanguages(): void {
     this.filmService.getLanguages().subscribe(
       (data) => {
-        console.log('Idiomas cargados:', data);  // Verifica si los datos están llegando correctamente
-        this.languages = data;  // Asume que 'data' es la lista de idiomas
+        console.log('Idiomas cargados:', data);  
+        this.languages = data;  
       },
       (error) => {
         console.error('Error al cargar los idiomas:', error);
@@ -82,10 +82,10 @@ export class FilmFormComponent implements OnInit {
     if (this.filmForm.valid) {
       const filmData: Film = this.filmForm.value;
   
-      // Loguea los datos que se están enviando
+
       console.log('Datos que se van a enviar:', filmData);
   
-      // Si estamos en modo edición
+   
       if (this.isEditMode) {
         filmData.filmId = this.filmId;
         this.filmService.updateFilm(this.filmId, filmData).subscribe(
@@ -99,7 +99,7 @@ export class FilmFormComponent implements OnInit {
           }
         );
       } else {
-        // Si estamos creando un nuevo film
+  
         this.filmService.addFilm(filmData).subscribe(
           (response) => {
             console.log('Film creado exitosamente:', response);

@@ -11,24 +11,24 @@ import { Film } from 'src/app/films/film.model';
   styleUrl: './actor-detail.component.css'
 })
 export class ActorDetailComponent implements OnInit {
-  // Aquí puedes definir las propiedades y métodos que necesites para el detalle del actor
-  actorId: number | null = null;  // ID del actor que recibimos desde la URL
-  actor: any;  // Cambia 'any' por el tipo de datos que esperas recibir
+
+  actorId: number | null = null;
+  actor: any;
   peliculas: Film[] = [];
 
   constructor(
-    private route: ActivatedRoute,  // Activamos la ruta
+    private route: ActivatedRoute, 
     private actorService: ActorService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.actorId = +params['id'];  // Convertimos el parámetro 'id' a número
-      console.log(`Actor ID desde URL: ${this.actorId}`);  // Log para verificar el valor de actorId
+      this.actorId = +params['id']; 
+      console.log(`Actor ID desde URL: ${this.actorId}`);
       
       if (this.actorId !== null) {
         this.loadActorDetails();
-        this.getActorMovies();  // Llamada al método para obtener las películas
+        this.getActorMovies(); 
       } else {
         console.error('Actor ID es nulo o inválido');
       }
@@ -39,20 +39,20 @@ export class ActorDetailComponent implements OnInit {
     if (this.actorId !== null) {
       this.actorService.getActorDetails(this.actorId).subscribe(data => {
         this.actor = data;
-        console.log('Detalles del actor:', this.actor);  // Esto te ayudará a verificar los datos
+        console.log('Detalles del actor:', this.actor); 
       });
     }
   }
 
   getActorMovies(): void {
     if (this.actorId !== null) {
-      // Convierte actorId de number a string
-      const actorIdAsString = this.actorId.toString();  // o `${this.actorId}`
+
+      const actorIdAsString = this.actorId.toString(); 
       
-      // Ahora puedes pasar actorIdAsString al método del servicio que espera un string
+
       this.actorService.getActorMovies(actorIdAsString).subscribe(
         (films: any) => {
-          this.peliculas = films;  // Aquí se guardan las películas del actor
+          this.peliculas = films; 
         },
         (error) => {
           console.error('Error al obtener las películas del actor:', error);

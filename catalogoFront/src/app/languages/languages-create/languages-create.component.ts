@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../language.service';
 import { Language } from '../language.model';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';  // Importa Router
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';  
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common';
 export class LanguagesFormComponent implements OnInit {
 
   languageForm!: FormGroup; 
-  languageId!: number;  // Guardamos el ID del language si estamos editando uno
-  isEditMode: boolean = false;  // Verifica si estamos en el modo de edición
+  languageId!: number; 
+  isEditMode: boolean = false; 
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +26,8 @@ export class LanguagesFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.languageId = +this.route.snapshot.paramMap.get('id')!;  // Obtén el ID de los parámetros de la ruta
-    this.isEditMode = this.languageId ? true : false;  // Si hay un ID, estamos en modo edición
+    this.languageId = +this.route.snapshot.paramMap.get('id')!; 
+    this.isEditMode = this.languageId ? true : false;  
 
     this.languageForm = this.fb.group({
       idioma: ['', Validators.required],
@@ -38,7 +38,7 @@ export class LanguagesFormComponent implements OnInit {
     }
   }
 
-  // Cargar los datos del language a editar
+ 
   loadLanguageData(): void {
       this.languageService.getLanguageById(this.languageId).subscribe(
         (language: Language) => {
@@ -56,12 +56,12 @@ export class LanguagesFormComponent implements OnInit {
     if (this.languageForm.valid) {
       const languageData: Language = this.languageForm.value;
   
-      // Si estamos en modo edición, no agregues el id al languageData (si no es necesario)
+      
       if (this.isEditMode) {
-        // Asegúrate de que el id en el cuerpo de la solicitud coincida con el id de la URL
-        languageData.id = this.languageId;  // Agregar el id explícitamente si es necesario
+ 
+        languageData.id = this.languageId;
   
-        // Si estamos editando, actualizamos el language
+    
         this.languageService.updateLanguage(this.languageId, languageData).subscribe(
           (response) => {
             console.log('language actualizado exitosamente:', response);
@@ -73,7 +73,7 @@ export class LanguagesFormComponent implements OnInit {
           }
         );
       } else {
-        // Si estamos creando un language, no necesitamos el id en el cuerpo
+ 
         this.languageService.addLanguage(languageData).subscribe(
           (response) => {
             console.log('language creado exitosamente:', response);

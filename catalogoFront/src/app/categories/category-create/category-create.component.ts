@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../category.service';
 import { Category } from '../category.model';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';  // Importa Router
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';  
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common';
 export class CategoryFormComponent implements OnInit {
 
   categoryForm!: FormGroup; 
-  categoryId!: number;  // Guardamos el ID del category si estamos editando uno
-  isEditMode: boolean = false;  // Verifica si estamos en el modo de edición
+  categoryId!: number; 
+  isEditMode: boolean = false;  
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +26,8 @@ export class CategoryFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoryId = +this.route.snapshot.paramMap.get('id')!;  // Obtén el ID de los parámetros de la ruta
-    this.isEditMode = this.categoryId ? true : false;  // Si hay un ID, estamos en modo edición
+    this.categoryId = +this.route.snapshot.paramMap.get('id')!;  
+    this.isEditMode = this.categoryId ? true : false;  
 
     this.categoryForm = this.fb.group({
       categoria: ['', Validators.required],
@@ -38,7 +38,7 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-  // Cargar los datos del category a editar
+
   loadCategoryData(): void {
       this.categoryService.getCategoryById(this.categoryId).subscribe(
         (category: Category) => {
@@ -56,12 +56,12 @@ export class CategoryFormComponent implements OnInit {
     if (this.categoryForm.valid) {
       const categoryData: Category = this.categoryForm.value;
   
-      // Si estamos en modo edición, no agregues el id al categoryData (si no es necesario)
+      
       if (this.isEditMode) {
-        // Asegúrate de que el id en el cuerpo de la solicitud coincida con el id de la URL
-        categoryData.id = this.categoryId;  // Agregar el id explícitamente si es necesario
+        
+        categoryData.id = this.categoryId;  
   
-        // Si estamos editando, actualizamos el category
+        
         this.categoryService.updateCategory(this.categoryId, categoryData).subscribe(
           (response) => {
             console.log('category actualizado exitosamente:', response);
@@ -73,7 +73,7 @@ export class CategoryFormComponent implements OnInit {
           }
         );
       } else {
-        // Si estamos creando un category, no necesitamos el id en el cuerpo
+       
         this.categoryService.addCategory(categoryData).subscribe(
           (response) => {
             console.log('category creado exitosamente:', response);

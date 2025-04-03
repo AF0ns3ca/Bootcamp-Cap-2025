@@ -3,45 +3,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Language } from './language.model';  // Importa el modelo de Actor si lo tienes
+import { Language } from './language.model'; 
 import { Film } from '../films/film.model';
 
 @Injectable({
-  providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
+  providedIn: 'root'  
 })
 export class LanguageService {
 
-  private apiUrl = 'http://localhost:8001/language/v1';  // Ajusta la URL según tu API
+  private apiUrl = 'http://localhost:8001/language/v1'; 
 
   constructor(private http: HttpClient) { }
   
-    // Método para obtener los detalles de la categoría (por ejemplo, el nombre)
+
     getLanguageById(languageId: number): Observable<Language> {
-      return this.http.get<any>(`${this.apiUrl}/${languageId}`);  // Devuelve el detalle de la categoría
+      return this.http.get<any>(`${this.apiUrl}/${languageId}`); 
     }
-  
-    // Método para obtener todas las categorías
+
     getLanguages(): Observable<Language[]> {
-      return this.http.get<Language[]>(`${this.apiUrl}`);  // Devuelve un array de categorías
+      return this.http.get<Language[]>(`${this.apiUrl}`);
     }
   
-    // Método para eliminar una categoría
+
     removeLanguage(languageId: number): Observable<any> {
-      return this.http.delete<any>(`${this.apiUrl}/${languageId}`);  // Devuelve la respuesta de la eliminación
+      return this.http.delete<any>(`${this.apiUrl}/${languageId}`); 
     }
   
-    // Método para crear una nueva categoría
+
     addLanguage(Language: Language): Observable<Language> {
-      return this.http.post<Language>(this.apiUrl, Language);  // Devuelve la categoría creada
+      return this.http.post<Language>(this.apiUrl, Language);  
     }
   
-    // Método para actualizar una categoría
+    
     updateLanguage(languageId: number, Language: Language): Observable<Language> {
-      return this.http.put<Language>(`${this.apiUrl}/${languageId}`, Language);  // Devuelve la categoría actualizada
+      return this.http.put<Language>(`${this.apiUrl}/${languageId}`, Language); 
     }
 
     getLanguageMovies(languageId: number): Observable<Film[]> {
-        return this.http.get<Film[]>(`${this.apiUrl}/${languageId}/peliculas`);  // Devuelve un array de películas
+        return this.http.get<Film[]>(`${this.apiUrl}/${languageId}/peliculas`);  
       }
 
 

@@ -4,7 +4,7 @@
   </h2>
 
   <form [formGroup]="filmForm" (ngSubmit)="onSubmit()" class="mt-6 space-y-6">
-    <!-- Titulo -->
+
     <div class="flex flex-col">
       <label for="title" class="text-gray-700 font-medium">Título</label>
       <input
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <!-- Descripción -->
+
     <div class="flex flex-col">
       <label for="description" class="text-gray-700 font-medium"
         >Descripción</label
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <!-- Año de estreno -->
+
     <div class="flex flex-col">
       <label for="releaseYear" class="text-gray-700 font-medium"
         >Año de estreno</label
@@ -61,7 +61,7 @@
       />
     </div>
 
-    <!-- Duración del alquiler -->
+
     <div class="flex flex-col">
       <label for="rentalDuration" class="text-gray-700 font-medium"
         >Duración del alquiler (días)</label
@@ -75,7 +75,7 @@
       />
     </div>
 
-    <!-- Valor de alquiler -->
+
     <div class="flex flex-col">
       <label for="rentalRate" class="text-gray-700 font-medium"
         >Valor del alquiler</label
@@ -89,7 +89,7 @@
       />
     </div>
 
-    <!-- Coste de reposición -->
+
     <div class="flex flex-col">
       <label for="replacementCost" class="text-gray-700 font-medium"
         >Coste de reposición</label
@@ -103,7 +103,7 @@
       />
     </div>
 
-    <!-- Longitud -->
+
     <div class="flex flex-col">
       <label for="length" class="text-gray-700 font-medium"
         >Longitud (minutos)</label
@@ -117,7 +117,7 @@
       />
     </div>
 
-    <!-- Clasificación -->
+ 
     <div class="flex flex-col">
       <label for="rating" class="text-gray-700 font-medium">Rating</label>
       <select
@@ -148,7 +148,7 @@
       />
     </div> -->
 
-    <!-- Idioma -->
+
     <div class="flex flex-col">
       <label for="language" class="text-gray-700 font-medium">Idioma</label>
       <select
@@ -161,7 +161,7 @@
             filmForm.get('language')?.touched
         }"
       >
-        <!-- Opción por defecto no seleccionada -->
+    
         <option value="" disabled>Seleccione un idioma</option>
         <option *ngFor="let language of languages" [value]="language.id">{{ language.idioma }}</option>
 
@@ -176,7 +176,7 @@
       </div>
     </div>
 
-    <!-- Botón de Enviar -->
+
     <div class="flex justify-center mt-6 gap-4">
       <button
         type="submit"

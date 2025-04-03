@@ -1,4 +1,4 @@
-// src/app/app.routes.ts
+
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ActorListComponent } from './actors/actor-list/actor-list.component';

@@ -1,8 +1,31 @@
-
-<section class="relative bg-cover bg-center h-screen">
-    <div class="flex justify-center items-center h-full bg-opacity-50">
-        <h1 class="text-black text-5xl font-bold">Bienvenido a la Página de Inicio</h1>
+<div class="w-full flex flex-col items-center justify-center gap-10">
+  
+    <h2 class="text-4xl font-extrabold text-gray-900 mt-6 mb-8">
+      <span class="text-blue-600">Novedades</span>
+    </h2>
+  
+  
+    <div *ngIf="films.length === 0" class="flex flex-col items-center justify-center">
+      <p class="text-lg text-gray-600">No se han encontrado novedades.</p>
+      <img src="https://via.placeholder.com/150" alt="No results" class="mt-4" />
     </div>
-  </section>
-
+  
+   
+    <div *ngIf="films.length > 0" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6">
+      <div *ngFor="let film of films" class="max-w-xs bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transition-all ease-in-out transform hover:scale-105">
+        <a [routerLink]="['/films', film.filmId]" class="block">
+          <div class="p-4 flex flex-col items-center justify-between">
+         
+            <svg class="w-28 h-32 rounded-full mb-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18v16H3V4zm14 10H7v-2h10v2z" />
+            </svg>
+    
+            <h3 class="text-xl font-semibold text-center text-gray-800 mb-2">{{ film.title }}</h3>
+       
+            <p class="text-sm text-center text-gray-500 line-clamp-2">{{ film.description || 'Sin descripción disponible.' }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
   
