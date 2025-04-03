@@ -37,6 +37,14 @@ export class FilmService {
     return this.http.get<Actor[]>(`${this.baseUrl}/${id}/reparto`);
   }
 
+  addActorToFilm(filmId: number, actorId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${filmId}/actors/${actorId}`, {});
+  }
+
+  removeActorFromFilm(filmId: number, actorId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${filmId}/actors/${actorId}`);
+  }
+
   getLanguages(): Observable<any[]> {
     return this.http.get<any[]>(`${this.lanUrl}`); // Cambia la URL según corresponda
   }
@@ -49,7 +57,7 @@ export class FilmService {
     const url = `${this.baseUrl}/${id}`; // El ID del actor debe ir en la URL
     return this.http.put<Film>(url, film); // Se utiliza PUT para actualizar
   }
-  
+
   deleteActor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

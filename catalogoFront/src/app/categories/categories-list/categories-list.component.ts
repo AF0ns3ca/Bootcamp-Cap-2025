@@ -51,4 +51,23 @@ export class CategoriesListComponent implements OnInit {
       }
     );
   }
+
+  onDeleteCategory(categoryId: number, event: Event): void {
+    event.stopPropagation();  // Evita que el evento de clic se propague
+  
+    if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
+      this.categoryService.removeCategory(categoryId).subscribe(
+        (response) => {
+          console.log('Categoría eliminada:', response);
+          alert('Categoría eliminada con éxito');
+          this.loadCategories();  // Recargar la lista de categorías
+        },
+        (error) => {
+          console.error('Error al eliminar categoría', error);
+          alert('Hubo un error al eliminar la categoría');
+        }
+      );
+    }
+  }
+  
 }

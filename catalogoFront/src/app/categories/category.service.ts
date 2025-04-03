@@ -19,11 +19,30 @@ export class CategoryService {
 
   // Método para obtener los detalles de la categoría (por ejemplo, el nombre)
   getCategoryById(categoryId: number): Observable<Category> {
-    return this.http.get<Category>(`${this.apiUrl}/${categoryId}`);  // Devuelve el detalle de la categoría
+    return this.http.get<any>(`${this.apiUrl}/${categoryId}`);  // Devuelve el detalle de la categoría
   }
 
   // Método para obtener todas las categorías
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}`);  // Devuelve un array de categorías
   }
+
+  // Método para eliminar una categoría
+  removeCategory(categoryId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${categoryId}`);  // Devuelve la respuesta de la eliminación
+  }
+
+  // Método para crear una nueva categoría
+  addCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(this.apiUrl, category);  // Devuelve la categoría creada
+  }
+
+  // Método para actualizar una categoría
+  updateCategory(categoryId: number, category: Category): Observable<Category> {
+    return this.http.put<Category>(`${this.apiUrl}/${categoryId}`, category);  // Devuelve la categoría actualizada
+  }
+
+
+
+
 }

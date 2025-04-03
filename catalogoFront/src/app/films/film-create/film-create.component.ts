@@ -43,7 +43,6 @@ export class FilmFormComponent implements OnInit {
       replacementCost: ['', Validators.required],
       length: [''],
       rating: [''],
-      // specialFeatures: [''], // Make sure this is an array
       languageId: ['', Validators.required],
       languageVO: [''],
     });

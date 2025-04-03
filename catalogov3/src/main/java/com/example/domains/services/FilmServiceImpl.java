@@ -14,6 +14,7 @@ import com.example.domains.contracts.repositories.FilmRepository;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.models.FilmDetailsDTO;
+import com.example.domains.entities.models.FilmEditDTO;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;

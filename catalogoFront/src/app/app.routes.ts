@@ -9,10 +9,12 @@ import { ActorDetailComponent } from './actors/actor-detail/actor-detail.compone
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
 import { ActorFormComponent } from './actors/actor-create/actor-create.component';
 import { FilmFormComponent } from './films/film-create/film-create.component';
+import { CategoryFormComponent } from './categories/category-create/category-create.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+
   {path: 'actors', children: [
     {path: '', component: ActorListComponent},
     {path: 'create', component: ActorFormComponent},
@@ -26,8 +28,19 @@ export const appRoutes: Routes = [
     {path: ':id', component: FilmDetailComponent},
     {path: 'edit/:id', component: FilmFormComponent },
   ]},
-  { path: 'categories', component: CategoriesListComponent},
-  { path: 'category/:id', component: CategoryDetailComponent },
+
+  {path: 'category', children: [
+    {path: '', component: CategoriesListComponent},
+    {path: 'create', component: CategoryFormComponent},
+    {path: ':id', component: CategoryDetailComponent},
+    {path: 'edit/:id', component: CategoryFormComponent },
+  ]},
+
+  
+  // { path: 'categories', component: CategoriesListComponent},
+  // { path: 'category/create', component: CategoryFormComponent},
+  // { path: 'category/:id', component: CategoryDetailComponent },
+  // { path: 'category/edit/:id', component: CategoryFormComponent },
   // { path: 'actors', component: ActorListComponent},
   // { path: 'films', component: FilmListComponent},
   // { path: 'actors/create', component: ActorCreateComponent},

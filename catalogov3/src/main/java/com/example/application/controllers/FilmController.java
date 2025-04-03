@@ -1,6 +1,7 @@
 package com.example.application.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +32,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.domains.contracts.services.ActorService;
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.Film.Rating;
@@ -62,20 +65,19 @@ public class FilmController {
 	@Autowired
 	private FilmService srv;
 
+	@Autowired
+	private ActorService srvA;
+
 	@Hidden
 	@GetMapping(params = "page")
 	public PagedModel<FilmShortDTO> getAll(Pageable pageable, @RequestParam(defaultValue = "short") String mode) {
 		return new PagedModel<FilmShortDTO>(srv.getByProjection(pageable, FilmShortDTO.class));
 	}
 
-	@Operation(summary = "Listado de las peliculas", 
-			description = "Recupera la lista de peliculas en formato corto o detallado, se puede paginar.",
-			parameters = {
-					@Parameter(in = ParameterIn.QUERY, name = "mode", required = false, description = "Formato de las peliculas", 
-								schema = @Schema(type = "string", allowableValues = {"details", "short" }, defaultValue = "short")) }, 
-			responses = {
-					@ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, 
-							schema = @Schema(anyOf = {
+	@Operation(summary = "Listado de las peliculas", description = "Recupera la lista de peliculas en formato corto o detallado, se puede paginar.", parameters = {
+			@Parameter(in = ParameterIn.QUERY, name = "mode", required = false, description = "Formato de las peliculas", schema = @Schema(type = "string", allowableValues = {
+					"details", "short" }, defaultValue = "short")) }, responses = {
+							@ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(anyOf = {
 									FilmShortDTO.class, FilmDetailsDTO.class }))) })
 	@GetMapping(params = { "page", "mode=details" })
 	@PageableAsQueryParam
@@ -96,54 +98,54 @@ public class FilmController {
 	@Hidden
 	@GetMapping(params = "mode=details")
 	public List<FilmDetailsDTO> getAllDetails(
-//			@Parameter(allowEmptyValue = true, required = false, schema = @Schema(type = "string", allowableValues = {"details","short"}, defaultValue = "short")) 
+			// @Parameter(allowEmptyValue = true, required = false, schema = @Schema(type =
+			// "string", allowableValues = {"details","short"}, defaultValue = "short"))
 			@RequestParam(defaultValue = "short") String mode) {
 		return srv.getAll().stream().map(item -> FilmDetailsDTO.from(item)).toList();
 	}
 
 	record Search(
-			@Schema(description = "Que el titulo contenga")
-			String title, 
-			@Schema(description = "Duración mínima de la pelicula")
-			Integer minlength, 
-			@Schema(description = "Duración máxima de la pelicula")
-			Integer maxlength, 
-			@Schema(description = "La clasificación por edades asignada a la película", allowableValues = {"G", "PG", "PG-13", "R", "NC-17"})
-			@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
-			String rating,
+			@Schema(description = "Que el titulo contenga") String title,
+			@Schema(description = "Duración mínima de la pelicula") Integer minlength,
+			@Schema(description = "Duración máxima de la pelicula") Integer maxlength,
+			@Schema(description = "La clasificación por edades asignada a la película", allowableValues = {
+					"G", "PG", "PG-13", "R", "NC-17" }) @Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$") String rating,
 			@Schema(description = "Formato de la respuesta", type = "string", allowableValues = {
-					"details", "short" }, defaultValue = "short")
-			String mode
-			) {}
+					"details", "short" }, defaultValue = "short") String mode){
+	}
 
 	@Operation(summary = "Consulta filtrada de peliculas")
 	@GetMapping("/filtro")
 	public List<?> search(@ParameterObject @Valid Search filter) throws BadRequestException {
-		if(filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
-				throw new BadRequestException("la duración máxima debe ser superior a la mínima");
+		if (filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
+			throw new BadRequestException("la duración máxima debe ser superior a la mínima");
 		Specification<Film> spec = null;
-		if(filter.title != null && !"".equals(filter.title)) {
-			Specification<Film> cond = (root, query, builder) -> builder.like(root.get("title"), "%" + filter.title.toUpperCase() + "%");
+		if (filter.title != null && !"".equals(filter.title)) {
+			Specification<Film> cond = (root, query, builder) -> builder.like(root.get("title"),
+					"%" + filter.title.toUpperCase() + "%");
 			spec = spec == null ? cond : spec.and(cond);
 		}
-		if(filter.rating != null && !"".equals(filter.rating)) {
-			if(!List.of(Rating.VALUES).contains(filter.rating))
+		if (filter.rating != null && !"".equals(filter.rating)) {
+			if (!List.of(Rating.VALUES).contains(filter.rating))
 				throw new BadRequestException("rating desconocido");
-			Specification<Film> cond = (root, query, builder) -> builder.equal(root.get("rating"), Rating.getEnum(filter.rating));
+			Specification<Film> cond = (root, query, builder) -> builder.equal(root.get("rating"),
+					Rating.getEnum(filter.rating));
 			spec = spec == null ? cond : spec.and(cond);
 		}
-		if(filter.minlength != null) {
-			Specification<Film> cond = (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("length"), filter.minlength);
+		if (filter.minlength != null) {
+			Specification<Film> cond = (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("length"),
+					filter.minlength);
 			spec = spec == null ? cond : spec.and(cond);
 		}
-		if(filter.maxlength != null) {
-			Specification<Film> cond = (root, query, builder) -> builder.lessThanOrEqualTo(root.get("length"), filter.maxlength);
+		if (filter.maxlength != null) {
+			Specification<Film> cond = (root, query, builder) -> builder.lessThanOrEqualTo(root.get("length"),
+					filter.maxlength);
 			spec = spec == null ? cond : spec.and(cond);
 		}
-		if(spec == null)
+		if (spec == null)
 			throw new BadRequestException("Faltan los parametros de filtrado");
 		var query = srv.getAll(spec).stream();
-		if("short".equals(filter.mode))
+		if ("short".equals(filter.mode))
 			return query.map(e -> FilmShortDTO.from(e)).toList();
 		else {
 			return query.map(e -> FilmDetailsDTO.from(e)).toList();
@@ -152,13 +154,10 @@ public class FilmController {
 
 	@GetMapping(path = "/{id}", params = "mode=short")
 	public FilmShortDTO getOneCorto(
-			@Parameter(description = "Identificador de la pelicula", required = true) 
-			@PathVariable 
-			int id,
+			@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
 			@Parameter(required = false, allowEmptyValue = true, schema = @Schema(type = "string", allowableValues = {
-					"details", "short", "edit" }, defaultValue = "edit")) 
-			@RequestParam(required = false, defaultValue = "edit") 
-			String mode)
+					"details", "short",
+					"edit" }, defaultValue = "edit")) @RequestParam(required = false, defaultValue = "edit") String mode)
 			throws Exception {
 		Optional<Film> rslt = srv.getOne(id);
 		if (rslt.isEmpty())
@@ -184,13 +183,9 @@ public class FilmController {
 			FilmShortDTO.class, FilmDetailsDTO.class, FilmEditDTO.class })))
 	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
 	public FilmEditDTO getOneEditar(
-			@Parameter(description = "Identificador de la pelicula", required = true) 
-			@PathVariable 
-			int id,
+			@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
 			@Parameter(required = false, schema = @Schema(type = "string", allowableValues = { "details", "short",
-					"edit" }, defaultValue = "edit")) 
-			@RequestParam(required = false, defaultValue = "edit") 
-			String mode)
+					"edit" }, defaultValue = "edit")) @RequestParam(required = false, defaultValue = "edit") String mode)
 			throws Exception {
 		Optional<Film> rslt = srv.getOne(id);
 		if (rslt.isEmpty())
@@ -231,7 +226,7 @@ public class FilmController {
 	public List<Map<String, String>> getClasificaciones() {
 		return List.of(Map.of("key", "G", "value", "Todos los públicos"),
 				Map.of("key", "PG", "value", "Guía paternal sugerida"),
-				Map.of("key", "PG-13", "value", "Guía paternal estricta"), 
+				Map.of("key", "PG-13", "value", "Guía paternal estricta"),
 				Map.of("key", "R", "value", "Restringido"),
 				Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
 	}
@@ -258,7 +253,7 @@ public class FilmController {
 	@Operation(summary = "Modificar una pelicula existente", description = "Los identificadores deben coincidir")
 	@ApiResponse(responseCode = "200", description = "Pelicula encontrada")
 	@ApiResponse(responseCode = "404", description = "Pelicula no encontrada")
-//	@Transactional
+	// @Transactional
 	@PutMapping(path = "/{id}")
 	public FilmEditDTO modify(
 			@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
@@ -278,11 +273,44 @@ public class FilmController {
 		srv.deleteById(id);
 	}
 
-//	@Operation(summary = "Enviar un me gusta")
-//	@ApiResponse(responseCode = "200", description = "Like enviado")
-//	@PostMapping(path = "{id}/like")
-//	public String like(@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id)
-//			throws Exception {
-//		return proxy.sendLike(id);
-//	}
+	// Endpoint para añadir un actor a una película
+	@PostMapping("/{filmId}/actors/{actorId}")
+	public ResponseEntity<Map<String, String>> addActorToFilm(@PathVariable int filmId, @PathVariable int actorId)
+			throws Exception {
+		Film film = srv.getOne(filmId).orElseThrow(() -> new NotFoundException("Pelicula no encontrada"));
+		Actor actor = srvA.getOne(actorId).orElseThrow(() -> new NotFoundException("Actor no encontrado"));
+		film.addActor(actor);
+		srv.modify(film);
+
+		// Cambia la respuesta a un objeto JSON con un mensaje
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Actor añadido a la película");
+
+		return ResponseEntity.ok(response);
+	}
+
+	@DeleteMapping("/{filmId}/actors/{actorId}")
+	public ResponseEntity<Map<String, String>> removeActorFromFilm(@PathVariable int filmId, @PathVariable int actorId)
+			throws Exception {
+		Film film = srv.getOne(filmId).orElseThrow(() -> new NotFoundException("Pelicula no encontrada"));
+		Actor actor = srvA.getOne(actorId).orElseThrow(() -> new NotFoundException("Actor no encontrado"));
+
+		film.removeActor(actor); // Asegúrate de que esta función elimina al actor correctamente
+		srv.modify(film);
+
+		// Cambiar la respuesta a un objeto JSON con un mensaje
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Actor eliminado de la película");
+
+		return ResponseEntity.ok(response); // Devolvemos el objeto JSON
+	}
+
+	// @Operation(summary = "Enviar un me gusta")
+	// @ApiResponse(responseCode = "200", description = "Like enviado")
+	// @PostMapping(path = "{id}/like")
+	// public String like(@Parameter(description = "Identificador de la pelicula",
+	// required = true) @PathVariable int id)
+	// throws Exception {
+	// return proxy.sendLike(id);
+	// }
 }
