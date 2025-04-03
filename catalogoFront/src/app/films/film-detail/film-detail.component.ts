@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,  // Marca el componente como independiente
   imports: [CommonModule, RouterLink],  // Importa los módulos necesarios aquí
 })
+
 export class FilmDetailComponent implements OnInit {
   filmId: number | null = null;
   film: any;  // Cambiar a un tipo más específico si es necesario

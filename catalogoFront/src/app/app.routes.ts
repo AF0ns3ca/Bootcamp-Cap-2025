@@ -22,8 +22,8 @@ export const appRoutes: Routes = [
   ]},
   {path: 'films', children: [
     {path: '', component: FilmListComponent},
-    {path: ':id', component: FilmDetailComponent},
     {path: 'create', component: FilmFormComponent},
+    {path: ':id', component: FilmDetailComponent},
     {path: 'edit/:id', component: FilmFormComponent },
   ]},
   { path: 'categories', component: CategoriesListComponent},

@@ -119,20 +119,23 @@
 
     <!-- Clasificación -->
     <div class="flex flex-col">
-      <label for="rating" class="text-gray-700 font-medium"
-        >Clasificación</label
-      >
-      <input
-        type="text"
+      <label for="rating" class="text-gray-700 font-medium">Rating</label>
+      <select
         id="rating"
         formControlName="rating"
         class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Clasificación de la película"
-      />
+      >
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+        <option value="NC-17">NC-17</option>
+      </select>
     </div>
+    
 
     <!-- Características especiales -->
-    <div class="flex flex-col">
+    <!-- <div class="flex flex-col">
       <label for="specialFeatures" class="text-gray-700 font-medium"
         >Características especiales</label
       >
@@ -143,26 +146,35 @@
         class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Características especiales"
       />
+    </div> -->
+
+    <!-- Idioma -->
+    <div class="flex flex-col">
+      <label for="language" class="text-gray-700 font-medium">Idioma</label>
+      <select
+        id="language"
+        formControlName="languageId"
+        class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{
+          'border-red-500':
+            filmForm.get('language')?.invalid &&
+            filmForm.get('language')?.touched
+        }"
+      >
+        <!-- Opción por defecto no seleccionada -->
+        <option value="" disabled>Seleccione un idioma</option>
+        <option *ngFor="let language of languages" [value]="language.id">{{ language.idioma }}</option>
+
+      </select>
+      <div
+        *ngIf="
+          filmForm.get('language')?.invalid && filmForm.get('language')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        El idioma es requerido.
+      </div>
     </div>
-
-    <!-- Idioma -->
-    <!-- Idioma -->
-<div class="flex flex-col">
-  <label for="language" class="text-gray-700 font-medium">Idioma</label>
-  <select
-    id="language"
-    formControlName="language"
-    class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-    [ngClass]="{'border-red-500': filmForm.get('language')?.invalid && filmForm.get('language')?.touched}"
-  >
-    <option value="" disabled selected>Seleccione un idioma</option>
-    <option *ngFor="let language of languages" [value]="language.id">{{ language.idioma }}</option>
-  </select>
-  <div *ngIf="filmForm.get('language')?.invalid && filmForm.get('language')?.touched" class="text-red-500 text-sm">
-    El idioma es requerido.
-  </div>
-</div>
-
 
     <!-- Botón de Enviar -->
     <div class="flex justify-center mt-6 gap-4">

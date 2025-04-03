@@ -49,4 +49,8 @@ export class FilmService {
     const url = `${this.baseUrl}/${id}`; // El ID del actor debe ir en la URL
     return this.http.put<Film>(url, film); // Se utiliza PUT para actualizar
   }
+  
+  deleteActor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

@@ -16,7 +16,8 @@ export class FilmFormComponent implements OnInit {
   filmForm!: FormGroup;
   isEditMode: boolean = false;
   filmId!: number;
-  languages: any[] = [];  // Aquí almacenaremos los idiomas
+  languages: any[] = [];  
+  
 
   constructor(
     private fb: FormBuilder,
@@ -35,17 +36,18 @@ export class FilmFormComponent implements OnInit {
     // Crear el formulario
     this.filmForm = this.fb.group({
       title: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       releaseYear: [''],
-      rentalDuration: [''],
-      rentalRate: [''],
-      replacementCost: [''],
+      rentalDuration: ['', Validators.required],
+      rentalRate: ['', Validators.required],
+      replacementCost: ['', Validators.required],
       length: [''],
       rating: [''],
-      specialFeatures: [''],
-      language: ['', Validators.required],
+      // specialFeatures: [''], // Make sure this is an array
+      languageId: ['', Validators.required],
       languageVO: [''],
     });
+    
 
     // Si estamos en modo edición, cargar los datos
     if (this.isEditMode) {

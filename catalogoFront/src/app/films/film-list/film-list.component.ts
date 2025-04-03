@@ -4,14 +4,15 @@ import { Film } from '../film.model';
 import { Pageable } from '../../core/model/Pageable';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // Importamos Router para la navegación
+import { Router, RouterModule } from '@angular/router'; // Importamos Router para la navegación
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-film-list',
   templateUrl: './film-list.component.html',
   styleUrls: ['./film-list.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule],
 })
 
 export class FilmListComponent implements OnInit {
@@ -21,7 +22,7 @@ export class FilmListComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 0;
 
-  constructor(private filmService: FilmService) {}
+  constructor(private filmService: FilmService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadFilms(); // Cargar las películas al inicio
@@ -73,4 +74,22 @@ export class FilmListComponent implements OnInit {
   get pages() {
     return Array.from({ length: this.totalPages }, (_, i) => i);
   }
+
+  onDeleteFilm(id: number, event: Event): void {
+    event.stopPropagation(); // Detiene la propagación del evento
+    if (confirm('¿Estás seguro de que deseas eliminar esta película?')) {
+      this.filmService.deleteActor(id).subscribe(
+        () => {
+          this.loadFilms(); // Recarga la lista de actores
+          alert('Pelicula eliminada con éxito');
+          this.router.navigate(['/films']); // Redirige a la lista de actores después de la eliminación
+        },
+        (error) => {
+          console.error('Error al eliminar la pelicula', error);
+          alert('No se pudo eliminar la pelicula');
+        }
+      );
+    }
+  }
+
 }
