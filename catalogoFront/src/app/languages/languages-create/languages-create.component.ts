@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './languages-create.component.html',
   styleUrl: './languages-create.component.css'
 })
-export class LanguagesCreateComponent implements OnInit {
+export class LanguagesFormComponent implements OnInit {
 
   languageForm!: FormGroup; 
   languageId!: number;  // Guardamos el ID del language si estamos editando uno
@@ -30,7 +30,7 @@ export class LanguagesCreateComponent implements OnInit {
     this.isEditMode = this.languageId ? true : false;  // Si hay un ID, estamos en modo edición
 
     this.languageForm = this.fb.group({
-      categoria: ['', Validators.required],
+      idioma: ['', Validators.required],
     });
 
     if (this.isEditMode) {

@@ -10,6 +10,9 @@ import { CategoryDetailComponent } from './categories/category-detail/category-d
 import { ActorFormComponent } from './actors/actor-create/actor-create.component';
 import { FilmFormComponent } from './films/film-create/film-create.component';
 import { CategoryFormComponent } from './categories/category-create/category-create.component';
+import { LanguagesListComponent } from './languages/languages-list/languages-list.component';
+import { LanguagesFormComponent } from './languages/languages-create/languages-create.component';
+import { LanguagesDetailComponent } from './languages/languages-detail/languages-detail.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,6 +37,13 @@ export const appRoutes: Routes = [
     {path: 'create', component: CategoryFormComponent},
     {path: ':id', component: CategoryDetailComponent},
     {path: 'edit/:id', component: CategoryFormComponent },
+  ]},
+
+  {path: 'language', children: [
+    {path: '', component: LanguagesListComponent},
+    {path: 'create', component: LanguagesFormComponent},
+    {path: ':id', component: LanguagesDetailComponent},
+    {path: 'edit/:id', component: LanguagesFormComponent },
   ]},
 
   

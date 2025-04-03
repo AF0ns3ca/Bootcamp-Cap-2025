@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Language } from './language.model';  // Importa el modelo de Actor si lo tienes
+import { Film } from '../films/film.model';
 
 @Injectable({
   providedIn: 'root'  // O, si no estás usando 'providedIn: root', también puedes proveer el servicio en el módulo
@@ -20,7 +21,7 @@ export class LanguageService {
     }
   
     // Método para obtener todas las categorías
-    getCategories(): Observable<Language[]> {
+    getLanguages(): Observable<Language[]> {
       return this.http.get<Language[]>(`${this.apiUrl}`);  // Devuelve un array de categorías
     }
   
@@ -38,6 +39,10 @@ export class LanguageService {
     updateLanguage(languageId: number, Language: Language): Observable<Language> {
       return this.http.put<Language>(`${this.apiUrl}/${languageId}`, Language);  // Devuelve la categoría actualizada
     }
+
+    getLanguageMovies(languageId: number): Observable<Film[]> {
+        return this.http.get<Film[]>(`${this.apiUrl}/${languageId}/peliculas`);  // Devuelve un array de películas
+      }
 
 
 

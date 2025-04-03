@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.domains.contracts.repositories.LanguageRepository;
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Language;
+import com.example.domains.entities.models.FilmDetailsDTO;
 import com.example.domains.entities.models.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -80,11 +81,11 @@ public class LanguageController {
 
     @GetMapping(path = "/{id}/peliculas")
 	@Transactional
-	public List<FilmShortDTO> getFilms(@PathVariable int id) throws Exception {
+	public List<FilmDetailsDTO> getFilms(@PathVariable int id) throws Exception {
 		Optional<Language> rslt = dao.findById(id);
 		if (rslt.isEmpty())
 			throw new NotFoundException();
-		return rslt.get().getFilms().stream().map(item -> FilmShortDTO.from(item))
+		return rslt.get().getFilms().stream().map(item -> FilmDetailsDTO.from(item))
 				.collect(Collectors.toList());
 	}
 
