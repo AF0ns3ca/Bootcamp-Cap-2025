@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.ActorService;
+import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
@@ -67,6 +68,9 @@ public class FilmController {
 
 	@Autowired
 	private ActorService srvA;
+
+	@Autowired
+	private CategoryService srvC;
 
 	@Hidden
 	@GetMapping(params = "page")
@@ -301,6 +305,39 @@ public class FilmController {
 		// Cambiar la respuesta a un objeto JSON con un mensaje
 		Map<String, String> response = new HashMap<>();
 		response.put("message", "Actor eliminado de la película");
+
+		return ResponseEntity.ok(response); // Devolvemos el objeto JSON
+	}
+
+	// Endpoint para añadir un actor a una película
+	@PostMapping("/{filmId}/category/{categoryId}")
+	public ResponseEntity<Map<String, String>> addCategoryToFilm(@PathVariable int filmId, @PathVariable int categoryId)
+			throws Exception {
+		Film film = srv.getOne(filmId).orElseThrow(() -> new NotFoundException("Pelicula no encontrada"));
+		Category category = srvC.getOne(categoryId).orElseThrow(() -> new NotFoundException("Categoria no encontrada"));
+		
+		film.addCategory(category);
+		srv.modify(film);
+
+		// Cambia la respuesta a un objeto JSON con un mensaje
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Categoria añadida a la película");
+
+		return ResponseEntity.ok(response);
+	}
+
+	@DeleteMapping("/{filmId}/category/{categoryId}")
+	public ResponseEntity<Map<String, String>> removeCategoryFromFilm(@PathVariable int filmId, @PathVariable int categoryId)
+			throws Exception {
+		Film film = srv.getOne(filmId).orElseThrow(() -> new NotFoundException("Pelicula no encontrada"));
+		Category category = srvC.getOne(categoryId).orElseThrow(() -> new NotFoundException("Categoria no encontrada"));
+
+		film.removeCategory(category); // Asegúrate de que esta función elimina al actor correctamente
+		srv.modify(film);
+
+		// Cambiar la respuesta a un objeto JSON con un mensaje
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Categoria eliminada de la película");
 
 		return ResponseEntity.ok(response); // Devolvemos el objeto JSON
 	}

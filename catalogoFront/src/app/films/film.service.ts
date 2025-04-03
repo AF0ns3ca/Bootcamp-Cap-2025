@@ -16,7 +16,8 @@ export class FilmService {
 
   constructor(private http: HttpClient) {}
   private baseUrl = 'http://localhost:8001/films/v1';
-  private lanUrl = 'http://localhost:8001/language/v1'; // Cambia la URL según corresponda
+  private lanUrl = 'http://localhost:8001/language/v1';
+  private catUrl = 'http://localhost:8001/category/v1';
 
   // getFilms(): Observable<Film[]> {
   //   return this.http.get<Film[]>(this.apiUrl);  // Esta es la llamada HTTP
@@ -35,6 +36,18 @@ export class FilmService {
 
   getActorsInFilm(id: number): Observable<Actor[]> {
     return this.http.get<Actor[]>(`${this.baseUrl}/${id}/reparto`);
+  }
+
+  getCategoriesInFilm(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${id}/categorias`);
+  }
+
+  addCategoryToFilm(filmId: number, categoryId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${filmId}/category/${categoryId}`, {});
+  }
+
+  removeCategoryFromFilm(filmId: number, categoryId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${filmId}/category/${categoryId}`);
   }
 
   addActorToFilm(filmId: number, actorId: number): Observable<any> {
